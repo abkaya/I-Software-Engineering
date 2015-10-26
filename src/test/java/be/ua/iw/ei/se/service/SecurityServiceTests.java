@@ -59,10 +59,10 @@ public class SecurityServiceTests {
 
         User u1 = new User("U","1");
         u1.setUserName("username");
-        u1.setRoles(Arrays.asList(administrator));
+//        u1.setRoles(Arrays.asList(administrator));
         User u2 = new User("U","2");
         u2.setUserName("username");
-        u2.setRoles(Arrays.asList(tester));
+//        u2.setRoles(Arrays.asList(tester));
         userList = new ArrayList<>();
         userList.add(u1);
         userList.add(u2);

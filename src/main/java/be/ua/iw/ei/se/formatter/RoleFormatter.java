@@ -2,6 +2,7 @@ package be.ua.iw.ei.se.formatter;
 
 import be.ua.iw.ei.se.model.Role;
 import be.ua.iw.ei.se.model.User;
+import be.ua.iw.ei.se.repository.RoleRepository;
 import be.ua.iw.ei.se.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
@@ -19,30 +20,14 @@ import java.util.Locale;
 public class RoleFormatter implements Formatter<Role> {
 
     @Autowired
-    private UserService userService;
-
-
-    public RoleFormatter() {
-        super();
-    }
+    private RoleRepository roleRepository;
 
     public Role parse(final String text, final Locale locale) throws ParseException {
-       Iterable<User> users = userService.findAll();
-        for (User user : users){
-            List<Role> roles = user.getRoles();
-            for (Role role : roles){
-                if (role.getName().equals(text)){
-                    return role;
-                }
-            }
-        }
-        return null;
+        return roleRepository.findOne(new Long(text));
     }
-
 
     public String print(final Role object, final Locale locale) {
-        return (object != null ? object.getName() : "");
+        return (object != null ? object.getId().toString() : "");
     }
-
 }
 

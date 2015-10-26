@@ -23,7 +23,9 @@ public class RoleFormatter implements Formatter<Role> {
     private RoleRepository roleRepository;
 
     public Role parse(final String text, final Locale locale) throws ParseException {
-        return roleRepository.findOne(new Long(text));
+        if (text != null && !text.isEmpty())
+            return roleRepository.findOne(new Long(text));
+        else return null;
     }
 
     public String print(final Role object, final Locale locale) {

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='Role management')"></head>
+
+<body onload="$('#permissions').multiSelect()">
+
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+    <form action="#" th:action="@{/users/add}" th:object="${role}" method="post">
+        <select th:field="*{permissions}" multiple="multiple">
+            <option th:each="permission : ${allPermissions}"
+                    th:value="${{permission}}"
+                    th:text="${permission.name}">Wireframe</option>
+        </select>
+    </form>
+</div>
+</body>
+</html>

@@ -19,7 +19,6 @@ import java.util.stream.StreamSupport;
  * Created by Edwin on 29/09/2015.
  */
 @Controller
-
 public class HomeController {
     @Autowired
     private UserService userService;

@@ -38,7 +38,7 @@ public class SecurityServiceTests {
     SecurityService securityService;
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
 
     List<User> userList;
 
@@ -71,13 +71,8 @@ public class SecurityServiceTests {
 
     @Test(expected = UsernameNotFoundException.class)
     public void nonExistingUsernameTest() {
-        when(userRepository.findAll()).thenReturn(userList);
+        when(userService.findByUserName("")).thenReturn(null);
         securityService.loadUserByUsername("bla");
     }
-    @Test
-    public void loadedAuthoritiesTest(){
-        when(userRepository.findAll()).thenReturn(userList);
-        UserDetails testUser = securityService.loadUserByUsername("username");
-        assertTrue(!testUser.getAuthorities().isEmpty());
-    }
+
 }

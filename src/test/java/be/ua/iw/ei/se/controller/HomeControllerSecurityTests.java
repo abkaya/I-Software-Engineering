@@ -43,7 +43,7 @@ public class HomeControllerSecurityTests {
         homeController.showHomepage(new ModelMap());
     }
     @Test
-    @WithUserDetails("Edwin")
+    @WithUserDetails("admin")
     public void testFour() {
         homeController.showHomepage(new ModelMap());
     }

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- Import header -->
-<head th:replace="layout :: head (title='Role management')"></head>
+<head th:replace="layout :: head (title='#{user.management}')"></head>
 
 <body onload="initPage()">
 <script type="text/javascript">
     function initPage(){
         var options = {
-            valueNames: [ 'name']
+            valueNames: [ 'userName']
         };
 
-        var roleList = new List('role-list', options);
+        var userList = new List('user-list', options);
     }
 
 </script>
@@ -21,7 +21,7 @@
 
     <div class="content">
 
-        <div id="role-list">
+        <div id="user-list">
             <input class="search" placeholder="Search" />
             <table class="table table-hover">
                 <thead>
@@ -32,16 +32,16 @@
                 </thead>
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
-                <tr th:each="role : ${allRoles}">
-                    <td class="name" th:value="${role}" th:text="${role.name}">Rolename</td>
+                <tr th:each="user : ${allUsers}">
+                    <td class="userName" th:value="${user}" th:text="${user.userName}">Username</td>
                     <td>
-                        <a th:href="@{/roles/{id}/(id=${role.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                        <a th:href="@{/roles/{id}/delete(id=${role.id})}"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a th:href="@{/users/{id}/(id=${user.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                        <a th:href="@{/users/{id}/delete(id=${user.id})}"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <a href="/roles/put" class="btn btn-primary" th:text="#{create.role}">Create role</a>
+            <a href="/users/put" class="btn btn-primary" th:text="#{create.user}">Create user</a>
         </div>
 
     </div>

@@ -1,5 +1,5 @@
 .ms-container{
-  background: transparent url('../img/switch.png') no-repeat 50% 50%;
+  background: transparent url('/images/switch.png') no-repeat 50% 50%;
   width: 370px;
 }
 
@@ -90,4 +90,10 @@
   background-color: #eee;
   color: #aaa;
   cursor: text;
+}
+.custom-header {
+  text-align: center;
+  padding: 3px;
+  background: #000;
+  color: #fff;
 }

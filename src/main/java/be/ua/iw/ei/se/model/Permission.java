@@ -8,7 +8,7 @@ import javax.persistence.Entity;
  * Created by Edwin on 6/10/2015.
  */
 @Entity
-public class Permission  extends AbstractPersistable<Long> {
+public class Permission  extends MyAbstractPersistable<Long> {
     private String name;
 
     public Permission() {

@@ -1,5 +1,5 @@
 /*
-* MultiSelect v0.9.11
+* MultiSelect v0.9.12
 * Copyright (c) 2012 Louis Cuny
 *
 * This program is free software. It comes without any warranty, to
@@ -323,13 +323,13 @@
     'activeMouse' : function($list){
       var that = this;
 
-      $('.ms-container').on('mouseenter', that.elemsSelector, function(){
+      this.$container.on('mouseenter', that.elemsSelector, function(){
         $(this).parents('.ms-container').find(that.elemsSelector).removeClass('ms-hover');
         $(this).addClass('ms-hover');
       });
 
-      $('.ms-container').on('mouseleave', that.elemsSelector, function () {
-          $(this).parents('.ms-container').find(that.elemsSelector).removeClass('ms-hover');;
+      this.$container.on('mouseleave', that.elemsSelector, function () {
+        $(this).parents('.ms-container').find(that.elemsSelector).removeClass('ms-hover');;
       });
     },
 

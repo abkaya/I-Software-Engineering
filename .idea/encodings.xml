@@ -8,7 +8,8 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/static/fonts/glyphicons-halflings-regular.svg" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/static/fonts/glyphicons-halflings-regular.ttf" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/static/fonts/glyphicons-halflings-regular.woff" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/img/switch.png" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/images/switch.png" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/jquery.multi-select.js" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/static/js/jquery.multi-select.js" charset="windows-1252" />
   </component>
 </project>

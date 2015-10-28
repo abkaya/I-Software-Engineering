@@ -19,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
+import javax.servlet.Filter;
 import java.util.Locale;
 
 @SpringBootApplication
@@ -95,9 +97,10 @@ public class IdTestManagerApplication extends WebMvcConfigurerAdapter{
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().antMatchers("/login").permitAll().anyRequest()
-                    .fullyAuthenticated().and()
-                    .authorizeRequests().antMatchers("/console/**").permitAll().and().formLogin().loginPage("/login")
+            http.authorizeRequests().antMatchers("/login").permitAll()
+                    .and().authorizeRequests().antMatchers("/console/**").permitAll()
+                    .and().authorizeRequests().antMatchers("/webjars/**").permitAll().anyRequest().fullyAuthenticated()
+                    .and().formLogin().loginPage("/login")
                     .failureUrl("/login?error").and().logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
                     .exceptionHandling().accessDeniedPage("/access?error");

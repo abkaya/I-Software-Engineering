@@ -3,18 +3,33 @@
 <!-- Import header -->
 <head th:replace="layout :: head (title='Role management')"></head>
 
-<body onload="$('#permissions').multiSelect()">
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage(){
+//        $('#permissions').multiSelect({});
+        $('#permissions').multiSelect({
+            selectableHeader: '<div class="custom-header" th:text="#{selectable.items}">Selectable items</div>',
+            selectionHeader: '<div class="custom-header" th:text="#{selected.items}">Selected items</div>'
+        });
+    }
 
+</script>
 <div class="container">
 
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
-    <form action="#" th:action="@{/users/add}" th:object="${role}" method="post">
-        <select th:field="*{permissions}" multiple="multiple">
-            <option th:each="permission : ${allPermissions}"
-                    th:value="${{permission}}"
-                    th:text="${permission.name}">Wireframe</option>
-        </select>
+    <form action="#" th:action="@{/roles}" th:object="${role}" method="post">
+        <input th:type="hidden" th:field="*{id}"/>
+        <p> <label th:text="#{name}">Name</label><input type="text" th:field="*{name}" /></p>
+        <p> <label th:text="#{permissions}">Permissions</label>
+            <select th:field="*{permissions}" multiple="multiple">
+                <option th:each="permission : ${allPermissions}"
+                        th:value="${{permission}}"
+                        th:text="${permission.name}">Wireframe</option>
+            </select>
+        </p>
+        <p><button type="submit" th:text="#{save}"
+                   class="btn btn-primary">Save</button></p>
     </form>
 </div>
 </body>

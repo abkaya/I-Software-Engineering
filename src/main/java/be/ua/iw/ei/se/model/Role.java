@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Edwin on 6/10/2015.
  */
 @Entity
-public class Role extends AbstractPersistable<Long> {
+public class Role extends MyAbstractPersistable<Long> {
     private String name;
     @ManyToMany
     @JoinTable(

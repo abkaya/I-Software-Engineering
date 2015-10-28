@@ -34,10 +34,13 @@ public class DatabaseLoader {
 
     @PostConstruct
     private void initDatabase() {
+        String[] allPermissions = {"user-view","user-create","user-edit","user-delete",
+                "role-view","role-create","role-edit","role-delete"};
+        for (String p : allPermissions){
+            permissionRepository.save(new Permission(p));
+        }
         Permission p1 = new Permission("logon");
         permissionRepository.save(p1);
-        Permission p2 = new Permission("secret-message");
-        permissionRepository.save(p2);
         Role administrator = new Role("Administrator");
         Role tester = new Role("Tester");
         List<Permission> permissions =  new ArrayList<Permission>();
@@ -45,16 +48,17 @@ public class DatabaseLoader {
         tester.setPermissions(permissions);
         roleRepository.save(tester);
         permissions =  new ArrayList<Permission>();
-        permissions.add(p1);
-        permissions.add(p2);
+        for (Permission p : permissionRepository.findAll()){
+            permissions.add(p);
+        }
         administrator.setPermissions(permissions);
         roleRepository.save(administrator);
-        User u1 = new User("Edwin","Walsh");
+        User u1 = new User("admin","admin");
         List<Role> roles = new ArrayList<>();
         roles.add(administrator);
         u1.setRoles(roles);
         userRepository.save(u1);
-        User u2 = new User("Filip","Van der Schueren");
+        User u2 = new User("user","user");
         roles = new ArrayList<>();
         roles.add(tester);
         u2.setRoles(roles);

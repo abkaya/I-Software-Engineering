@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 /**
  * Created by Edwin on 27/10/2015.
@@ -40,23 +43,21 @@ public class RoleController {
         return "roles-manage";
     }
 
-    @RequestMapping(value="/roles", method= RequestMethod.POST)
-    public String addRole(@ModelAttribute(value="role") Role role, BindingResult result, final ModelMap model){
+    @RequestMapping(value={"/roles/", "/roles/{id}"}, method= RequestMethod.POST)
+    public String addRole(@Valid Role role, BindingResult result, final ModelMap model){
         if(result.hasErrors()){
-            if (role.getId()!=null)
-                return "/roles/"+role.getId();
-            else
-                return "/roles/put";
+            model.addAttribute("allPermissions", permissionRepository.findAll());
+            return "roles-manage";
         }
         roleRepository.save(role);
-        model.clear();
         return "redirect:/roles";
     }
 
 
     @RequestMapping(value="/roles/{id}/delete")
-    public String deleteRole(){
-
+    public String deleteRole(@PathVariable Long id, final ModelMap model){
+        roleRepository.delete(id);
+        model.clear();
         return "redirect:/roles";
     }
 

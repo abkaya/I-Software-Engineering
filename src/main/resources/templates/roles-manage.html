@@ -18,9 +18,13 @@
 
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
-    <form action="#" th:action="@{/roles}" th:object="${role}" method="post">
+    <form action="#" th:action="@{/roles/{id}(id=${role})}" th:object="${role}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
-        <p> <label th:text="#{name}">Name</label><input type="text" th:field="*{name}" /></p>
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
+            <label class="control-label" th:text="#{name}">Name</label>
+            <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+            <input class="form-control" type="text" th:field="*{name}" />
+        </div>
         <p> <label th:text="#{permissions}">Permissions</label>
             <select th:field="*{permissions}" multiple="multiple">
                 <option th:each="permission : ${allPermissions}"
@@ -28,8 +32,10 @@
                         th:text="${permission.name}">Wireframe</option>
             </select>
         </p>
-        <p><button type="submit" th:text="#{save}"
-                   class="btn btn-primary">Save</button></p>
+        <p>
+            <a href="/roles" th:text="#{close}" class="btn btn-primary">Close</a>
+            <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
+        </p>
     </form>
 </div>
 </body>

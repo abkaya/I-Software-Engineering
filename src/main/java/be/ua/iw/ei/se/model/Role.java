@@ -1,11 +1,7 @@
 package be.ua.iw.ei.se.model;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -13,6 +9,7 @@ import java.util.List;
  */
 @Entity
 public class Role extends MyAbstractPersistable<Long> {
+    @Size(min=2, max=60)
     private String name;
     @ManyToMany
     @JoinTable(
@@ -20,6 +17,9 @@ public class Role extends MyAbstractPersistable<Long> {
             joinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="PERM_ID", referencedColumnName="ID")})
     private List<Permission> permissions;
+
+    @ManyToMany(mappedBy="roles")
+    private List<User> users;
 
     public Role() {
     }
@@ -44,6 +44,7 @@ public class Role extends MyAbstractPersistable<Long> {
         this.permissions = permissions;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,5 +59,12 @@ public class Role extends MyAbstractPersistable<Long> {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @PreRemove
+    private void removeRolesFromUsers() {
+        for (User u : users) {
+            u.getRoles().remove(this);
+        }
     }
 }

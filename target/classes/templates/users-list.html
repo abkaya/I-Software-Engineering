@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#{user.management}')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage(){
+        var options = {
+            valueNames: [ 'userName']
+        };
+
+        var userList = new List('user-list', options);
+    }
+
+</script>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="content">
+
+        <div id="user-list">
+            <input class="search" placeholder="Search" />
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{name}">Name</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <!-- IMPORTANT, class="list" have to be at tbody -->
+                <tbody class="list">
+                <tr th:each="user : ${allUsers}">
+                    <td class="userName" th:value="${user}" th:text="${user.userName}">Username</td>
+                    <td>
+                        <a th:href="@{/users/{id}/(id=${user.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                        <a th:href="@{/users/{id}/delete(id=${user.id})}"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <a href="/users/put" class="btn btn-primary" th:text="#{create.user}">Create user</a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

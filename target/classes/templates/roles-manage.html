@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='Role management')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage(){
+//        $('#permissions').multiSelect({});
+        $('#permissions').multiSelect({
+            selectableHeader: '<div class="custom-header" th:text="#{selectable.items}">Selectable items</div>',
+            selectionHeader: '<div class="custom-header" th:text="#{selected.items}">Selected items</div>'
+        });
+    }
+
+</script>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+    <form action="#" th:action="@{/roles/{id}(id=${role})}" th:object="${role}" method="post">
+        <input th:type="hidden" th:field="*{id}"/>
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
+            <label class="control-label" th:text="#{name}">Name</label>
+            <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+            <input class="form-control" type="text" th:field="*{name}" />
+        </div>
+        <p> <label th:text="#{permissions}">Permissions</label>
+            <select th:field="*{permissions}" multiple="multiple">
+                <option th:each="permission : ${allPermissions}"
+                        th:value="${{permission}}"
+                        th:text="${permission.name}">Wireframe</option>
+            </select>
+        </p>
+        <p>
+            <a href="/roles" th:text="#{close}" class="btn btn-primary">Close</a>
+            <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
+        </p>
+    </form>
+</div>
+</body>
+</html>

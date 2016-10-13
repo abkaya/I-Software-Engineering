@@ -1,28 +1,41 @@
 package be.uantwerpen.fti.se.controller;
 
 import be.uantwerpen.fti.se.service.UserService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = HomeController.class, secure = false)
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+@RunWith(MockitoJUnitRunner.class)
 public class HomeControllerTests {
 
-    @Autowired
-    private MockMvc mvc;
+    @InjectMocks
+    private HomeController homeController;
 
-    @MockBean
+    @Mock
     private UserService userService;
 
+    private MockMvc mvc;
+    @Before
+    public void setup()
+    {
+
+        MockitoAnnotations.initMocks(this);
+
+        mvc = MockMvcBuilders.standaloneSetup(homeController).build();
+    }
 
     @Test
     public void viewHomepageTest() throws Exception {
-//        mvc.perform(get("/home"))
-//               .andExpect(view().name("homepage"));
+        mvc.perform(get("/home"))
+               .andExpect(view().name("homepage"));
     }
 }

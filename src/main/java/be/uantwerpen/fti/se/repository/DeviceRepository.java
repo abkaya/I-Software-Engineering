@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by Quentin Van Ravels on 20-Oct-16.
  */
 public interface DeviceRepository extends CrudRepository<Device, Long> {
+    Device findByDeviceName(String deviceName);
 }

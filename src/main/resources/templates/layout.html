@@ -42,6 +42,7 @@
                         <li><a href="/">Home <span class="sr-only">(homepage)</span></a></li>
                         <li sec:authorize="hasAuthority('user-view')"><a href="/users" th:text="#{user.management}">User management <span class="sr-only">(user management)</span></a></li>
                         <li sec:authorize="hasAuthority('role-view')"><a href="/roles" th:text="#{role.management}">Role management <span class="sr-only">(role management)</span></a></li>
+                        <li><a href="/devices" th:text="#{device.management}">Device management <span class="sr-only">(device management)</span> </a></li>
                         <li><a href="/logout">Logout <span class="sr-only">(logout)</span></a></li>
                     </ul>
 

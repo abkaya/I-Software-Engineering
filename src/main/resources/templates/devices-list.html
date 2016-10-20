@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dit is een test voor GIT</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#{device.management}')"></head>
 
+<body>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="content">
+        <!--  Enter content here -->
+        <h1>Lijst van apparaten in aanbouw! - JH</h1>
+
+    </div>
+</div>
 </body>
 </html>

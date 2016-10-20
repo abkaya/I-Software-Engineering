@@ -14,6 +14,7 @@ import java.io.IOException;
 public class Device extends MyAbstractPersistable<Long> {
 
     private BufferedImage devImg = null;
+    private File devFile = null;
 
     public void addImage(String imageName){
 
@@ -24,5 +25,12 @@ public class Device extends MyAbstractPersistable<Long> {
     }
 
     public BufferedImage getImage(){return this.devImg;}
+
+    public void addFile(String fileName){
+
+        devFile = new File(fileName);
+    }
+
+    public File getFile(){return this.devFile;}
 
 }

@@ -12,7 +12,7 @@
 
     <span th:text="#{homepage.hello}"/> <br/>
 
-    <div sec:authorize="hasRole('secret-message')">
+    <div sec:authorize="hasAuthority('secret-message')">
         <span th:text="#{homepage.secret-message}"/>
     </div>
 

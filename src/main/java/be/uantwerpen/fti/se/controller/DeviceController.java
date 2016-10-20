@@ -1,6 +1,8 @@
 package be.uantwerpen.fti.se.controller;
 
 import be.uantwerpen.fti.se.model.Device;
+import be.uantwerpen.fti.se.repository.DeviceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -15,12 +17,12 @@ import javax.validation.Valid;
  */
 @Controller
 public class DeviceController {
-    // @Autowired
-    // private DeviceRepository deviceRepository
+    @Autowired
+    private DeviceRepository deviceRepository;
 
     @RequestMapping(value = "/devices", method = RequestMethod.GET)
     public String showDevices(final ModelMap model) {
-        //model.addAttribute("allDevices", deviceRepository.findAll());
+        model.addAttribute("allDevices", deviceRepository.findAll());
         return "devices-list";
     }
 
@@ -32,7 +34,7 @@ public class DeviceController {
 
     @RequestMapping(value = "/devices/{id}", method = RequestMethod.GET)
     public String viewEditUser(@PathVariable Long id, final ModelMap model)  {
-        //model.addAttribute("device",deviceRepository.findOne(id));
+        model.addAttribute("device",deviceRepository.findOne(id));
         return "devices-manage";
     }
 
@@ -41,13 +43,13 @@ public class DeviceController {
         if(result.hasErrors())  {
             return "devices-manage";
         }
-        //deviceRepository.save(device);
+        deviceRepository.save(device);
         return "redirect:/devices";
     }
 
     @RequestMapping(value = "/devices/{id}/delete")
     public String deleteDevice(@PathVariable Long id, final ModelMap model) {
-        //deviceRepository.delete(id);
+        deviceRepository.delete(id);
         model.clear();
         return "redirect:/devices";
     }

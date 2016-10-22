@@ -19,7 +19,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
     public TestSequence() {
         this.difficulty = 1;
         this.numberOfTargets = 11;
-        this.radiusSmall = 50;
+        this.radiusSmall = 33;
         this.radiusBig = 250;
         this.sequences = new ArrayList<ArrayList<Integer>>();
     }
@@ -33,8 +33,24 @@ public class TestSequence extends MyAbstractPersistable<Long>{
     public TestSequence(int difficulty, int numberOfTargets) {
         this.difficulty = difficulty;
         this.numberOfTargets = numberOfTargets;
-        this.radiusSmall = 50;
+        this.radiusSmall = 33;
         this.radiusBig = 250;
+        this.sequences = new ArrayList<ArrayList<Integer>>();
+    }
+
+    /**
+     * Constructor with parameters difficulty, numberOfTargets, radiusSmall and radiusBig
+     *
+     * @param difficulty:      choice the difficulty you want (1-10)
+     * @param numberOfTargets: choice the number of targets you want (11-25)
+     * @param radiusSmall:     choice the radius of the small circles
+     * @param radiusBig:       choice the radius of the big circle
+     */
+    public TestSequence(int difficulty, int numberOfTargets, int radiusSmall, int radiusBig){
+        this.difficulty = difficulty;
+        this.numberOfTargets = numberOfTargets;
+        this.radiusSmall = radiusSmall;
+        this.radiusBig = radiusBig;
         this.sequences = new ArrayList<ArrayList<Integer>>();
     }
 
@@ -70,10 +86,20 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         }
     }
 
+    /**
+     * Get the list of sequences
+     *
+     * @return the test sequences
+     */
     public ArrayList<ArrayList<Integer>> getSequences(){
         return sequences;
     }
 
+    /**
+     * set the test sequences
+     *
+     * @param sequences: the new sequences
+     */
     public void setSequences(ArrayList<ArrayList<Integer>> sequences){
         this.sequences = sequences;
     }

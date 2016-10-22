@@ -42,7 +42,7 @@ public class TestSequence {
         int initialradius = 55;
         if (difficulty > 10) {
             radiusSmall = 0;
-            return 0;
+            return 5;
         } else {
             radiusSmall = initialradius - (difficulty * 5);
             return initialradius - (difficulty * 5);
@@ -55,8 +55,14 @@ public class TestSequence {
      * @return the radius of the circle
      */
     public int determineRadiusBig() {
-        radiusBig = 250;
-        return radiusBig;
+        int initialradius = 270;
+        if (difficulty > 10) {
+            radiusBig = 600;
+            return 0;
+        } else {
+            radiusBig = initialradius + (difficulty * 30);
+            return initialradius + (difficulty * 30);
+        }
     }
 
     /**
@@ -141,7 +147,12 @@ public class TestSequence {
         return p;
     }
 
-    public void CreateSequence() {
+    /**
+     * Create a sequence of tests
+     *
+     * @return the middlepoint of the screen
+     */
+    public ArrayList<ArrayList<Integer>> CreateSequence() {
         ArrayList<ArrayList<Integer>> sequences = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> test = new ArrayList<Integer>();
         test.add(getDifficulty());
@@ -152,8 +163,9 @@ public class TestSequence {
         test.add(getDifficulty());
         test.add(numberOfTargets);
         test.add(determineRadiusSmall());
-        test.add(determineRadiusBig()); //300
+        test.add(determineRadiusBig());
         sequences.add(test);
+        return sequences;
     }
 
 }

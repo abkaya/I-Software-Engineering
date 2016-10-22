@@ -20,6 +20,8 @@ public class HomeController {
     @PreAuthorize("hasAuthority('logon')")
     public String showHomepage(final ModelMap model){
         model.addAttribute("user", new User());
+        //Set the navigation button Home Management to active
+        model.addAttribute("homeActiveSettings","active");
         return "homepage";
     }
 

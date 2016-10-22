@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- Import header -->
-<head th:replace="layout :: head (title='#{test.management}')"></head>
+<head th:replace="layout :: head (title='Test Management')"></head>
 
 <body onload="initPage()">
 <script type="text/javascript">
@@ -33,7 +33,7 @@
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
                 <tr th:each="testTemplate : ${allTestTemplates}">
-                    <td class="userName" th:value="${testTemplate}" th:text="${testTemplate.testTemplateName}">testTemplateName</td>
+                    <td class="name" th:value="${testTemplate}" th:text="${testTemplate.testTemplateName}">testTemplateName</td>
                     <td>
                         <a th:href="@{/testTemplates/{id}/(id=${testTemplate.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                         <a th:href="@{/testTemplates/{id}/delete(id=${testTemplate.id})}"><span class="glyphicon glyphicon-trash"></span></a>

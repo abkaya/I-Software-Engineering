@@ -26,18 +26,24 @@ public class UserController {
     @RequestMapping(value="/users", method= RequestMethod.GET)
     public String showUsers(final ModelMap model){
         model.addAttribute("allUsers", userRepository.findAll());
+        //Set the navigation button User Management to active
+        model.addAttribute("usersActiveSettings","active");
         return "users-list";
     }
     @RequestMapping(value="/users/put", method= RequestMethod.GET)
     public String viewCreateUser(final ModelMap model){
         model.addAttribute("allRoles", roleRepository.findAll());
         model.addAttribute("user",new User("",""));
+        //Set the navigation button User Management to active
+        model.addAttribute("usersActiveSettings","active");
         return "users-manage";
     }
     @RequestMapping(value="/users/{id}", method= RequestMethod.GET)
     public String viewEditUser(@PathVariable Long id, final ModelMap model){
         model.addAttribute("allRoles", roleRepository.findAll());
         model.addAttribute("user",userRepository.findOne(id));
+        //Set the navigation button User Management to active
+        model.addAttribute("usersActiveSettings","active");
         return "users-manage";
     }
 
@@ -45,6 +51,8 @@ public class UserController {
     public String addUser(@Valid User user, BindingResult result, final ModelMap model){
         if(result.hasErrors()){
             model.addAttribute("allRoles", roleRepository.findAll());
+            //Set the navigation button User Management to active
+            model.addAttribute("usersActiveSettings","active");
             return "users-manage";
         }
         userRepository.save(user);
@@ -56,6 +64,8 @@ public class UserController {
     public String deleteUser(@PathVariable Long id, final ModelMap model){
         userRepository.delete(id);
         model.clear();
+        //Set the navigation button User Management to active
+        model.addAttribute("usersActiveSettings","active");
         return "redirect:/users";
     }
 

@@ -26,18 +26,24 @@ public class RoleController {
     @RequestMapping(value="/roles", method= RequestMethod.GET)
     public String showRoles(final ModelMap model){
         model.addAttribute("allRoles", roleRepository.findAll());
+        //Set the navigation button Role Management to active
+        model.addAttribute("rolesActiveSettings","active");
         return "roles-list";
     }
     @RequestMapping(value="/roles/put", method= RequestMethod.GET)
     public String viewCreateRole(final ModelMap model){
         model.addAttribute("allPermissions", permissionRepository.findAll());
         model.addAttribute("role",new Role(""));
+        //Set the navigation button Role Management to active
+        model.addAttribute("rolesActiveSettings","active");
         return "roles-manage";
     }
     @RequestMapping(value="/roles/{id}", method= RequestMethod.GET)
     public String viewEditRole(@PathVariable Long id, final ModelMap model){
         model.addAttribute("allPermissions", permissionRepository.findAll());
         model.addAttribute("role",roleRepository.findOne(id));
+        //Set the navigation button Role Management to active
+        model.addAttribute("rolesActiveSettings","active");
         return "roles-manage";
     }
 
@@ -48,6 +54,8 @@ public class RoleController {
             return "roles-manage";
         }
         roleRepository.save(role);
+        //Set the navigation button Role Management to active
+        model.addAttribute("rolesActiveSettings","active");
         return "redirect:/roles";
     }
 
@@ -56,6 +64,8 @@ public class RoleController {
     public String deleteRole(@PathVariable Long id, final ModelMap model){
         roleRepository.delete(id);
         model.clear();
+        //Set the navigation button Role Management to active
+        model.addAttribute("rolesActiveSettings","active");
         return "redirect:/roles";
     }
 

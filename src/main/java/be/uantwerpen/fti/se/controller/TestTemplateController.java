@@ -19,6 +19,8 @@ public class TestTemplateController {
     @RequestMapping(value="/tests", method = RequestMethod.GET)
     public String showTestTemplates(final ModelMap model){
         model.addAttribute("allTestTemplates", testTemplateRepository.findAll());
+        //Set the navigation button Test Management to active
+        model.addAttribute("testsActiveSettings","active");
         return "testTemplates-list";
     }
 }

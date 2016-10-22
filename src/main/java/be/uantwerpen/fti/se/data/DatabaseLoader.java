@@ -69,6 +69,7 @@ public class DatabaseLoader {
         userRepository.save(u2);
         TestSequence sequence = new TestSequence(2,11);
         ArrayList<ArrayList<Integer>> firsttest = sequence.CreateSequence();
+        sequence.setSequences(firsttest);
         testSequenceRepository.save(sequence);
 
     }

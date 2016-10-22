@@ -13,6 +13,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
     private int numberOfTargets;
     private int radiusSmall;
     private int radiusBig;
+    ArrayList<ArrayList<Integer>> sequences;
 
     //When you use the default constructor, you get the easiest difficulty
     public TestSequence() {
@@ -20,6 +21,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         this.numberOfTargets = 11;
         this.radiusSmall = 50;
         this.radiusBig = 250;
+        this.sequences = new ArrayList<ArrayList<Integer>>();
     }
 
     /**
@@ -33,6 +35,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         this.numberOfTargets = numberOfTargets;
         this.radiusSmall = 50;
         this.radiusBig = 250;
+        this.sequences = new ArrayList<ArrayList<Integer>>();
     }
 
     /**
@@ -65,6 +68,14 @@ public class TestSequence extends MyAbstractPersistable<Long>{
             radiusBig = initialradius + (difficulty * 30);
             return initialradius + (difficulty * 30);
         }
+    }
+
+    public ArrayList<ArrayList<Integer>> getSequences(){
+        return sequences;
+    }
+
+    public void setSequences(ArrayList<ArrayList<Integer>> sequences){
+        this.sequences = sequences;
     }
 
     /**
@@ -155,7 +166,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      * @return sequence of tests
      */
     public ArrayList<ArrayList<Integer>> CreateSequence() {
-        ArrayList<ArrayList<Integer>> sequences = new ArrayList<ArrayList<Integer>>();
+        sequences = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> test = new ArrayList<Integer>();
         test.add(getDifficulty());
         test.add(numberOfTargets);

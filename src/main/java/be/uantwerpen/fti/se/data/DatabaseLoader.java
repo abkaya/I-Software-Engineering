@@ -2,9 +2,11 @@ package be.uantwerpen.fti.se.data;
 
 import be.uantwerpen.fti.se.model.Permission;
 import be.uantwerpen.fti.se.model.Role;
+import be.uantwerpen.fti.se.model.TestSequence;
 import be.uantwerpen.fti.se.model.User;
 import be.uantwerpen.fti.se.repository.PermissionRepository;
 import be.uantwerpen.fti.se.repository.RoleRepository;
+import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import be.uantwerpen.fti.se.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -24,12 +26,14 @@ public class DatabaseLoader {
     private final PermissionRepository permissionRepository;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final TestSequenceRepository testSequenceRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestSequenceRepository testSequenceRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.testSequenceRepository = testSequenceRepository;
     }
 
     @PostConstruct
@@ -63,6 +67,9 @@ public class DatabaseLoader {
         roles.add(tester);
         u2.setRoles(roles);
         userRepository.save(u2);
+        TestSequence sequence = new TestSequence(2,11);
+        ArrayList<ArrayList<Integer>> firsttest = sequence.CreateSequence();
+        testSequenceRepository.save(sequence);
 
     }
 }

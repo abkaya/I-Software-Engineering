@@ -1,12 +1,14 @@
 package be.uantwerpen.fti.se.model;
 
+import javax.persistence.Entity;
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * Created by Kevin on 20/10/2016.
  */
-public class TestSequence {
+@Entity
+public class TestSequence extends MyAbstractPersistable<Long>{
     private int difficulty;
     private int numberOfTargets;
     private int radiusSmall;
@@ -150,7 +152,7 @@ public class TestSequence {
     /**
      * Create a sequence of tests
      *
-     * @return the middlepoint of the screen
+     * @return sequence of tests
      */
     public ArrayList<ArrayList<Integer>> CreateSequence() {
         ArrayList<ArrayList<Integer>> sequences = new ArrayList<ArrayList<Integer>>();
@@ -167,5 +169,4 @@ public class TestSequence {
         sequences.add(test);
         return sequences;
     }
-
 }

@@ -44,13 +44,13 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      * @return the radius of the targets
      */
     public int determineRadiusSmall() {
-        int initialradius = 55;
+        int initialradius = 36;
         if (difficulty > 10) {
-            radiusSmall = 0;
-            return 5;
+            radiusSmall = 3;
+            return 3;
         } else {
-            radiusSmall = initialradius - (difficulty * 5);
-            return initialradius - (difficulty * 5);
+            radiusSmall = initialradius - (difficulty * 3);
+            return initialradius - (difficulty * 3);
         }
     }
 
@@ -60,13 +60,13 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      * @return the radius of the circle
      */
     public int determineRadiusBig() {
-        int initialradius = 270;
+        int initialradius = 135;
         if (difficulty > 10) {
-            radiusBig = 600;
+            radiusBig = 300;
             return 0;
         } else {
-            radiusBig = initialradius + (difficulty * 30);
-            return initialradius + (difficulty * 30);
+            radiusBig = initialradius + (difficulty * 15);
+            return initialradius + (difficulty * 15);
         }
     }
 
@@ -173,5 +173,23 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         test.add(determineRadiusBig());
         sequences.add(test);
         return sequences;
+    }
+
+    /**
+     * Add a sequence to the list of test sequences
+     *
+     * @parameter sequence: the sequence we want to add
+     */
+    public void AddSequence(ArrayList<Integer> sequence){
+        this.sequences.add(sequence);
+    }
+
+    /**
+     * Delete a sequence
+     *
+     * @param index: gives the place of the sequence we want to remove
+     */
+    public void RemoveSequence(int index){
+        sequences.remove(index);
     }
 }

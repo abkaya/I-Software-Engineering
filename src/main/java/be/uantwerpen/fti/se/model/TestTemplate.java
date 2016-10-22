@@ -1,5 +1,7 @@
 package be.uantwerpen.fti.se.model;
 
+import org.aspectj.weaver.ast.Test;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,8 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
         this.testTemplateDescription = templateDescription;
         this.numberOfTestSequences = numberOfTestSequences;
     }
+
+    public TestTemplate(){};
 
     /*
     public TestTemplate(String templateName, String templateDescription, int numberOfTestSequences, List<TestSequence> testSequences) {

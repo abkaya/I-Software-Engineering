@@ -161,18 +161,12 @@ public class TestSequence extends MyAbstractPersistable<Long>{
     }
 
     /**
-     * Create a sequence of tests
+     * Create a sequence
      *
-     * @return sequence of tests
+     * @return sequence
      */
     public ArrayList<ArrayList<Integer>> CreateSequence() {
-        sequences = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> test = new ArrayList<Integer>();
-        test.add(getDifficulty());
-        test.add(numberOfTargets);
-        test.add(determineRadiusSmall());
-        test.add(determineRadiusBig());
-        sequences.add(test);
         test.add(getDifficulty());
         test.add(numberOfTargets);
         test.add(determineRadiusSmall());

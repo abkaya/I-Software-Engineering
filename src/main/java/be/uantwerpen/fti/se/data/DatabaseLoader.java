@@ -38,39 +38,38 @@ public class DatabaseLoader {
 
     @PostConstruct
     private void initDatabase() {
-        String[] allPermissions = {"user-view","user-create","user-edit","user-delete",
-                "role-view","role-create","role-edit","role-delete"};
-        for (String p : allPermissions){
+        String[] allPermissions = {"user-view", "user-create", "user-edit", "user-delete",
+                "role-view", "role-create", "role-edit", "role-delete"};
+        for (String p : allPermissions) {
             permissionRepository.save(new Permission(p));
         }
         Permission p1 = new Permission("logon");
         permissionRepository.save(p1);
         Role administrator = new Role("Administrator");
         Role tester = new Role("Tester");
-        List<Permission> permissions =  new ArrayList<Permission>();
+        List<Permission> permissions = new ArrayList<Permission>();
         permissions.add(p1);
         tester.setPermissions(permissions);
         roleRepository.save(tester);
-        permissions =  new ArrayList<Permission>();
-        for (Permission p : permissionRepository.findAll()){
+        permissions = new ArrayList<Permission>();
+        for (Permission p : permissionRepository.findAll()) {
             permissions.add(p);
         }
         administrator.setPermissions(permissions);
         roleRepository.save(administrator);
-        User u1 = new User("admin","admin");
+        User u1 = new User("admin", "admin");
         List<Role> roles = new ArrayList<>();
         roles.add(administrator);
         u1.setRoles(roles);
         userRepository.save(u1);
-        User u2 = new User("user","user");
+        User u2 = new User("user", "user");
         roles = new ArrayList<>();
         roles.add(tester);
         u2.setRoles(roles);
         userRepository.save(u2);
-        TestSequence sequence = new TestSequence(2,11);
+        TestSequence sequence = new TestSequence(2, 11);
         ArrayList<ArrayList<Integer>> firsttest = sequence.CreateSequence();
         sequence.setSequences(firsttest);
         testSequenceRepository.save(sequence);
-
     }
 }

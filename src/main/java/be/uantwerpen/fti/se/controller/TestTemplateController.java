@@ -2,6 +2,7 @@ package be.uantwerpen.fti.se.controller;
 
 import be.uantwerpen.fti.se.model.TestTemplate;
 import be.uantwerpen.fti.se.repository.TestTemplateRepository;
+import be.uantwerpen.fti.se.service.TestTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +20,8 @@ import javax.validation.Valid;
 public class TestTemplateController {
     @Autowired
     private TestTemplateRepository testTemplateRepository;
+    @Autowired
+    private TestTemplateService testTemplateService;
 
     @RequestMapping(value="/tests", method = RequestMethod.GET)
     public String showTestTemplates(final ModelMap model){
@@ -41,6 +44,13 @@ public class TestTemplateController {
         //Yet to be done: load all sequences from the testSequenceRepository
         //model.addAttribute("allTestSequences", testSequenceRepository.findAll());
         model.addAttribute("testTemplate",testTemplateRepository.findOne(id));
+
+        /*
+        //used to check whether or not the partial edits caused other attributes to turn to null - now fixed
+        for(int i=0;i<50;i++) {
+            System.out.println(testTemplateRepository.findOne(id).getTemplateDescription());
+        }*/
+
         //Set the navigation button Test Management to active
         model.addAttribute("testsActiveSettings","active");
         return "testTemplates-manage";
@@ -53,7 +63,7 @@ public class TestTemplateController {
             //model.addAttribute("allTestSequences", testSequenceRepository.findAll());
             return "testTemplates-manage";
         }
-        testTemplateRepository.save(testTemplate);
+        testTemplateService.saveSomeAttributes(testTemplate);
         //Set the navigation button Test Management to active
         model.addAttribute("testsActiveSettings","active");
         return "redirect:/tests";

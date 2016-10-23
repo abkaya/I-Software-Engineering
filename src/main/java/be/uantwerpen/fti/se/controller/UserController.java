@@ -3,6 +3,7 @@ package be.uantwerpen.fti.se.controller;
 import be.uantwerpen.fti.se.model.User;
 import be.uantwerpen.fti.se.repository.RoleRepository;
 import be.uantwerpen.fti.se.repository.UserRepository;
+import be.uantwerpen.fti.se.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,6 +19,8 @@ import javax.validation.Valid;
  */
 @Controller
 public class UserController {
+    @Autowired
+    private UserService userService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -55,7 +58,7 @@ public class UserController {
             model.addAttribute("usersActiveSettings","active");
             return "users-manage";
         }
-        userRepository.save(user);
+        userService.saveSomeAttributes(user);
         return "redirect:/users";
     }
 

@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface TestTemplateRepository extends CrudRepository<TestTemplate, Long> {
     TestTemplate findByName(String name);
+    TestTemplate findOne(Long id);
 }

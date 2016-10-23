@@ -21,6 +21,5 @@ public class DeviceService {
         }
     }
 
-
     public Device findByDeviceName(String deviceName){return deviceRepository.findByDeviceName(deviceName);}
 }

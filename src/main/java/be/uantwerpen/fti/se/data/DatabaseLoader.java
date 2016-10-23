@@ -85,7 +85,8 @@ public class DatabaseLoader {
         userRepository.save(u2);
 
         //test creating a template and adding it to the repo
-        TestTemplate t1 = new TestTemplate("Template_0x01", "This is the very first test template with no use whatsoever. Ignore it.", 0);
+        TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", 0);
         testTemplateRepository.save(t1);
+
     }
 }

@@ -17,5 +17,5 @@ public class TestTemplateService {
     public void add(final TestTemplate testTemplate) {this.testTemplateRepository.save(testTemplate);}
     public void delete(Long id){this.testTemplateRepository.delete(id);}
 
-    public TestTemplate findByTestTemplateName(String testTemplateName) {return testTemplateRepository.findByTestTemplateName(testTemplateName);}
+    public TestTemplate findByTestTemplateName(String name) {return testTemplateRepository.findByName(name);}
 }

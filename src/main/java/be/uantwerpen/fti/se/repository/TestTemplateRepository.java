@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by abdil on 22/10/2016.
  */
 public interface TestTemplateRepository extends CrudRepository<TestTemplate, Long> {
-    TestTemplate findByTestTemplateName(String testTemplateName);
+    TestTemplate findByName(String name);
 }

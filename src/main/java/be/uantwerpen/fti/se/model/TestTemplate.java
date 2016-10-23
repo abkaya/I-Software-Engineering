@@ -1,19 +1,17 @@
 package be.uantwerpen.fti.se.model;
 
-import org.aspectj.weaver.ast.Test;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by abdil on 20/10/2016.
  */
+
+
 @Entity
 public class TestTemplate extends MyAbstractPersistable<Long>{
-    private String testTemplateName;
-    private String testTemplateDescription;
-    private int numberOfTestSequences;
+    private String name;
+    private String description;
+    private int seqCount;
 
     /*
     @OneToMany
@@ -24,43 +22,50 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     private List<TestSequence> testSequences;
     */
 
-    public String getTestTemplateName() {
-        return testTemplateName;
+    public String getName() {
+        return name;
     }
 
-    public void setTestTemplateName(String templateName) {
-        this.testTemplateName = templateName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTemplateDescription() {
-        return testTemplateDescription;
+        return description;
     }
 
-    public void setTemplateDescription(String templateDescription) {
-        this.testTemplateDescription = templateDescription;
+    public void setTemplateDescription(String description) {
+        this.description = description;
     }
 
-    public int getNumberOfTestSequences() {
-        return numberOfTestSequences;
+    public int getSeqCount() {
+        return seqCount;
     }
 
-    public void setNumberOfTestSequences(int numberOfTestSequences) {
-        this.numberOfTestSequences = numberOfTestSequences;
+    public void setSeqCount(int seqCount) {
+        this.seqCount = seqCount;
     }
 
-    public TestTemplate(String templateName, String templateDescription, int numberOfTestSequences) {
-        this.testTemplateName = templateName;
-        this.testTemplateDescription = templateDescription;
-        this.numberOfTestSequences = numberOfTestSequences;
+    /**
+     * Class constructor specifying parameters
+     *
+     * @param name          The template's name
+     * @param description   Template description by admin
+     * @param seqCount      Number of tests in this template
+     */
+    public TestTemplate(String name, String description, int seqCount) {
+        this.name = name;
+        this.description = description;
+        this.seqCount = seqCount;
     }
 
     public TestTemplate(){};
 
     /*
-    public TestTemplate(String templateName, String templateDescription, int numberOfTestSequences, List<TestSequence> testSequences) {
+    public TestTemplate(String templateName, String templateDescription, int seqCount, List<TestSequence> testSequences) {
         this.templateName = templateName;
         this.templateDescription = templateDescription;
-        this.numberOfTestSequences = numberOfTestSequences;
+        this.seqCount = seqCount;
         this.testSequences = testSequences;
     }*/
 
@@ -73,12 +78,12 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
         User user = (User) o;
         TestTemplate template = (TestTemplate) o;
 
-        return testTemplateName.equals(template.testTemplateName);
+        return name.equals(template.name);
     }
 
     @Override
     public int hashCode() {
-        return testTemplateName.hashCode();
+        return name.hashCode();
     }
 
 }

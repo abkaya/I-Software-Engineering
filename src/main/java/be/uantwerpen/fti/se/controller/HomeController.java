@@ -24,6 +24,4 @@ public class HomeController {
         model.addAttribute("homeActiveSettings","active");
         return "homepage";
     }
-
-
 }

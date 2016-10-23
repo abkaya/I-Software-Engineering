@@ -12,7 +12,15 @@ public class DeviceService {
     private DeviceRepository deviceRepository;
     public Iterable<Device> findAll() {return this.deviceRepository.findAll();}
     public void add(final Device device){ this.deviceRepository.save(device);}
-    public void delete(Long id){ this.deviceRepository.delete(id);}
+    public void delete(Long id) {
+        Device device = this.deviceRepository.findOne(id);
+        if (device.isUsed()) {
+            device.setDisabled(true);
+        } else {
+            this.deviceRepository.delete(id);
+        }
+    }
+
 
     public Device findByDeviceName(String deviceName){return deviceRepository.findByDeviceName(deviceName);}
 }

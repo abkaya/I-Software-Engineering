@@ -13,9 +13,13 @@ public class Device extends MyAbstractPersistable<Long> {
     private String deviceClass;
     private String manufacturer;
     private String driver;
+    private boolean used;
+    private boolean disabled;
 
     public Device(){
 
+        used = false;
+        disabled = false;
     }
 
     public Device(String deviceName, String type, String deviceClass, String manufacturer, String driver){
@@ -24,6 +28,9 @@ public class Device extends MyAbstractPersistable<Long> {
         this.deviceClass = deviceClass;
         this.manufacturer = manufacturer;
         this.driver = driver;
+
+        used = false;
+        disabled = false;
     }
 
     public String getDeviceName() {
@@ -64,6 +71,22 @@ public class Device extends MyAbstractPersistable<Long> {
 
     public void setDriver(String driver) {
         this.driver = driver;
+    }
+
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 
     @Override

@@ -16,7 +16,9 @@
     <!--<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />-->
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>-->
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>-->
-
+    <!--Bootstrap used for the dropdown menu-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script >
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
 
     <link rel="stylesheet" type="text/css" href="/css/multiselect.css" />
     <script type="text/javascript" src="/js/list.min.js"></script>
@@ -25,7 +27,7 @@
 
 
     <div th:fragment="navbar">
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default" role = "navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -49,8 +51,20 @@
                         <li sec:authorize="hasAuthority('role-view')" role="presentation" th:class="${rolesActiveSettings}">
                             <a href="/roles" th:text="#{role.management}">Role management <span class="sr-only">(role management)</span></a>
                         </li>
-                        <li sec:authorize="hasAuthority('test-view')" role="presentation" th:class="${testsActiveSettings}">
-                            <a href="/tests" th:text="#{test.management}">Test management <span class="sr-only">(test management)</span></a>
+
+                        <!-- DROPDOWN FOR TEST MANAGEMENT-->
+                        <li sec:authorize="hasAuthority('test-view')" role="presentation" th:class="${testsActiveSettings}" class = "dropdown">
+                            <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
+                                Test Management
+                                <b class="caret"></b>
+                            </a>
+
+                            <ul class = "dropdown-menu">
+                                <li><a href = "/tests">Test Templates</a></li>
+                                <li><a href = "#">Test Sequences</a></li>
+                                <li class = "divider"></li>
+                                <li><a href = "#">Assign Test Template</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a href="/logout">Logout <span class="sr-only">(logout)</span></a>

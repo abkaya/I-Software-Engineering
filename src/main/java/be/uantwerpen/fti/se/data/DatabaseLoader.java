@@ -1,8 +1,10 @@
 package be.uantwerpen.fti.se.data;
 
+import be.uantwerpen.fti.se.model.Device;
 import be.uantwerpen.fti.se.model.Permission;
 import be.uantwerpen.fti.se.model.Role;
 import be.uantwerpen.fti.se.model.User;
+import be.uantwerpen.fti.se.repository.DeviceRepository;
 import be.uantwerpen.fti.se.repository.PermissionRepository;
 import be.uantwerpen.fti.se.repository.RoleRepository;
 import be.uantwerpen.fti.se.repository.UserRepository;
@@ -24,12 +26,14 @@ public class DatabaseLoader {
     private final PermissionRepository permissionRepository;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final DeviceRepository deviceRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, DeviceRepository deviceRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.deviceRepository = deviceRepository;
     }
 
     @PostConstruct
@@ -63,6 +67,10 @@ public class DatabaseLoader {
         roles.add(tester);
         u2.setRoles(roles);
         userRepository.save(u2);
+        Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver");
+        Device d2 = new Device("aDevice2", "aType2", "aClass2", "aManufacturer2", "aDriver2");
+        deviceRepository.save(d1);
+        deviceRepository.save(d2);
 
     }
 }

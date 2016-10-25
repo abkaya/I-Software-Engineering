@@ -3,10 +3,12 @@ package be.uantwerpen.fti.se.service;
 import be.uantwerpen.fti.se.model.Device;
 import be.uantwerpen.fti.se.repository.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Quentin Van Ravels on 20-Oct-16.
  */
+@Service
 public class DeviceService {
     @Autowired
     private DeviceRepository deviceRepository;
@@ -20,6 +22,7 @@ public class DeviceService {
             this.deviceRepository.delete(id);
         }
     }
+
 
     public Device findByDeviceName(String deviceName){return deviceRepository.findByDeviceName(deviceName);}
 }

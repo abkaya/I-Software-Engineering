@@ -20,6 +20,7 @@ import javax.validation.Valid;
 public class DeviceController {
     @Autowired
     private DeviceRepository deviceRepository;
+    @Autowired
     private DeviceService deviceService;
 
     @RequestMapping(value = "/devices", method = RequestMethod.GET)

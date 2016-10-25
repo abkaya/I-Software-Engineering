@@ -27,7 +27,9 @@ public class TestTemplateService {
         if (tempTestTemplate != null){
             //html page still needs to support the editing of multiple attributes
             //tempTestTemplate.setTemplateDescription(testTemplate.getTemplateDescription());
+            tempTestTemplate.setDescription(testTemplate.getDescription());
             tempTestTemplate.setName(testTemplate.getName());
+            tempTestTemplate.setSeqCount(testTemplate.getSeqCount());
             testTemplateRepository.save(tempTestTemplate);
         }
         else{

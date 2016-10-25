@@ -30,11 +30,11 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
         this.name = name;
     }
 
-    public String getTemplateDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setTemplateDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

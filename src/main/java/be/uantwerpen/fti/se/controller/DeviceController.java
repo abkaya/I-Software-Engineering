@@ -2,6 +2,7 @@ package be.uantwerpen.fti.se.controller;
 
 import be.uantwerpen.fti.se.model.Device;
 import be.uantwerpen.fti.se.repository.DeviceRepository;
+import be.uantwerpen.fti.se.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 public class DeviceController {
     @Autowired
     private DeviceRepository deviceRepository;
+    private DeviceService deviceService;
 
     @RequestMapping(value = "/devices", method = RequestMethod.GET)
     public String showDevices(final ModelMap model) {
@@ -49,7 +51,7 @@ public class DeviceController {
 
     @RequestMapping(value = "/devices/{id}/delete")
     public String deleteDevice(@PathVariable Long id, final ModelMap model) {
-        deviceRepository.delete(id);
+        deviceService.delete(id);
         model.clear();
         return "redirect:/devices";
     }

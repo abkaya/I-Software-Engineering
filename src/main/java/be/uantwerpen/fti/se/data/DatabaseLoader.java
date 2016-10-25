@@ -1,8 +1,10 @@
 package be.uantwerpen.fti.se.data;
 
+import be.uantwerpen.fti.se.model.Device;
 import be.uantwerpen.fti.se.model.Permission;
 import be.uantwerpen.fti.se.model.Role;
 import be.uantwerpen.fti.se.model.User;
+import be.uantwerpen.fti.se.repository.DeviceRepository;
 import be.uantwerpen.fti.se.repository.PermissionRepository;
 import be.uantwerpen.fti.se.repository.RoleRepository;
 import be.uantwerpen.fti.se.repository.UserRepository;
@@ -24,17 +26,19 @@ public class DatabaseLoader {
     private final PermissionRepository permissionRepository;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final DeviceRepository deviceRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, DeviceRepository deviceRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.deviceRepository = deviceRepository;
     }
 
     @PostConstruct
     private void initDatabase() {
-        String[] allPermissions = {"user-view","user-create","user-edit","user-delete",
+        String[] allPermissions = {"user-view","user-create","user-edit","user-delete", "device-view",
                 "role-view","role-create","role-edit","role-delete"};
         for (String p : allPermissions){
             permissionRepository.save(new Permission(p));
@@ -63,6 +67,8 @@ public class DatabaseLoader {
         roles.add(tester);
         u2.setRoles(roles);
         userRepository.save(u2);
+
+        Device devices = new Device();
 
     }
 }

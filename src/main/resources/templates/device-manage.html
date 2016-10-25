@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='device management')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage(){
+//        $('#permissions').multiSelect({});
+        $('#permissions').multiSelect({
+            selectableHeader: '<div class="custom-header" th:text="#{selectable.items}">Selectable items</div>',
+            selectionHeader: '<div class="custom-header" th:text="#{selected.items}">Selected items</div>'
+        });
+    }
+
+</script>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+    <form action="#" th:action="@{/devices}" th:object="${device}" method="post">
+       <!-- <input th:type="hidden" th:field="*{id}"/> -->
+        <input name="url" type="text"  class="input_convert" placeholder="Enter URL" id="urlinput"/>
+        <p>
+            <a href="/devices" th:text="#{AddFile}" class="btn btn-primary">Add File</a>
+            <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
+        </p>
+    </form>
+</div>
+</body>
+</html>

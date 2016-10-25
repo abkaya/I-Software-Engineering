@@ -13,18 +13,27 @@ import java.io.IOException;
 @Entity
 public class Device extends MyAbstractPersistable<Long> {
 
-    private BufferedImage devImg = null;
+    private String name;
+
+    public Device() {
+    }
+
+    public Device(String name) {
+        this.name = name;
+    }
+
+    //private BufferedImage devImg = null;
     private File devFile = null;
 
     public void addImage(String imageName){
 
-        try {
-            devImg = ImageIO.read(new File(imageName));
-        } catch (IOException e) {
-        }
+        //try {
+           // devImg = ImageIO.read(new File(imageName));
+        //} catch (IOException e) {
+        //}
     }
 
-    public BufferedImage getImage(){return this.devImg;}
+    //public BufferedImage getImage(){return this.devImg;}
 
     public void addFile(String fileName){
 

@@ -3,7 +3,24 @@
 <!-- Import header -->
 <head th:replace="layout :: head (title='#{device.management}')"></head>
 
-<body>
+<body onload="initPage()">
+
+<script type="text/javascript">
+    function initPage(){
+        var options = {
+            valueNames: [ 'userName']
+        };
+
+        var userList = new List('user-list', options);
+    }
+</script>
+
+
+
+
+
+
+
 <div class="container">
 
     <!-- Import menu bar -->
@@ -27,15 +44,25 @@
                 </thead>
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
-                <!--
-                <tr th:each="user : ${allUsers}">
-                    <td class="userName" th:value="${user}" th:text="${user.userName}">Username</td>
+
+                <tr th:each="device : ${allDevices}">
+
+                    <td class="deviceName" th:value="${device}" th:text="${device.deviceName}">Device</td>
+                    <td class="deviceType" th:value="${device}" th:text="${device.type}">Type</td>
+                    <td class="deviceClass" th:value="${device}" th:text="${device.deviceClass}">Class</td>
+                    <td class="deviceManufacturer" th:value="${device}" th:text="${device.manufacturer}">Manufacturer</td>
+                    <td class="deviceDriver" th:value="${device}" th:text="${device.driver}">Driver</td>
+                    <td class="deviceInUse" th:value="${device}" th:text="${device.disabled}">In use</td>
+
+                    <!--
                     <td>
                         <a th:href="@{/users/{id}/(id=${user.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                         <a th:href="@{/users/{id}/delete(id=${user.id})}"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
+                    -->
+
                 </tr>
-                -->
+
                 </tbody>
             </table>
             <!--<a href="/users/put" class="btn btn-primary" th:text="#{create.user}">Create user</a>-->

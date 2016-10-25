@@ -2,12 +2,10 @@ package be.uantwerpen.fti.se.data;
 
 import be.uantwerpen.fti.se.model.Permission;
 import be.uantwerpen.fti.se.model.Role;
-import be.uantwerpen.fti.se.model.TestSequence;
 import be.uantwerpen.fti.se.model.TestTemplate;
 import be.uantwerpen.fti.se.model.User;
 import be.uantwerpen.fti.se.repository.PermissionRepository;
 import be.uantwerpen.fti.se.repository.RoleRepository;
-import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import be.uantwerpen.fti.se.repository.TestTemplateRepository;
 import be.uantwerpen.fti.se.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +28,13 @@ public class DatabaseLoader {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final TestTemplateRepository testTemplateRepository;
-    p rivate final TestSequenceRepository testSequenceRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository,TestSequenceRepository testSequenceRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.testTemplateRepository = testTemplateRepository;
-        this.testSequenceRepository = testSequenceRepository;
     }
 
     @PostConstruct
@@ -92,14 +88,5 @@ public class DatabaseLoader {
         TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", 0);
         testTemplateRepository.save(t1);
 
-
-        TestSequence sequence = new TestSequence(2, 11);
-        ArrayList<ArrayList<Integer>> firsttest = sequence.CreateSequence();
-        sequence.setSequences(firsttest);
-        testSequenceRepository.save(sequence);
-        TestSequence sequence1 = new TestSequence(5,13);
-        firsttest = sequence1.CreateSequence();
-        sequence1.setSequences(firsttest);
-        testSequenceRepository.save(sequence1);
     }
 }

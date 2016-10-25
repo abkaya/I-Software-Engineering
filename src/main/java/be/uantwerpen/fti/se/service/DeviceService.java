@@ -23,6 +23,24 @@ public class DeviceService {
         }
     }
 
+    public void saveSomeAttributes(Device device) {
+        Device tempDevice = device.getId() == null ? null : deviceRepository.findOne(device.getId());
+
+
+
+        if (tempDevice != null) {
+            tempDevice.setDeviceName(device.getDeviceName());
+            tempDevice.setDeviceClass(device.getDeviceClass());
+            tempDevice.setType(device.getType());
+            tempDevice.setDriver(device.getDriver());
+            tempDevice.setManufacturer(device.getManufacturer());
+            tempDevice.setUsed(device.isUsed());
+            tempDevice.setDisabled(device.isDisabled());
+            deviceRepository.save(tempDevice);
+        }else{
+            deviceRepository.save(device);
+        }
+    }
 
     public Device findByDeviceName(String deviceName){return deviceRepository.findByDeviceName(deviceName);}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Created by Quentin Van Ravels on 20-Oct-16.
+ * Edited by Jan Huijghebaert on 25-Oct-16
  */
 @Service
 public class DeviceService {
@@ -25,17 +26,22 @@ public class DeviceService {
 
     public void saveSomeAttributes(Device device) {
         Device tempDevice = device.getId() == null ? null : deviceRepository.findOne(device.getId());
-
-
-
         if (tempDevice != null) {
             tempDevice.setDeviceName(device.getDeviceName());
             tempDevice.setDeviceClass(device.getDeviceClass());
             tempDevice.setType(device.getType());
             tempDevice.setDriver(device.getDriver());
             tempDevice.setManufacturer(device.getManufacturer());
-            tempDevice.setUsed(device.isUsed());
-            tempDevice.setDisabled(device.isDisabled());
+            if(device.isUsed()) {
+                tempDevice.setIsUsed();
+            } else {
+                tempDevice.setIsUnused();
+            }
+            if(device.isDisabled()) {
+                tempDevice.setDisabled();
+            } else {
+                tempDevice.setEnabled();
+            }
             deviceRepository.save(tempDevice);
         }else{
             deviceRepository.save(device);

@@ -36,7 +36,7 @@ public class DeviceController {
     }
 
     @RequestMapping(value = "/devices/{id}", method = RequestMethod.GET)
-    public String viewEditUser(@PathVariable Long id, final ModelMap model)  {
+    public String viewEditDevice(@PathVariable Long id, final ModelMap model)  {
         model.addAttribute("device",deviceRepository.findOne(id));
         return "devices-manage";
     }

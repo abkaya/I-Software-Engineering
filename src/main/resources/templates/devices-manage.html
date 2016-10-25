@@ -1,19 +1,60 @@
+<!-- AUTEUR: Jan Huijghebaert -->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- Import header -->
-<head th:replace="layout :: head (title='')"></head>
+<head th:replace="layout :: head (title='#{device.management}')"></head>
 
 <body>
+
 <div class="container">
 
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
 
-    <div class="content">
-        <!--  Enter content here -->
 
 
-    </div>
+    <form action="#" th:action="@{/devices/{id}(id=${device})}" th:object="${device}" method="post">
+        <input th:type="hidden" th:field="*{id}"/>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('deviceName')}?'has-error': ''">
+            <label class="control-label" th:text="#{device.name}">Name</label>
+            <span class="control-label" th:if="${#fields.hasErrors('deviceName')}" th:errors="*{deviceName}">Device name Error</span>
+            <input class="form-control" type="text" th:field="*{deviceName}" />
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('type')}?'has-error': ''">
+            <label class="control-label" th:text="#{device.type}">Type</label>
+            <span class="control-label" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Device type Error</span>
+            <input class="form-control" type="text" th:field="*{type}" />
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('deviceClass')}?'has-error': ''">
+            <label class="control-label" th:text="#{device.class}">Class</label>
+            <span class="control-label" th:if="${#fields.hasErrors('deviceClass')}" th:errors="*{deviceClass}">Device class Error</span>
+            <input class="form-control" type="text" th:field="*{deviceClass}" />
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('manufacturer')}?'has-error': ''">
+            <label class="control-label" th:text="#{device.manufacturer}">Manufacturer</label>
+            <span class="control-label" th:if="${#fields.hasErrors('manufacturer')}" th:errors="*{manufacturer}">Device manufacturer Error</span>
+            <input class="form-control" type="text" th:field="*{manufacturer}" />
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('driver')}?'has-error': ''">
+            <label class="control-label" th:text="#{device.driver}">Driver</label>
+            <span class="control-label" th:if="${#fields.hasErrors('driver')}" th:errors="*{driver}">Device driver Error</span>
+            <input class="form-control" type="text" th:field="*{driver}" />
+        </div>
+
+        <p>
+            <a href="/devices" th:text="#{close}" class="btn btn-primary">Close</a>
+            <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
+        </p>
+    </form>
+
+
+
 </div>
 </body>
 </html>

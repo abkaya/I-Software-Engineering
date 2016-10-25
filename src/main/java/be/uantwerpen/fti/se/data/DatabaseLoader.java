@@ -67,10 +67,12 @@ public class DatabaseLoader {
         roles.add(tester);
         u2.setRoles(roles);
         userRepository.save(u2);
+
         Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver");
-        Device d2 = new Device("aDevice2", "aType2", "aClass2", "aManufacturer2", "aDriver2");
+        Device d2 = new Device("bDevice2", "bType2", "bClass2", "bManufacturer2", "bDriver2");
+        d1.setIsUsed();
+        d2.setDisabled();
         deviceRepository.save(d1);
         deviceRepository.save(d2);
-
     }
 }

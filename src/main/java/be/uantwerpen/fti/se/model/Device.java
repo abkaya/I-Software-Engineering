@@ -3,10 +3,11 @@ package be.uantwerpen.fti.se.model;
 import javax.persistence.Entity;
 
 /**
- * Created by Quentin Van Ravels on 20-Oct-16.
+ * Created by Quentin Van Ravels and Jan Huijghebaert on 20-Oct-16.
  */
 @Entity
 public class Device extends MyAbstractPersistable<Long> {
+
 
     private String deviceName;
     private String type;
@@ -17,7 +18,6 @@ public class Device extends MyAbstractPersistable<Long> {
     private boolean disabled;
 
     public Device(){
-
         used = false;
         disabled = false;
     }
@@ -28,7 +28,6 @@ public class Device extends MyAbstractPersistable<Long> {
         this.deviceClass = deviceClass;
         this.manufacturer = manufacturer;
         this.driver = driver;
-
         used = false;
         disabled = false;
     }
@@ -77,6 +76,14 @@ public class Device extends MyAbstractPersistable<Long> {
         return used;
     }
 
+    public void setIsUsed() {
+        this.used = true;
+    }
+
+    public void setIsUnused()   {
+        this.used = false;
+    }
+
     public void setUsed(boolean used) {
         this.used = used;
     }
@@ -85,8 +92,12 @@ public class Device extends MyAbstractPersistable<Long> {
         return disabled;
     }
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+    public void setDisabled()   {
+        disabled = true;
+    }
+
+    public void setEnabled()    {
+        disabled = false;
     }
 
     @Override
@@ -99,10 +110,4 @@ public class Device extends MyAbstractPersistable<Long> {
         return deviceName.equals(device.deviceName);
 
     }
-
-    @Override
-    public int hashCode() {
-        return deviceName.hashCode();
-    }
-
 }

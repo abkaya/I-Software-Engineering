@@ -1,35 +1,28 @@
+<!-- AUTEUR: Jan Huijghebaert -->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- Import header -->
 <head th:replace="layout :: head (title='#{device.management}')"></head>
 
 <body onload="initPage()">
-
 <script type="text/javascript">
-    function initPage(){
+    function initPage() {
         var options = {
-            valueNames: [ 'userName']
+            valueNames: ['deviceName']
         };
 
-        var userList = new List('user-list', options);
+        var deviceList = new List('device-list', options);
     }
 </script>
 
-
-
-
-
-
-
 <div class="container">
-
-    <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
 
     <div class="content">
-
         <div id="device-list">
             <input class="search" placeholder="Search" />
+
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -39,36 +32,30 @@
                     <th th:text="#{device.manufacturer}">Manufacturer</th>
                     <th th:text="#{device.driver}">Driver</th>
                     <th th:text="#{device.inUse}">In use</th>
+                    <th th:text="#{device.disabled}">Disabled</th>
                     <th></th>
                 </tr>
                 </thead>
-                <!-- IMPORTANT, class="list" have to be at tbody -->
+
                 <tbody class="list">
-
                 <tr th:each="device : ${allDevices}">
-
                     <td class="deviceName" th:value="${device}" th:text="${device.deviceName}">Device</td>
                     <td class="deviceType" th:value="${device}" th:text="${device.type}">Type</td>
                     <td class="deviceClass" th:value="${device}" th:text="${device.deviceClass}">Class</td>
                     <td class="deviceManufacturer" th:value="${device}" th:text="${device.manufacturer}">Manufacturer</td>
                     <td class="deviceDriver" th:value="${device}" th:text="${device.driver}">Driver</td>
-                    <td class="deviceInUse" th:value="${device}" th:text="${device.disabled}">In use</td>
-
-                    <!--
+                    <td class="deviceInUse" th:value="${device}" th:text="${device.used}">In use</td>
+                    <td class="deviceDisabled" th:value="${device}" th:text="${device.disabled}">Disabled</td>
                     <td>
-                        <a th:href="@{/users/{id}/(id=${user.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                        <a th:href="@{/users/{id}/delete(id=${user.id})}"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a th:href="@{/devices/{id}/(id=${device.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                        <a th:href="@{/devices/{id}/delete(id=${device.id})}"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
-                    -->
-
                 </tr>
-
                 </tbody>
             </table>
-            <!--<a href="/users/put" class="btn btn-primary" th:text="#{create.user}">Create user</a>-->
+
+            <a href="/devices/put" class="btn btn-primary" th:text="#{create.device}">Create device</a>
         </div>
-
-
     </div>
 </div>
 </body>

@@ -23,14 +23,16 @@ public class DatabaseLoader {
     private final UserRepository userRepository;
     private final TestTemplateRepository testTemplateRepository;
     private final TestSequenceRepository testSequenceRepository;
+    private final DeviceRepository deviceRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository, TestSequenceRepository testSequenceRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository, TestSequenceRepository testSequenceRepository, DeviceRepository deviceRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.testTemplateRepository = testTemplateRepository;
         this.testSequenceRepository = testSequenceRepository;
+        this.deviceRepository = deviceRepository;
     }
 
     @PostConstruct
@@ -124,7 +126,13 @@ public class DatabaseLoader {
         testTemplateRepository.save(t6);
         testTemplateRepository.save(t8);
 
-
+    //voeg devices toe
+        Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver");
+        Device d2 = new Device("bDevice2", "bType2", "bClass2", "bManufacturer2", "bDriver2");
+        d1.setIsUsed();
+        d2.setDisabled();
+        deviceRepository.save(d1);
+        deviceRepository.save(d2);
 
     }
 }

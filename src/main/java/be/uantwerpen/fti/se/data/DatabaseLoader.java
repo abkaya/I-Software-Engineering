@@ -92,7 +92,7 @@ public class DatabaseLoader {
         testSequenceRepository.save(ts3);
         testSequenceRepository.save(ts4);
 
-                //test creating a template and adding it to the repo
+        //test creating a template and adding it to the repo
         TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", 0);
         TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.", 0);
         TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.", 0);
@@ -101,23 +101,30 @@ public class DatabaseLoader {
         TestTemplate t6 = new TestTemplate("Template_0x06", "Brief description of the template.", 0);
         TestTemplate t7 = new TestTemplate("Template_0x07", "Brief description of the template.", 0);
         TestTemplate t8 = new TestTemplate("Template_0x08", "Brief description of the template.", 0);
-        testTemplateRepository.save(t1);
+
+        List<TestSequence> testSequences = new ArrayList<TestSequence>();
+        testSequences.add(ts1);
+
+        t2.setTestSequences(testSequences);
         testTemplateRepository.save(t2);
+
+        //add add all sequences to t1
+        testSequences = new ArrayList<TestSequence>();
+        for (TestSequence ts : testSequenceRepository.findAll()) {
+            testSequences.add(ts);
+        }
+        t1.setTestSequences(testSequences);
+        testTemplateRepository.save(t1);
+
         testTemplateRepository.save(t3);
         testTemplateRepository.save(t4);
         testTemplateRepository.save(t5);
         testTemplateRepository.save(t6);
         testTemplateRepository.save(t7);
+        testTemplateRepository.save(t6);
         testTemplateRepository.save(t8);
 
 
-        //add add all sequences to t1
-        List<TestSequence> testSequences = new ArrayList<TestSequence>();
-        for (TestSequence ts : testSequenceRepository.findAll()) {
-            testSequences.add(ts);
-        }
 
-        t1.setTestSequences(testSequences);
-        testTemplateRepository.save(t1);
     }
 }

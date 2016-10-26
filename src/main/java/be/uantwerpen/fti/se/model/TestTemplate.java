@@ -14,7 +14,7 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     private String description;
     private int seqCount;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name="TEMPLATE_SEQUENCE",
             joinColumns={@JoinColumn(name="TEMPLATE_ID", referencedColumnName="ID")},

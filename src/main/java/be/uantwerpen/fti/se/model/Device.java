@@ -110,4 +110,13 @@ public class Device extends MyAbstractPersistable<Long> {
         return deviceName.equals(device.deviceName);
 
     }
+
+    @Override
+    public int hashCode() {
+        if(deviceName != null) {
+            return deviceName.hashCode();
+        }
+
+        return 0;
+    }
 }

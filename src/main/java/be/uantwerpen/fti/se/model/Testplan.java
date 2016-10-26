@@ -20,7 +20,7 @@ public class Testplan extends MyAbstractPersistable<Long>{
             name="TESTPLAN_TEMPLATE",
             joinColumns={@JoinColumn(name="TESTPLAN_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="TEMPLATE_ID", referencedColumnName="ID")})
-    private List<Template> templates;
+    private Template template;
 
     @ManyToMany
     @JoinTable(
@@ -42,17 +42,17 @@ public class Testplan extends MyAbstractPersistable<Long>{
         this.startDate = "";
         this.endDate = "";
         this.description = "";
-        this.templates = new ArrayList<>();
+        this.template = new Template();
         this.users = new ArrayList<>();
         this.devices = new ArrayList<>();
     }
 
-    public Testplan(String name, String startDate, String endDate, String description, List<Template> templates, List<User> users, List<Device> devices) {
+    public Testplan(String name, String startDate, String endDate, String description, Template template, List<User> users, List<Device> devices) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-        this.templates = templates;
+        this.template = template;
         this.users = users;
         this.devices = devices;
     }
@@ -89,12 +89,12 @@ public class Testplan extends MyAbstractPersistable<Long>{
         this.description = description;
     }
 
-    public List<Template> getTemplates() {
-        return templates;
+    public Template getTemplate() {
+        return template;
     }
 
-    public void setTemplates(List<Template> templates) {
-        this.templates = templates;
+    public void setTemplates(Template template) {
+        this.template = template;
     }
 
     public List<User> getUsers() {

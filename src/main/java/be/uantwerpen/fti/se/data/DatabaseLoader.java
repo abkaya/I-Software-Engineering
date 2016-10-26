@@ -1,13 +1,7 @@
 package be.uantwerpen.fti.se.data;
 
-import be.uantwerpen.fti.se.model.Device;
-import be.uantwerpen.fti.se.model.Permission;
-import be.uantwerpen.fti.se.model.Role;
-import be.uantwerpen.fti.se.model.User;
-import be.uantwerpen.fti.se.repository.DeviceRepository;
-import be.uantwerpen.fti.se.repository.PermissionRepository;
-import be.uantwerpen.fti.se.repository.RoleRepository;
-import be.uantwerpen.fti.se.repository.UserRepository;
+import be.uantwerpen.fti.se.model.*;
+import be.uantwerpen.fti.se.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -27,13 +21,15 @@ public class DatabaseLoader {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final DeviceRepository deviceRepository;
+    private final FileRepository fileRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, DeviceRepository deviceRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, DeviceRepository deviceRepository, FileRepository fileRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.deviceRepository = deviceRepository;
+        this.fileRepository = fileRepository;
     }
 
     @PostConstruct
@@ -68,7 +64,21 @@ public class DatabaseLoader {
         u2.setRoles(roles);
         userRepository.save(u2);
 
-        Device devices = new Device();
+
+        File f1 = new File("test.txt");
+        File f2 = new File("test2.txt");
+        Device d1 = new Device("keyboard");
+        List<File> files = new ArrayList<>();
+        f1.setPath("C:/Users/Admin/Desktop");
+        f2.setPath("C:/Users/Admin/Desktop");
+        files.add(f1);
+        files.add(f2);
+        d1.setFiles(files);
+        deviceRepository.save(d1);
+
+        Device d2 = new Device("Scherm");
+
+
 
     }
 }

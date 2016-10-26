@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#{device.management}')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage(){
+        var options = {
+            valueNames: [ 'deviceName']
+        };
+
+        var DeviceList = new List('device-list', options);
+    }
+
+</script>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="content">
+
+        <div id="device-list">
+            <input class="search" placeholder="Search" />
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{name}">Name</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <!-- IMPORTANT, class="list" have to be at tbody -->
+                <tbody class="list">
+                <tr th:each="device : ${allDevices}">
+                    <td class="deviceName" th:value="${device}" th:text="${device.deviceName}">devicename</td>
+                    <td>
+                        <a th:href="@{/devices/{id}/(id=${device.id})}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>&nbsp;
+                        <a th:href="@{/devices/{id}/delete(id=${device.id})}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>&nbsp;
+                        <a th:href="@{/devices/{id}/view(id=${device.id})}">
+                            <span class="glyphicon glyphicon-check"></span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <a href="/devices" class="btn btn-primary" th:text="#{create.device}">Create Device</a>
+            <a href="/devices/info" class="btn btn-primary" th:text="#{add.file.to.device}">add file</a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

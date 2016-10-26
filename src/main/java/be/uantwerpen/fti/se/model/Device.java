@@ -1,10 +1,11 @@
 package be.uantwerpen.fti.se.model;
 
 import javax.imageio.ImageIO;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Admin on 20-10-2016.
@@ -12,34 +13,31 @@ import java.io.IOException;
 
 @Entity
 public class Device extends MyAbstractPersistable<Long> {
-
-    private String name;
+    private String deviceName;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name="DEVICE_FILE",
+            joinColumns={@JoinColumn(name="DEVICE_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="FILE_ID", referencedColumnName="ID")})
+    private List<File> files;
 
     public Device() {
+
     }
 
     public Device(String name) {
-        this.name = name;
+
+        this.deviceName = name;
+        files = new ArrayList<>();
     }
 
-    //private BufferedImage devImg = null;
-    private File devFile = null;
-
-    public void addImage(String imageName){
-
-        //try {
-           // devImg = ImageIO.read(new File(imageName));
-        //} catch (IOException e) {
-        //}
+    public void setFiles(List<File> files) {
+        this.files = files;
     }
 
-    //public BufferedImage getImage(){return this.devImg;}
+    public List<File> getFiles(){return files;}
 
-    public void addFile(String fileName){
+    public String getDeviceName(){return this.deviceName;}
 
-        devFile = new File(fileName);
-    }
-
-    public File getFile(){return this.devFile;}
 
 }

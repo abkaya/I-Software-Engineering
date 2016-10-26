@@ -2,6 +2,7 @@ package be.uantwerpen.fti.se.controller;
 
 import be.uantwerpen.fti.se.model.Device;
 import be.uantwerpen.fti.se.model.Role;
+import be.uantwerpen.fti.se.repository.FileRepository;
 import be.uantwerpen.fti.se.repository.PermissionRepository;
 import be.uantwerpen.fti.se.repository.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,21 @@ import javax.validation.Valid;
 @Controller
 public class DeviceController {
     @Autowired
-    private DeviceRepository DeviceRepository;
+    private DeviceRepository deviceRepository;
+    @Autowired
+    private FileRepository fileRepository;
 
     @RequestMapping(value="/devices", method= RequestMethod.GET)
     public String showDevices(final ModelMap model){
-        model.addAttribute("device",new Device(""));
-        return "device-manage";
+        model.addAttribute("allDevices", deviceRepository.findAll());
+        return "device-list";
     }
 
+    @RequestMapping(value="/devices/{id}/view", method= RequestMethod.GET)
+    public String viewDevice(@PathVariable Long id, final ModelMap model){
+        model.addAttribute("allFiles", fileRepository.findAll());
+        model.addAttribute("device", deviceRepository.findOne(id));
+        return "device-manage";
+    }
 }
 

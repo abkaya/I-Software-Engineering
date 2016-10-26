@@ -5,27 +5,33 @@
 
 <body onload="initPage()">
 <script type="text/javascript">
-
     function initPage(){
-        /*
-        $('#files').multiSelect({});
+//        $('#files').multiSelect({});
         $('#files').multiSelect({
             selectableHeader: '<div class="custom-header" th:text="#{selectable.items}">Selectable items</div>',
             selectionHeader: '<div class="custom-header" th:text="#{selected.items}">Selected items</div>'
-        });*/
+        });
     }
+
 </script>
 <div class="container">
 
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
-    <form action="#" th:action="@{/devices/{id}(id=${file})}" th:object="${file}" method="post">
+    <form action="#" th:action="@{/devices/{id}(id=${device})}" th:object="${device}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
-        <div class="form-group" th:classappend="${#fields.hasErrors('fileName')}?'has-error': ''">
-            <label class="control-label" th:text="#{FileName}">FileName</label>
-            <span class="control-label" th:if="${#fields.hasErrors('fileName')}" th:errors="*{fileName}">Name Error</span>
-            <input class="form-control" type="text" th:field="*{fileName}" />
+        <div class="form-group" th:classappend="${#fields.hasErrors('deviceName')}?'has-error': ''">
+            <label class="control-label" th:text="#{deviceName}">Name</label>
+            <span class="control-label" th:if="${#fields.hasErrors('deviceName')}" th:errors="*{deviceName}">Name Error</span>
+            <input class="form-control" type="text" th:field="*{deviceName}" />
         </div>
+        <p> <label th:text="#{files}">Files</label>
+            <select th:field="*{files}" multiple="multiple">
+                <option th:each="file : ${allFiles}"
+                        th:value="${{file}}"
+                        th:text="${file.fileName}">Wireframe</option>
+            </select>
+        </p>
         <p>
             <a href="/devices" th:text="#{close}" class="btn btn-primary">Close</a>
             <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
@@ -34,3 +40,4 @@
 </div>
 </body>
 </html>
+

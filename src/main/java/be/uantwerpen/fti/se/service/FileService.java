@@ -15,12 +15,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FileService {
-    /*
-    @Autowired
-    private FileRepository fileRepository;
-    public Iterable<File> findAllForDevice(Device device){
 
-        return fileRepository.findAllForDevice(device);
-    }
-    */
 }

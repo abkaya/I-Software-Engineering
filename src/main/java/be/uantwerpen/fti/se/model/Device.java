@@ -1,5 +1,7 @@
 package be.uantwerpen.fti.se.model;
 
+import be.uantwerpen.fti.se.repository.FileRepository;
+
 import javax.imageio.ImageIO;
 import javax.persistence.*;
 import java.awt.image.BufferedImage;
@@ -14,7 +16,7 @@ import java.util.List;
 @Entity
 public class Device extends MyAbstractPersistable<Long> {
     private String deviceName;
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @OneToMany//(cascade = CascadeType.PERSIST)
     @JoinTable(
             name="DEVICE_FILE",
             joinColumns={@JoinColumn(name="DEVICE_ID", referencedColumnName="ID")},
@@ -38,6 +40,5 @@ public class Device extends MyAbstractPersistable<Long> {
     public List<File> getFiles(){return files;}
 
     public String getDeviceName(){return this.deviceName;}
-
 
 }

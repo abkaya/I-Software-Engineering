@@ -1,6 +1,7 @@
 package be.uantwerpen.fti.se.controller;
 
 import be.uantwerpen.fti.se.model.Device;
+import be.uantwerpen.fti.se.model.File;
 import be.uantwerpen.fti.se.model.Role;
 import be.uantwerpen.fti.se.repository.FileRepository;
 import be.uantwerpen.fti.se.repository.PermissionRepository;
@@ -32,11 +33,28 @@ public class DeviceController {
         return "device-list";
     }
 
-    @RequestMapping(value="/devices/{id}/view", method= RequestMethod.GET)
-    public String viewDevice(@PathVariable Long id, final ModelMap model){
+    @RequestMapping(value="/devices/put", method= RequestMethod.GET)
+    public String viewCreateFile(final ModelMap model){
         model.addAttribute("allFiles", fileRepository.findAll());
-        model.addAttribute("device", deviceRepository.findOne(id));
+        model.addAttribute("file",new File(""));
         return "device-manage";
+    }
+
+    @RequestMapping(value="/devices/{id}", method= RequestMethod.GET)
+    public String viewEditFile(@PathVariable Long id, final ModelMap model){
+        model.addAttribute("allFiles", fileRepository.findAll());
+        model.addAttribute("device",deviceRepository.findOne(id));
+        return "device-select";
+    }
+
+    @RequestMapping(value={"/devices/", "/devices/{id}"}, method= RequestMethod.POST)
+    public String addFile(@Valid File file, BindingResult result, final ModelMap model){
+        if(result.hasErrors()){
+            model.addAttribute("allFiles", fileRepository.findAll());
+            return "device-manage";
+        }
+        fileRepository.save(file);
+        return "redirect:/devices";
     }
 }
 

@@ -38,18 +38,11 @@
                         <a th:href="@{/devices/{id}/(id=${device.id})}">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>&nbsp;
-                        <a th:href="@{/devices/{id}/delete(id=${device.id})}">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>&nbsp;
-                        <a th:href="@{/devices/{id}/view(id=${device.id})}">
-                            <span class="glyphicon glyphicon-check"></span>
-                        </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <a href="/devices" class="btn btn-primary" th:text="#{create.device}">Create Device</a>
-            <a href="/devices/info" class="btn btn-primary" th:text="#{add.file.to.device}">add file</a>
+            <a href="/devices/put" class="btn btn-primary" th:text="#{create.new.file}">Create file</a>
         </div>
 
     </div>

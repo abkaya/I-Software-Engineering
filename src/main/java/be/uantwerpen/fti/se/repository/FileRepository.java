@@ -12,9 +12,8 @@ import org.springframework.data.repository.query.Param;
  * Created by Admin on 25-10-2016.
  */
 public interface FileRepository extends CrudRepository<File, Long> {
-
-    /*
-    @Query(value = "select p from User u left join u.roles r left join r.permissions  p where u=:dev")
+/*
+    @Query(value = "select f from Device d left join u.files f where d=:dev")
     Iterable<File> findAllForDevice(@Param("dev") Device device);
-    */
+*/
 }

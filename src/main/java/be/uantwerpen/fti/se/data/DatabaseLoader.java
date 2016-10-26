@@ -39,6 +39,7 @@ public class DatabaseLoader {
         for (String p : allPermissions){
             permissionRepository.save(new Permission(p));
         }
+
         Permission p1 = new Permission("logon");
         permissionRepository.save(p1);
         Role administrator = new Role("Administrator");
@@ -65,19 +66,30 @@ public class DatabaseLoader {
         userRepository.save(u2);
 
 
-        File f1 = new File("test.txt");
-        File f2 = new File("test2.txt");
-        Device d1 = new Device("keyboard");
         List<File> files = new ArrayList<>();
+        Device d1 = new Device("keyboard");
+
+        File f1 = new File("test.txt");
         f1.setPath("C:/Users/Admin/Desktop");
+        fileRepository.save(f1);
+        File f2 = new File("test2.txt");
         f2.setPath("C:/Users/Admin/Desktop");
-        files.add(f1);
-        files.add(f2);
+        fileRepository.save(f2);
+
+        for (File f : fileRepository.findAll()){
+            files.add(f);
+        }
         d1.setFiles(files);
         deviceRepository.save(d1);
 
+        File f3 = new File("test3.txt");
+        f3.setPath("C:/Users/Admin/Desktop");
+        fileRepository.save(f3);
         Device d2 = new Device("Scherm");
-
+        List<File> files2 = new ArrayList<>();
+        files2.add(f3);
+        d2.setFiles(files2);
+        deviceRepository.save(d2);
 
 
     }

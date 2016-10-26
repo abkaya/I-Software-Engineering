@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='Show device image')"></head>
+
+<body>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+    <img src="/images/afb1.jpg" alt="Device image" style="width:256px;height:256px;"></img>
+    <br/>
+    <a href="/devices" th:text="#{close}" class="btn btn-primary">Close</a>
+
+</div>
+</body>
+</html>

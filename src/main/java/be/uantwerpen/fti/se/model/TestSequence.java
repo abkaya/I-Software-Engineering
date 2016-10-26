@@ -1,8 +1,9 @@
 package be.uantwerpen.fti.se.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by Kevin on 20/10/2016.
@@ -14,6 +15,9 @@ public class TestSequence extends MyAbstractPersistable<Long>{
     private int radiusSmall;
     private int radiusBig;
     ArrayList<ArrayList<Integer>> sequences;
+
+    @ManyToMany(mappedBy="testSequences")
+    private java.util.List<TestTemplate> testTemplates;
 
     //When you use the default constructor, you get the easiest difficulty
     public TestSequence() {

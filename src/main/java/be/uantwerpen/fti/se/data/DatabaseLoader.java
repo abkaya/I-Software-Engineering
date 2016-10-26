@@ -80,7 +80,19 @@ public class DatabaseLoader {
         u2.setRoles(roles);
         userRepository.save(u2);
 
-        //test creating a template and adding it to the repo
+        //create sequences and add these to the repository
+        TestSequence ts0 = new TestSequence();
+        TestSequence ts1 = new TestSequence(3, 10, 1, 3);
+        TestSequence ts2 = new TestSequence();
+        TestSequence ts3 = new TestSequence();
+        TestSequence ts4 = new TestSequence();
+        testSequenceRepository.save(ts0);
+        testSequenceRepository.save(ts1);
+        testSequenceRepository.save(ts2);
+        testSequenceRepository.save(ts3);
+        testSequenceRepository.save(ts4);
+
+                //test creating a template and adding it to the repo
         TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", 0);
         TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.", 0);
         TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.", 0);
@@ -98,17 +110,14 @@ public class DatabaseLoader {
         testTemplateRepository.save(t7);
         testTemplateRepository.save(t8);
 
-        //create sequences and add these to the repository
-        TestSequence ts0 = new TestSequence();
-        TestSequence ts1 = new TestSequence(3, 10, 1, 3);
-        TestSequence ts2 = new TestSequence();
-        TestSequence ts3 = new TestSequence();
-        TestSequence ts4 = new TestSequence();
-        testSequenceRepository.save(ts0);
-        testSequenceRepository.save(ts1);
-        testSequenceRepository.save(ts2);
-        testSequenceRepository.save(ts3);
-        testSequenceRepository.save(ts4);
 
+        //add add all sequences to t1
+        List<TestSequence> testSequences = new ArrayList<TestSequence>();
+        for (TestSequence ts : testSequenceRepository.findAll()) {
+            testSequences.add(ts);
+        }
+
+        t1.setTestSequences(testSequences);
+        testTemplateRepository.save(t1);
     }
 }

@@ -34,22 +34,24 @@
         </div>
 
 
-        <!-- Edit the description -->
+        <!-- seaCount doesn't need editing right now
         <div class="form-group" th:classappend="${#fields.hasErrors('seqCount')}?'has-error': ''">
             <label class="control-label" th:text="#{seqCount}">Name</label>
             <span class="control-label" th:if="${#fields.hasErrors('seqCount')}" th:errors="*{seqCount}">seqCount Error</span>
             <input class="form-control" type="text" th:field="*{seqCount}" />
-        </div>
+        </div> -->
 
 
         <p> <label th:text="#{testSequences}">Test Sequences</label>
             <select th:field="*{testSequences}" multiple="multiple">
                 <option th:each="testSequence : ${allTestSequences}"
                         th:value="${{testSequence}}"
-                        th:text="${testSequence.name}">Wireframe
+                        th:text="${testSequence.id}">Wireframe
                 </option>
             </select>
         </p>
+
+
         <p>
             <a href="/tests" th:text="#{close}" class="btn btn-primary">Close</a>
             <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>

@@ -1,6 +1,7 @@
 package be.uantwerpen.fti.se.controller;
 
 import be.uantwerpen.fti.se.model.TestTemplate;
+import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import be.uantwerpen.fti.se.repository.TestTemplateRepository;
 import be.uantwerpen.fti.se.service.TestTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class TestTemplateController {
     private TestTemplateRepository testTemplateRepository;
     @Autowired
     private TestTemplateService testTemplateService;
+    @Autowired
+    private TestSequenceRepository testSequenceRepository;
 
     @RequestMapping(value="/tests", method = RequestMethod.GET)
     public String showTestTemplates(final ModelMap model){
@@ -41,8 +44,7 @@ public class TestTemplateController {
     }
     @RequestMapping(value="/tests/{id}", method= RequestMethod.GET)
     public String viewEditTestTemplate(@PathVariable Long id, final ModelMap model){
-        //Yet to be done: load all sequences from the testSequenceRepository
-        //model.addAttribute("allTestSequences", testSequenceRepository.findAll());
+        model.addAttribute("allTestSequences", testSequenceRepository.findAll());
         model.addAttribute("testTemplate",testTemplateRepository.findOne(id));
 
         /*
@@ -59,8 +61,7 @@ public class TestTemplateController {
     @RequestMapping(value={"/tests/", "/tests/{id}"}, method= RequestMethod.POST)
     public String addTestTemplate(@Valid TestTemplate testTemplate, BindingResult result, final ModelMap model){
         if(result.hasErrors()){
-            //Yet to be done: load all sequences from the testSequenceRepository
-            //model.addAttribute("allTestSequences", testSequenceRepository.findAll());
+            model.addAttribute("allTestSequences", testSequenceRepository.findAll());
             return "testTemplates-manage";
         }
         testTemplateService.saveSomeAttributes(testTemplate);

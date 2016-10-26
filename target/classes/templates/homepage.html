@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<!-- Import header -->
+<head th:replace="layout :: head (title='Home')"></head>
+
+
+<body>
+
+<div class="container">
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+
+    <span th:text="#{homepage.hello}"/> <br/>
+
+    <div sec:authorize="hasAuthority('secret-message')">
+        <span th:text="#{homepage.secret-message}"/>
+    </div>
+
+
+
+</div>
+</body>
+</html>

@@ -39,7 +39,7 @@ public class DatabaseLoader {
     private void initDatabase() {
         //Array of permissions, to be saved in p and later to be assigned to the administrator role.
         String[] allPermissions = {"user-view", "user-create", "user-edit", "user-delete",
-                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete"};
+                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-view", "device-create", "device-edit", "devioe-delete"};
         for (String p : allPermissions) {
             permissionRepository.save(new Permission(p));
         }

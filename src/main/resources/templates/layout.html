@@ -51,9 +51,11 @@
                     <li sec:authorize="hasAuthority('role-view')" role="presentation" th:class="${rolesActiveSettings}">
                         <a href="/roles" th:text="#{role.management}">Role management <span class="sr-only">(role management)</span></a>
                     </li>
-                    <li><a href="/devices" th:text="#{device.management}">Device management <span class="sr-only">(device management)</span> </a></li>
+
+                    <li sec:authorize="hasAuthority('device-view')" role="presentation" th:class="${rolesActiveSettings}"><a href="/devices" th:text="#{device.management}">Device management <span class="sr-only">(device management)</span> </a></li>
+
                     <!-- DROPDOWN FOR TEST MANAGEMENT-->
-                    <li sec:authorize="hasAuthority('test-view')" role="presentation" th:class="${testsActiveSettings}" class = "dropdown">
+                    <li sec:authorize="hasAuthority('test-view')" role="presentation" th:class="${devicesActiveSettings}" class = "dropdown">
                         <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
                             Test Management
                             <b class="caret"></b>
@@ -61,7 +63,7 @@
 
                         <ul class = "dropdown-menu">
                             <li><a href = "/tests">Test Templates</a></li>
-                            <li><a href = "/testSequences">Test Sequences</a></li>
+                            <li><a href = "#">Test Sequences</a></li>
                             <li class = "divider"></li>
                             <li><a href = "#">Test Plan</a></li>
                         </ul>

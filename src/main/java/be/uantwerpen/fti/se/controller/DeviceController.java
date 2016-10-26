@@ -26,18 +26,21 @@ public class DeviceController {
     @RequestMapping(value = "/devices", method = RequestMethod.GET)
     public String showDevices(final ModelMap model) {
         model.addAttribute("allDevices", deviceRepository.findAll());
+        model.addAttribute("devicesActiveSettings","active");
         return "devices-list";
     }
 
     @RequestMapping(value = "/devices/put", method = RequestMethod.GET)
     public String viewCreateDevice(final ModelMap model)    {
         model.addAttribute("device", new Device());
+        model.addAttribute("devicesActiveSettings","active");
         return "devices-manage";
     }
 
     @RequestMapping(value = "/devices/{id}", method = RequestMethod.GET)
     public String viewEditDevice(@PathVariable Long id, final ModelMap model)  {
         model.addAttribute("device",deviceRepository.findOne(id));
+        model.addAttribute("devicesActiveSettings","active");
         return "devices-manage";
     }
 
@@ -47,6 +50,7 @@ public class DeviceController {
             return "devices-manage";
         }
         deviceRepository.save(device);
+        model.addAttribute("devicesActiveSettings","active");
         return "redirect:/devices";
     }
 
@@ -54,6 +58,7 @@ public class DeviceController {
     public String deleteDevice(@PathVariable Long id, final ModelMap model) {
         deviceService.delete(id);
         model.clear();
+        model.addAttribute("devicesActiveSettings","active");
         return "redirect:/devices";
     }
 }

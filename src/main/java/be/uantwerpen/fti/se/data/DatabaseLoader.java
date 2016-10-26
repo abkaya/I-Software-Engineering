@@ -1,13 +1,7 @@
 package be.uantwerpen.fti.se.data;
 
-import be.uantwerpen.fti.se.model.Device;
-import be.uantwerpen.fti.se.model.Permission;
-import be.uantwerpen.fti.se.model.Role;
-import be.uantwerpen.fti.se.model.User;
-import be.uantwerpen.fti.se.repository.DeviceRepository;
-import be.uantwerpen.fti.se.repository.PermissionRepository;
-import be.uantwerpen.fti.se.repository.RoleRepository;
-import be.uantwerpen.fti.se.repository.UserRepository;
+import be.uantwerpen.fti.se.model.*;
+import be.uantwerpen.fti.se.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.context.annotation.Profile;
@@ -29,14 +23,12 @@ public class DatabaseLoader {
     private final UserRepository userRepository;
     private final TestTemplateRepository testTemplateRepository;
     private final TestSequenceRepository testSequenceRepository;
-    private final DeviceRepository deviceRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, TestTemplateRepository testTemplateRepository, TestSequenceRepository testSequenceRepository, UserRepository userRepository, DeviceRepository deviceRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository, TestSequenceRepository testSequenceRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
-        this.deviceRepository = deviceRepository;
         this.testTemplateRepository = testTemplateRepository;
         this.testSequenceRepository = testSequenceRepository;
     }
@@ -44,39 +36,50 @@ public class DatabaseLoader {
     @PostConstruct
     private void initDatabase() {
         //Array of permissions, to be saved in p and later to be assigned to the administrator role.
-        String[] allPermissions = {"user-view","user-create","user-edit","user-delete",
-                "role-view","role-create","role-edit","role-delete", "test-view", "test-create", "test-edit", "test-delete"};
-        for (String p : allPermissions){
+        String[] allPermissions = {"user-view", "user-create", "user-edit", "user-delete",
+                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete"};
+        for (String p : allPermissions) {
             permissionRepository.save(new Permission(p));
         }
+
+        //create logon permission and save it to the repository
         Permission p1 = new Permission("logon");
         permissionRepository.save(p1);
+
+        //create admin and tester roles
         Role administrator = new Role("Administrator");
         Role tester = new Role("Tester");
-        //add permission "logon" to the newly created list permissions
-        List<Permission> permissions =  new ArrayList<Permission>();
+
+        //add permission "logon" to the newly created list permissions.
+        List<Permission> permissions = new ArrayList<Permission>();
         permissions.add(p1);
+
         //now add all permissions in permissions to the tester role (currently just 1)
         tester.setPermissions(permissions);
         roleRepository.save(tester);
-        permissions =  new ArrayList<Permission>();
-        for (Permission p : permissionRepository.findAll()){
+
+        //now add all permissions from the String array above (allPermissions) to the newly created permissions.
+        permissions = new ArrayList<Permission>();
+        for (Permission p : permissionRepository.findAll()) {
             permissions.add(p);
         }
-        //create logon permission and save it to the repository
+
+        //add all these permissions to the administrator role
         administrator.setPermissions(permissions);
         roleRepository.save(administrator);
-        //add all these permissions to the administrator role
-        User u1 = new User("admin","admin");
+
+        //create users and set roles
+        User u1 = new User("admin", "admin");
         List<Role> roles = new ArrayList<>();
         roles.add(administrator);
         u1.setRoles(roles);
         userRepository.save(u1);
-        User u2 = new User("user","user");
+        User u2 = new User("user", "user");
         roles = new ArrayList<>();
         roles.add(tester);
         u2.setRoles(roles);
         userRepository.save(u2);
+
         //create sequences and add these to the repository
         TestSequence ts0 = new TestSequence();
         TestSequence ts1 = new TestSequence(3, 10, 1, 3);
@@ -123,13 +126,5 @@ public class DatabaseLoader {
 
 
 
-
-
-        Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver");
-        Device d2 = new Device("bDevice2", "bType2", "bClass2", "bManufacturer2", "bDriver2");
-        d1.setIsUsed();
-        d2.setDisabled();
-        deviceRepository.save(d1);
-        deviceRepository.save(d2);
     }
 }

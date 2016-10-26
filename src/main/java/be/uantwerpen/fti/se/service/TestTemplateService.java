@@ -28,6 +28,7 @@ public class TestTemplateService {
             //html page still needs to support the editing of multiple attributes
             //tempTestTemplate.setTemplateDescription(testTemplate.getTemplateDescription());
             tempTestTemplate.setDescription(testTemplate.getDescription());
+            tempTestTemplate.setTestSequences(testTemplate.getTestSequences());
             tempTestTemplate.setName(testTemplate.getName());
             tempTestTemplate.setSeqCount(testTemplate.getSeqCount());
             testTemplateRepository.save(tempTestTemplate);

@@ -1,6 +1,7 @@
 package be.uantwerpen.fti.se.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by abdil on 20/10/2016.
@@ -13,14 +14,20 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     private String description;
     private int seqCount;
 
-    /*
     @OneToMany
     @JoinTable(
             name="TEMPLATE_SEQUENCE",
             joinColumns={@JoinColumn(name="TEMPLATE_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="SEQUENCE_ID", referencedColumnName="ID")})
     private List<TestSequence> testSequences;
-    */
+
+    public List<TestSequence> getTestSequences() {
+        return testSequences;
+    }
+
+    public void setTestSequences(List<TestSequence> testSequences) {
+        this.testSequences = testSequences;
+    }
 
     public String getName() {
         return name;

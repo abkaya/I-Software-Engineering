@@ -33,6 +33,7 @@ public class UserController {
         model.addAttribute("usersActiveSettings","active");
         return "users-list";
     }
+
     @RequestMapping(value="/users/put", method= RequestMethod.GET)
     public String viewCreateUser(final ModelMap model){
         model.addAttribute("allRoles", roleRepository.findAll());
@@ -41,6 +42,7 @@ public class UserController {
         model.addAttribute("usersActiveSettings","active");
         return "users-manage";
     }
+
     @RequestMapping(value="/users/{id}", method= RequestMethod.GET)
     public String viewEditUser(@PathVariable Long id, final ModelMap model){
         model.addAttribute("allRoles", roleRepository.findAll());
@@ -62,7 +64,6 @@ public class UserController {
         return "redirect:/users";
     }
 
-
     @RequestMapping(value="/users/{id}/delete")
     public String deleteUser(@PathVariable Long id, final ModelMap model){
         userRepository.delete(id);
@@ -71,6 +72,4 @@ public class UserController {
         model.addAttribute("usersActiveSettings","active");
         return "redirect:/users";
     }
-
-
 }

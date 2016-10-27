@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#(sequence.management)')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage() {
+        var options = {
+            valueNames: ['difficulty']
+        };
+        var testSequenceList = new List('testSequence-list', options);
+    }
+</script>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="content">
+
+        <div id="testSequence-list">
+            <input class="search" placeholder="Search" />
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{sequence.name}">Sequence Name</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <!-- IMPORTANT, class="list" have to be at tbody -->
+                <tbody class="list">
+                <tr th:each="testSequence : ${allTestSequences}">
+                    <td class="difficulty" th:value="${testSequence}" th:text="${testSequence.difficulty}">Difficulty</td>
+                    <td>
+                        <a th:href="@{/testSequence/{id}/(id=${testSequence.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                        <a th:href="@{/testSequence/{id}/delete(id=${testSequence.id})}"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <a href="/testSequences/put" class="btn btn-primary" th:text="#{create.testSequence}">Create test sequence</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

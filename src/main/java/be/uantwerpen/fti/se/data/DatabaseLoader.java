@@ -95,14 +95,15 @@ public class DatabaseLoader {
         testSequenceRepository.save(ts4);
 
         //test creating a template and adding it to the repo
-        TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", 0);
-        TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.", 0);
-        TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.", 0);
-        TestTemplate t4 = new TestTemplate("Template_0x04", "Brief description of the template.", 0);
-        TestTemplate t5 = new TestTemplate("Template_0x05", "Brief description of the template.", 0);
-        TestTemplate t6 = new TestTemplate("Template_0x06", "Brief description of the template.", 0);
-        TestTemplate t7 = new TestTemplate("Template_0x07", "Brief description of the template.", 0);
-        TestTemplate t8 = new TestTemplate("Template_0x08", "Brief description of the template.", 0);
+        TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.");
+        TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.");
+        TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.");
+        TestTemplate t4 = new TestTemplate("Template_0x04", "Brief description of the template.");
+        TestTemplate t5 = new TestTemplate("Template_0x05", "Brief description of the template.");
+        TestTemplate t6 = new TestTemplate("Template_0x06", "Brief description of the template.");
+        TestTemplate t7 = new TestTemplate("Template_0x07", "Brief description of the template.");
+        TestTemplate t8 = new TestTemplate("Template_0x08_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. CHANGES WILL NOT BE SAVED");
+        t8.setEditable(false);
 
         List<TestSequence> testSequences = new ArrayList<TestSequence>();
         testSequences.add(ts1);

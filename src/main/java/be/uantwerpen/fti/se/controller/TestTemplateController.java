@@ -26,26 +26,29 @@ public class TestTemplateController {
     @Autowired
     private TestSequenceRepository testSequenceRepository;
 
-    @RequestMapping(value="/tests", method = RequestMethod.GET)
-    public String showTestTemplates(final ModelMap model){
-        model.addAttribute("allTestTemplates", testTemplateRepository.findAll());
+    @RequestMapping(value = "/tests", method = RequestMethod.GET)
+    public String showTestTemplates(final ModelMap model) {
+        //findAll is edited in the service, so it would refresh the number of tests per test template
+        model.addAttribute("allTestTemplates", testTemplateService.findAll());
         //Set the navigation button Test Management to active
-        model.addAttribute("testsActiveSettings","active");
+        model.addAttribute("testsActiveSettings", "active");
         return "testTemplates-list";
     }
 
-    @RequestMapping(value="/tests/put", method= RequestMethod.GET)
-    public String viewCreateTestTemplate(final ModelMap model){
+    @RequestMapping(value = "/tests/put", method = RequestMethod.GET)
+    public String viewCreateTestTemplate(final ModelMap model) {
         model.addAttribute("allTestSequences", testSequenceRepository.findAll());
-        model.addAttribute("testTemplate",new TestTemplate("","",0));
+        model.addAttribute("testTemplate", new TestTemplate("", ""));
         //Set the navigation button Tests Management to active
-        model.addAttribute("testsActiveSettings","active");
+        model.addAttribute("testsActiveSettings", "active");
         return "testTemplates-manage";
     }
-    @RequestMapping(value="/tests/{id}", method= RequestMethod.GET)
-    public String viewEditTestTemplate(@PathVariable Long id, final ModelMap model){
-        model.addAttribute("allTestSequences", testSequenceRepository.findAll());
-        model.addAttribute("testTemplate",testTemplateRepository.findOne(id));
+
+    @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET)
+    public String viewEditTestTemplate(@PathVariable Long id, final ModelMap model) {
+        if (testTemplateRepository.findOne(id).isEditable()) {
+            model.addAttribute("allTestSequences", testSequenceRepository.findAll());
+            model.addAttribute("testTemplate", testTemplateRepository.findOne(id));
 
         /*
         //used to check whether or not the partial edits caused other attributes to turn to null - now fixed
@@ -53,29 +56,36 @@ public class TestTemplateController {
             System.out.println(testTemplateRepository.findOne(id).getTemplateDescription());
         }*/
 
-        //Set the navigation button Test Management to active
-        model.addAttribute("testsActiveSettings","active");
-        return "testTemplates-manage";
-    }
+            //Set the navigation button Test Management to active
+            model.addAttribute("testsActiveSettings", "active");
+            return "testTemplates-manage";
+        }else{
+            return "redirect:/tests";
+    }}
 
-    @RequestMapping(value={"/tests/", "/tests/{id}"}, method= RequestMethod.POST)
-    public String addTestTemplate(@Valid TestTemplate testTemplate, BindingResult result, final ModelMap model){
-        if(result.hasErrors()){
+    @RequestMapping(value = {"/tests/", "/tests/{id}"}, method = RequestMethod.POST)
+    public String addTestTemplate(@Valid TestTemplate testTemplate, BindingResult result, final ModelMap model) {
+        if (result.hasErrors()) {
             model.addAttribute("allTestSequences", testSequenceRepository.findAll());
             return "testTemplates-manage";
         }
-        testTemplateService.saveSomeAttributes(testTemplate);
+        if (testTemplate.isEditable()) {
+            testTemplateService.saveSomeAttributes(testTemplate);
+
+        }
         //Set the navigation button Test Management to active
-        model.addAttribute("testsActiveSettings","active");
+        model.addAttribute("testsActiveSettings", "active");
         return "redirect:/tests";
     }
 
-    @RequestMapping(value="/tests/{id}/delete")
-    public String deleteTestTemplate(@PathVariable Long id, final ModelMap model){
-        testTemplateRepository.delete(id);
-        model.clear();
+    @RequestMapping(value = "/tests/{id}/delete")
+    public String deleteTestTemplate(@PathVariable Long id, final ModelMap model) {
+        if (testTemplateRepository.findOne(id).isEditable()) {
+            testTemplateRepository.delete(id);
+            model.clear();
+        }
         //Set the navigation button Tests Management to active
-        model.addAttribute("testsActiveSettings","active");
+        model.addAttribute("testsActiveSettings", "active");
         return "redirect:/tests";
     }
 }

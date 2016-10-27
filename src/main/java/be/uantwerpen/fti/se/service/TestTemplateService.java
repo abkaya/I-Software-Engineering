@@ -13,27 +13,38 @@ import org.springframework.stereotype.Service;
 public class TestTemplateService {
     @Autowired
     private TestTemplateRepository testTemplateRepository;
-    public Iterable<TestTemplate> findAll(){ return this.testTemplateRepository.findAll();}
 
-    public void add(final TestTemplate testTemplate) {this.testTemplateRepository.save(testTemplate);}
-    public void delete(Long id){this.testTemplateRepository.delete(id);}
+    public Iterable<TestTemplate> findAll() {
+        for (TestTemplate tt : this.testTemplateRepository.findAll()) {
+            tt.setSeqCount();
+        }
+        return this.testTemplateRepository.findAll();
+    }
+
+    public void add(final TestTemplate testTemplate) {
+        this.testTemplateRepository.save(testTemplate);
+    }
+
+    public void delete(Long id) {
+        this.testTemplateRepository.delete(id);
+    }
 
     public TestTemplate findByTestTemplateName(String name) {
         return testTemplateRepository.findByName(name);
     }
 
     public void saveSomeAttributes(TestTemplate testTemplate) {
-        TestTemplate tempTestTemplate = testTemplate.getId()==null?null:findOne(testTemplate.getId());
-        if (tempTestTemplate != null){
+        TestTemplate tempTestTemplate = testTemplate.getId() == null ? null : findOne(testTemplate.getId());
+        if (tempTestTemplate != null) {
             //html page still needs to support the editing of multiple attributes
             //tempTestTemplate.setTemplateDescription(testTemplate.getTemplateDescription());
             tempTestTemplate.setDescription(testTemplate.getDescription());
             tempTestTemplate.setTestSequences(testTemplate.getTestSequences());
+            tempTestTemplate.setEditable(testTemplate.isEditable());
             tempTestTemplate.setName(testTemplate.getName());
-            tempTestTemplate.setSeqCount(testTemplate.getSeqCount());
+            tempTestTemplate.setSeqCount();
             testTemplateRepository.save(tempTestTemplate);
-        }
-        else{
+        } else {
             testTemplateRepository.save(testTemplate);
         }
     }

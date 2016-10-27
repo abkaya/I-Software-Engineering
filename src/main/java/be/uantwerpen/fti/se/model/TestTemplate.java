@@ -12,7 +12,8 @@ import java.util.List;
 public class TestTemplate extends MyAbstractPersistable<Long>{
     private String name;
     private String description;
-    private int seqCount;
+    private int seqCount=0;
+    private boolean editable=true;
 
     @ManyToMany
     @JoinTable(
@@ -49,8 +50,16 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
         return seqCount;
     }
 
-    public void setSeqCount(int seqCount) {
-        this.seqCount = seqCount;
+    public void setSeqCount() {
+        this.seqCount = testSequences.size();;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 
     /**
@@ -58,9 +67,8 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
      *
      * @param name          The template's name
      * @param description   Template description by admin
-     * @param seqCount      Number of tests in this template
      */
-    public TestTemplate(String name, String description, int seqCount) {
+    public TestTemplate(String name, String description) {
         this.name = name;
         this.description = description;
         this.seqCount = seqCount;

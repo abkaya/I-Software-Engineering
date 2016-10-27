@@ -26,14 +26,20 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th th:text="#{testTemplate.id}">TemplateID</th>
                     <th th:text="#{template.name}">Template Name</th>
+                    <th th:text="#{testTemplate.seqCount}">Seq Count</th>
+                    <th th:text="#{template.editable}">Editable</th>
                     <th></th>
                 </tr>
                 </thead>
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
                 <tr th:each="testTemplate : ${allTestTemplates}">
+                    <td class="id" th:value="${id}" th:text="${testTemplate.id}">templateId</td>
                     <td class="name" th:value="${testTemplate}" th:text="${testTemplate.name}">Name</td>
+                    <td class="id" th:value="${seqCount}" th:text="${testTemplate.seqCount}"># Test Sequences</td>
+                    <td class="name" th:value="${editable}" th:text="${testTemplate.editable}">editable</td>
                     <td>
                         <a th:href="@{/tests/{id}/(id=${testTemplate.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                         <a th:href="@{/tests/{id}/delete(id=${testTemplate.id})}"><span class="glyphicon glyphicon-trash"></span></a>

@@ -14,6 +14,8 @@ public class TestSequence extends MyAbstractPersistable<Long>{
     private int numberOfTargets;
     private int radiusSmall;
     private int radiusBig;
+    private double distanceTargets;
+    private float maxErrorRate;         //Between 0 and 1
     ArrayList<ArrayList<Integer>> sequences;
 
     @ManyToMany(mappedBy="testSequences")
@@ -25,7 +27,9 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         this.numberOfTargets = 11;
         this.radiusSmall = 33;
         this.radiusBig = 250;
+        this.distanceTargets = 360/numberOfTargets;
         this.sequences = new ArrayList<ArrayList<Integer>>();
+        this.maxErrorRate = 1;
     }
 
     /**
@@ -39,7 +43,9 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         this.numberOfTargets = numberOfTargets;
         this.radiusSmall = 33;
         this.radiusBig = 250;
+        this.distanceTargets = 360/numberOfTargets;
         this.sequences = new ArrayList<ArrayList<Integer>>();
+        this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
     }
 
     /**
@@ -55,7 +61,96 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         this.numberOfTargets = numberOfTargets;
         this.radiusSmall = radiusSmall;
         this.radiusBig = radiusBig;
+        this.distanceTargets = 360/numberOfTargets;
         this.sequences = new ArrayList<ArrayList<Integer>>();
+        this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
+    }
+
+    /**
+     * Constructor with parameters numberOfTargets, radiusSmall and radiusBig
+     *
+     * @param numberOfTargets: choice the number of targets you want (11-25)
+     * @param radiusSmall:     choice the radius of the small circles
+     * @param radiusBig:       choice the radius of the big circle
+     */
+    public TestSequence(int numberOfTargets, int radiusSmall, int radiusBig){
+        this.numberOfTargets = numberOfTargets;
+        this.radiusSmall = radiusSmall;
+        this.radiusBig = radiusBig;
+        this.distanceTargets = 360/numberOfTargets;
+        this.sequences = new ArrayList<ArrayList<Integer>>();
+        this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
+    }
+
+    /**
+     * Constructor with parameters distanceTargets, radiusSmall and radiusBig
+     *
+     * @param distanceTargets: choice the distance between the targets you want
+     * @param radiusSmall:     choice the radius of the small circles
+     * @param radiusBig:       choice the radius of the big circle
+     */
+    public TestSequence(double distanceTargets, int radiusSmall, int radiusBig){
+        this.distanceTargets = distanceTargets;
+        this.radiusSmall = radiusSmall;
+        this.radiusBig = radiusBig;
+        this.numberOfTargets = (int) (360/distanceTargets);
+        this.sequences = new ArrayList<ArrayList<Integer>>();
+        this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
+    }
+
+    /**
+     * Calculate the max error rate
+     */
+    public void CalculateMaxErrorRate(){
+        this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
+    }
+
+    /**
+     * Calculate the number of targets
+     */
+    public void CalculateNumberOfTargets(){
+        numberOfTargets = (int) (360/distanceTargets);
+    }
+
+    /**
+     * Calculate the number of targets
+     */
+    public void CalculateDistanceTargets(){
+        numberOfTargets = 360/numberOfTargets;
+    }
+
+    /**
+     * Calculate the difficulty  with parameters radiusSmall, radiusBig and numberOfTargets
+     */
+    public void CalculateDifficulty(){
+        int dif = 0;
+        if(radiusSmall < 3){
+            radiusSmall = 3;
+            difficulty = 10;
+        }
+        else if (radiusSmall > 30){
+            difficulty = 1;
+        }
+        else{
+            int mod = radiusSmall % 3;
+            if(mod == 0){
+                dif = 0;
+            }
+            else {
+                dif = 3 - mod;
+            }
+            int calculation = (radiusSmall + dif) / 3;
+            difficulty = 11-calculation;
+        }
+        if((numberOfTargets > 20) && (difficulty < 10)){
+            difficulty++;
+        }
+        if((radiusBig > 250)&& (difficulty < 10)){
+            difficulty++;
+        }
+        if((radiusBig < 200)&& (difficulty > 1)){
+            difficulty--;
+        }
     }
 
     /**
@@ -64,7 +159,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      * @return the radius of the targets
      */
     public int determineRadiusSmall() {
-        int initialradius = 36;
+        int initialradius = 33;
         if (difficulty > 10) {
             radiusSmall = 3;
             return 3;

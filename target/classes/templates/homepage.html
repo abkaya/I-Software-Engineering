@@ -12,12 +12,6 @@
 
     <span th:text="#{homepage.hello}"/> <br/>
 
-    <div sec:authorize="hasRole('secret-message')">
-        <span th:text="#{homepage.secret-message}"/>
-    </div>
-
-
-
 </div>
 </body>
 </html>

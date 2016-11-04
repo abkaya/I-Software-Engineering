@@ -17,9 +17,10 @@ public class DeviceService {
     public void add(final Device device){ this.deviceRepository.save(device);}
     public void delete(Long id) {
         Device device = this.deviceRepository.findOne(id);
-        if (device.isUsed()) {
+        if (device.isUsed() && !device.isInUse()) {
             device.setDisabled();
-        } else {
+        } else if(device.isInUse()) {//warn user of error
+        }else{
             this.deviceRepository.delete(id);
         }
     }
@@ -28,7 +29,7 @@ public class DeviceService {
         Device tempDevice = device.getId() == null ? null : deviceRepository.findOne(device.getId());
         if (tempDevice != null) {
             tempDevice.setDeviceName(device.getDeviceName());
-            tempDevice.setDeviceClass(device.getDeviceClass());
+            tempDevice.setVersion(device.getVersion());
             tempDevice.setType(device.getType());
             tempDevice.setDriver(device.getDriver());
             tempDevice.setManufacturer(device.getManufacturer());

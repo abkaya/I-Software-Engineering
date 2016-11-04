@@ -11,10 +11,11 @@ public class Device extends MyAbstractPersistable<Long> {
 
     private String deviceName;
     private String type;
-    private String deviceClass;
+    private String version;
     private String manufacturer;
     private String driver;
     private boolean used;
+    private boolean inUse;
     private boolean disabled;
 
     public Device(){
@@ -22,13 +23,14 @@ public class Device extends MyAbstractPersistable<Long> {
         disabled = false;
     }
 
-    public Device(String deviceName, String type, String deviceClass, String manufacturer, String driver){
+    public Device(String deviceName, String type, String version, String manufacturer, String driver){
         this.deviceName = deviceName;
         this.type = type;
-        this.deviceClass = deviceClass;
+        this.version = version;
         this.manufacturer = manufacturer;
         this.driver = driver;
         used = false;
+        inUse = false;
         disabled = false;
     }
 
@@ -48,12 +50,12 @@ public class Device extends MyAbstractPersistable<Long> {
         this.type = type;
     }
 
-    public String getDeviceClass() {
-        return deviceClass;
+    public String getVersion() {
+        return version;
     }
 
-    public void setDeviceClass(String deviceClass) {
-        this.deviceClass = deviceClass;
+    public void setVersion(String deviceClass) {
+        this.version = version;
     }
 
     public String getManufacturer() {
@@ -99,6 +101,12 @@ public class Device extends MyAbstractPersistable<Long> {
     public void setEnabled()    {
         disabled = false;
     }
+
+    public boolean isInUse() {return inUse;}
+
+    public void setIsInUse() {this.inUse = true; this.setIsUsed();}
+
+    public void setIsNotInUse() {this.inUse = false;}
 
     @Override
     public boolean equals(Object o) {

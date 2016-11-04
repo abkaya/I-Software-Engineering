@@ -39,9 +39,17 @@ public class DeviceController {
 
     @RequestMapping(value = "/devices/{id}", method = RequestMethod.GET)
     public String viewEditDevice(@PathVariable Long id, final ModelMap model)  {
-        model.addAttribute("device",deviceRepository.findOne(id));
-        model.addAttribute("devicesActiveSettings","active");
-        return "devices-manage";
+        Device device = deviceRepository.findOne(id);
+        if(device.isUsed() || device.isInUse())
+        {
+            model.addAttribute("allDevices", deviceRepository.findAll());
+            model.addAttribute("devicesActiveSettings","active");
+            return "devices-list";
+        }else {
+            model.addAttribute("device", deviceRepository.findOne(id));
+            model.addAttribute("devicesActiveSettings", "active");
+            return "devices-manage";
+        }
     }
 
     @RequestMapping(value = {"/devices/", "/devices/{id}"}, method = RequestMethod.POST)

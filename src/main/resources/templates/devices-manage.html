@@ -29,10 +29,10 @@
             <input class="form-control" type="text" th:field="*{type}" />
         </div>
 
-        <div class="form-group" th:classappend="${#fields.hasErrors('deviceClass')}?'has-error': ''">
-            <label class="control-label" th:text="#{device.class}">Class</label>
-            <span class="control-label" th:if="${#fields.hasErrors('deviceClass')}" th:errors="*{deviceClass}">Device class Error</span>
-            <input class="form-control" type="text" th:field="*{deviceClass}" />
+        <div class="form-group" th:classappend="${#fields.hasErrors('version')}?'has-error': ''">
+            <label class="control-label" th:text="#{version}">Version</label>
+            <span class="control-label" th:if="${#fields.hasErrors('version')}" th:errors="*{version}">Device version Error</span>
+            <input class="form-control" type="text" th:field="*{version}" />
         </div>
 
         <div class="form-group" th:classappend="${#fields.hasErrors('manufacturer')}?'has-error': ''">

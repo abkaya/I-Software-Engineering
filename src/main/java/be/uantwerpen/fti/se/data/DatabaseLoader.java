@@ -39,7 +39,7 @@ public class DatabaseLoader {
     private void initDatabase() {
         //Array of permissions, to be saved in p and later to be assigned to the administrator role.
         String[] allPermissions = {"user-view", "user-create", "user-edit", "user-delete",
-                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-view", "device-create", "device-edit", "devioe-delete"};
+                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-view", "device-create", "device-edit", "device-delete"};
         for (String p : allPermissions) {
             permissionRepository.save(new Permission(p));
         }
@@ -129,11 +129,16 @@ public class DatabaseLoader {
 
     //voeg devices toe
         Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver");
-        Device d2 = new Device("bDevice2", "bType2", "bClass2", "bManufacturer2", "bDriver2");
+        Device d2 = new Device("aDevice2", "aType2", "aClass2", "aManufacturer2", "bDriver2");
+        Device d3 = new Device("aDevice3", "aType3", "aClass3", "aManufacturer3", "aDriver3");
+        Device d4 = new Device("aDevice4", "aType4", "aClass4", "aManufacturer4", "aDriver4");
         d1.setIsUsed();
+        d2.setIsUsed();
         d2.setDisabled();
+        d3.setIsInUse();
         deviceRepository.save(d1);
         deviceRepository.save(d2);
-
+        deviceRepository.save(d3);
+        deviceRepository.save(d4);
     }
 }

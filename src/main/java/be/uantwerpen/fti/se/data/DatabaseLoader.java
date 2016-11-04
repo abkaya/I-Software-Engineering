@@ -128,10 +128,10 @@ public class DatabaseLoader {
         testTemplateRepository.save(t8);
 
     //voeg devices toe
-        Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver");
-        Device d2 = new Device("aDevice2", "aType2", "aClass2", "aManufacturer2", "bDriver2");
-        Device d3 = new Device("aDevice3", "aType3", "aClass3", "aManufacturer3", "aDriver3");
-        Device d4 = new Device("aDevice4", "aType4", "aClass4", "aManufacturer4", "aDriver4");
+        Device d1 = new Device("aDevice", "aType", "aVersion", "aManufacturer", "aDriver");
+        Device d2 = new Device("aDevice2", "aType2", "aVersion2", "aManufacturer2", "aDriver2");
+        Device d3 = new Device("aDevice3", "aType3", "aVersion3", "aManufacturer3", "aDriver3");
+        Device d4 = new Device("aDevice4", "aType4", "aVersion4", "aManufacturer4", "aDriver4");
         d1.setIsUsed();
         d2.setIsUsed();
         d2.setDisabled();

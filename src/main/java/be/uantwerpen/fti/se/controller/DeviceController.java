@@ -42,9 +42,10 @@ public class DeviceController {
         Device device = deviceRepository.findOne(id);
         if(device.isUsed() || device.isInUse())
         {
-            model.addAttribute("allDevices", deviceRepository.findAll());
-            model.addAttribute("devicesActiveSettings","active");
-            return "devices-list";
+            //model.addAttribute("allDevices", deviceRepository.findAll());
+            //model.addAttribute("devicesActiveSettings","active");
+            //return "devices-list";
+            return "redirect:/devices";
         }else {
             model.addAttribute("device", deviceRepository.findOne(id));
             model.addAttribute("devicesActiveSettings", "active");
@@ -65,8 +66,8 @@ public class DeviceController {
     @RequestMapping(value = "/devices/{id}/delete")
     public String deleteDevice(@PathVariable Long id, final ModelMap model) {
         deviceService.delete(id);
-        model.clear();
+        model.addAttribute("allDevices", deviceRepository.findAll());
         model.addAttribute("devicesActiveSettings","active");
-        return "redirect:/devices";
+        return "devices-list";
     }
 }

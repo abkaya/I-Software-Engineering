@@ -18,7 +18,7 @@ public class DeviceService {
     public void delete(Long id) {
         Device device = this.deviceRepository.findOne(id);
         if (device.isUsed() && !device.isInUse()) {
-            device.setDisabled();
+            this.deviceRepository.findOne(id).setDisabled();
         } else if(device.isInUse()) {//warn user of error
         }else{
             this.deviceRepository.delete(id);

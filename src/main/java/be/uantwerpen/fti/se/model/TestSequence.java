@@ -109,20 +109,20 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      * Calculate the number of targets
      */
     public void CalculateNumberOfTargets(){
-        numberOfTargets = (int) (360/distanceTargets);
+        this.numberOfTargets = (int) (360/distanceTargets);
     }
 
     /**
      * Calculate the number of targets
      */
     public void CalculateDistanceTargets(){
-        numberOfTargets = 360/numberOfTargets;
+        this.numberOfTargets = 360/numberOfTargets;
     }
 
     /**
      * Calculate the difficulty  with parameters radiusSmall, radiusBig and numberOfTargets
      */
-    public void CalculateDifficulty(){
+    public int CalculateDifficulty(){
         int dif = 0;
         if(radiusSmall < 3){
             radiusSmall = 3;
@@ -151,6 +151,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         if((radiusBig < 200)&& (difficulty > 1)){
             difficulty--;
         }
+        return difficulty;
     }
 
     /**
@@ -183,6 +184,25 @@ public class TestSequence extends MyAbstractPersistable<Long>{
             radiusBig = initialradius + (difficulty * 15);
             return initialradius + (difficulty * 15);
         }
+    }
+
+    /**
+     * Get the maximum error rate
+     *
+     * @return the maximum error rate
+     */
+    public float getmaxErrorRate(){
+        return maxErrorRate;
+    }
+
+    /**
+     * set the maximum error rate
+     *
+     * @param maxErrorRate: the new maxErrorRate
+     */
+    public void setMaxErrorRate(float maxErrorRate)
+    {
+        this.maxErrorRate = maxErrorRate;
     }
 
     /**

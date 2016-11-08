@@ -39,7 +39,7 @@ public class DatabaseLoader {
     private void initDatabase() {
         //Array of permissions, to be saved in p and later to be assigned to the administrator role.
         String[] allPermissions = {"user-view", "user-create", "user-edit", "user-delete",
-                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-view", "device-create", "device-edit", "device-delete"};
+                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-create", "device-edit", "device-delete"};
         for (String p : allPermissions) {
             permissionRepository.save(new Permission(p));
         }
@@ -48,6 +48,9 @@ public class DatabaseLoader {
         Permission p1 = new Permission("logon");
         permissionRepository.save(p1);
 
+        Permission p2 = new Permission("device-view");
+        permissionRepository.save(p2);
+
         //create admin and tester roles
         Role administrator = new Role("Administrator");
         Role tester = new Role("Tester");
@@ -55,6 +58,7 @@ public class DatabaseLoader {
         //add permission "logon" to the newly created list permissions.
         List<Permission> permissions = new ArrayList<Permission>();
         permissions.add(p1);
+        permissions.add(p2);
 
         //now add all permissions in permissions to the tester role (currently just 1)
         tester.setPermissions(permissions);

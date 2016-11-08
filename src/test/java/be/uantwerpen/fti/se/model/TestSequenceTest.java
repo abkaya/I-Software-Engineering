@@ -1,10 +1,14 @@
 package be.uantwerpen.fti.se.model;
 
+import org.hibernate.hql.internal.ast.InvalidPathException;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import be.uantwerpen.fti.se.model.TestSequence;
+import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
+
+import java.security.InvalidParameterException;
 
 /**
  * Created by Kevin on 5/11/2016.
@@ -18,7 +22,7 @@ public class TestSequenceTest {
     }
 
     @Test
-    public void testRadiusSmall(){
+    public void testRadiusSmall() throws InvalidValue {
         testSequence = new TestSequence(20,21);
         assertEquals(3,testSequence.determineRadiusSmall());
         testSequence.setDifficulty(1);
@@ -85,5 +89,10 @@ public class TestSequenceTest {
         testSequence = new TestSequence(10,15);
         testSequence.CalculateMaxErrorRate();
         assertEquals(0.05,testSequence.getmaxErrorRate(),0.0001);
+    }
+
+    @Test(expected = InvalidParameterException.class)
+    public void testHighDifficulty()  {
+        testSequence.setDifficulty(11);
     }
 }

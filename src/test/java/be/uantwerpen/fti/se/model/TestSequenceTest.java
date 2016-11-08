@@ -90,9 +90,4 @@ public class TestSequenceTest {
         testSequence.CalculateMaxErrorRate();
         assertEquals(0.05,testSequence.getmaxErrorRate(),0.0001);
     }
-
-    @Test(expected = InvalidParameterException.class)
-    public void testHighDifficulty()  {
-        testSequence.setDifficulty(11);
-    }
 }

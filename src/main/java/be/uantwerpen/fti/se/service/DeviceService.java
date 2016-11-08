@@ -32,7 +32,7 @@ public class DeviceService {
             tempDevice.setVersion(device.getVersion());
             tempDevice.setType(device.getType());
             tempDevice.setDriver(device.getDriver());
-            tempDevice.setManufacturer(device.getManufacturer());
+            tempDevice.setVersion(device.getVersion());
             if(device.isUsed()) {
                 tempDevice.setIsUsed();
             } else {

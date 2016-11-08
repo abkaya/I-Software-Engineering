@@ -54,7 +54,7 @@ public class Device extends MyAbstractPersistable<Long> {
         return version;
     }
 
-    public void setVersion(String deviceClass) {
+    public void setVersion(String version) {
         this.version = version;
     }
 

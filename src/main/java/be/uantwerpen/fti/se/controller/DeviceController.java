@@ -40,7 +40,7 @@ public class DeviceController {
     @RequestMapping(value = "/devices/{id}", method = RequestMethod.GET)
     public String viewEditDevice(@PathVariable Long id, final ModelMap model)  {
         Device device = deviceRepository.findOne(id);
-        if(device.isUsed() || device.isInUse())
+        if(device.isUsed() || device.isInUse() || device.isDisabled())
         {
             //model.addAttribute("allDevices", deviceRepository.findAll());
             //model.addAttribute("devicesActiveSettings","active");
@@ -58,7 +58,23 @@ public class DeviceController {
         if(result.hasErrors())  {
             return "devices-manage";
         }
-        deviceRepository.save(device);
+        if(!device.getDeviceName().isEmpty() && !device.getVersion().isEmpty() && !device.getType().isEmpty() && !device.getDriver().isEmpty() && !device.getManufacturer().isEmpty())
+        {
+            Boolean duplicate = false;
+            for(Device devices : deviceRepository.findAll()) {
+                if (device.getDeviceName().equals(devices.getDeviceName())) {
+                    if (device.getVersion().equals(devices.getVersion())) {
+                        duplicate = true;
+                    }
+                }
+            }
+
+            if(duplicate){
+
+            }else {
+                deviceRepository.save(device);
+            }
+        }
         model.addAttribute("devicesActiveSettings","active");
         return "redirect:/devices";
     }

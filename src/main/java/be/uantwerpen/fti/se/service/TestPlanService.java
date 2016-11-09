@@ -1,3 +1,4 @@
+
 package be.uantwerpen.fti.se.service;
 
 import be.uantwerpen.fti.se.model.TestPlan;
@@ -16,7 +17,9 @@ public class TestPlanService {
     private TestPlanRepository testPlanRepository;
 
     public Iterable<TestPlan> findByUserName(User user){
-        return testPlanRepository.findByUser(user);
+
+
+        return testPlanRepository.findByUsers(user);
 
     }
 

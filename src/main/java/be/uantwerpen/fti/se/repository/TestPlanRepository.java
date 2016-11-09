@@ -1,3 +1,4 @@
+
 package be.uantwerpen.fti.se.repository;
 
 import be.uantwerpen.fti.se.model.TestPlan;
@@ -9,5 +10,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 
 public interface TestPlanRepository extends CrudRepository<TestPlan, Long> {
-    Iterable<TestPlan> findByUser(User user);
+    Iterable<TestPlan> findByUsers(User user);
 }

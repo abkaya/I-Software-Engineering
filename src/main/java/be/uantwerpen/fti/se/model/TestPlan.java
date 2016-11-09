@@ -1,3 +1,4 @@
+
 package be.uantwerpen.fti.se.model;
 
 import javax.persistence.*;
@@ -37,24 +38,13 @@ public class TestPlan extends MyAbstractPersistable<Long>{
             inverseJoinColumns={@JoinColumn(name="DEVICE_ID", referencedColumnName="ID")})
     private List<Device> devices;
 
-    public TestPlan(String name) {
-        this.name = name;
-        this.startDate = "";
-        this.endDate = "";
-        this.description = "";
-        this.testTemplates = new ArrayList<>();
-        this.users = new ArrayList<>();
-        this.devices = new ArrayList<>();
-    }
+    public TestPlan() {}
 
-    public TestPlan(String name, String startDate, String endDate, String description, List<TestTemplate> testTemplates, List<User> users, List<Device> devices) {
+    public TestPlan(String name, String startDate, String endDate, String description) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-        this.testTemplates = testTemplates;
-        this.users = users;
-        this.devices = devices;
     }
 
     public String getName() {

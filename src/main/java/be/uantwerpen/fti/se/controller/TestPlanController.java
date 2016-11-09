@@ -1,10 +1,13 @@
+
 package be.uantwerpen.fti.se.controller;
+
 
 import be.uantwerpen.fti.se.model.TestPlan;
 import be.uantwerpen.fti.se.repository.DeviceRepository;
 import be.uantwerpen.fti.se.repository.TestPlanRepository;
 import be.uantwerpen.fti.se.repository.TestTemplateRepository;
 import be.uantwerpen.fti.se.repository.UserRepository;
+import be.uantwerpen.fti.se.service.TestPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,20 +27,25 @@ import java.security.Principal;
 public class TestPlanController {
 
     @Autowired
+    private TestPlanService testPlanService;
+    @Autowired
     private TestPlanRepository testPlanRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private TestTemplateRepository testTemplateRepository;
-
     @Autowired
     private DeviceRepository deviceRepository;
 
     @RequestMapping(value="/testplans", method= RequestMethod.GET)
     public String showTestplans(Principal principal, final ModelMap model){
-        model.addAttribute("allTestplans", testPlanRepository.findByUser(userRepository.findByUserName(principal.getName())));
+        System.out.printf("\n The logged user is: " + principal.getName() + "\n" );
+
+        /*
+        model.addAttribute("allTestplans", testPlanService.findByUserName(userRepository.findByUserName(principal.getName())));
+        */
+
+        model.addAttribute("allTestplans", testPlanRepository.findAll());
         return "testplans-list";
     }
 
@@ -46,7 +54,7 @@ public class TestPlanController {
         model.addAttribute("allTemplates", testTemplateRepository.findAll());
         model.addAttribute("allUsers", userRepository.findAll());
         model.addAttribute("allDevices", deviceRepository.findAll());
-        model.addAttribute("testplan",new TestPlan(""));
+        model.addAttribute("testplan",new TestPlan());
         return "testplans-manage";
     }
 

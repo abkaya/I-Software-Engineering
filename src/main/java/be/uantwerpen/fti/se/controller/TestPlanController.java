@@ -41,11 +41,12 @@ public class TestPlanController {
     public String showTestplans(Principal principal, final ModelMap model){
         System.out.printf("\n The logged user is: " + principal.getName() + "\n" );
 
-        /*
-        model.addAttribute("allTestplans", testPlanService.findByUserName(userRepository.findByUserName(principal.getName())));
-        */
 
+        model.addAttribute("allTestplans", testPlanService.findByUserName(userRepository.findByUserName(principal.getName())));
+
+        /*
         model.addAttribute("allTestplans", testPlanRepository.findAll());
+        */
         return "testplans-list";
     }
 

@@ -43,7 +43,6 @@ public class TestPlanController {
 
 
         model.addAttribute("allTestplans", testPlanService.findByUserName(userRepository.findByUserName(principal.getName())));
-
         /*
         model.addAttribute("allTestplans", testPlanRepository.findAll());
         */

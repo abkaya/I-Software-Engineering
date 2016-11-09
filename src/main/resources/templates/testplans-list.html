@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <!-- Import header -->
 <head th:replace="layout :: head (title='#{testplan.management}')"></head>
 
@@ -11,6 +11,7 @@
         };
 
         var testplansList = new List('testplans-list', options);
+
     }
 
 </script>
@@ -26,22 +27,28 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th th:text="#{name}">Name</th>
+                    <th th:text="#{testplan.name}">Name</th>
+                    <th th:text="#{testplan.startDate}">Start Date</th>
+                    <th th:text="#{testplan.endDate}">End Date</th>
+                    <th th:text="#{testplan.amountUsers}">#Users</th>
                     <th></th>
                 </tr>
                 </thead>
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
-                <tr th:each="testplan : ${allTestplans}">
+                <tr th:each="testplan : ${allTestplans}" >
                     <td class="testplanName" th:value="${testplan}" th:text="${testplan.name}">Name</td>
+                    <td class="testplanStartDate" th:value="${testplan}" th:text="${testplan.startDate}">Start Date</td>
+                    <td class="testplanEndDate" th:value="${testplan}" th:text="${testplan.endDate}">Start Date</td>
+                    <td class="testplanEndDate" th:value="${testplan}" th:text="${testplan.users.size()}"># Users</td>
                     <td>
-                        <a th:href="@{/testplans/{id}/(id=${testplan.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                        <a th:href="@{/testplans/{id}/delete(id=${testplan.id})}"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a sec:authorize="hasAuthority('testplan-edit')" th:href="@{/testplans/{id}/(id=${testplan.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                        <a sec:authorize="hasAuthority('testplan-delete')" th:href="@{/testplans/{id}/delete(id=${testplan.id})}"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <a href="/testplans/put" class="btn btn-primary" th:text="#{create.testplan}">Create Testplan</a>
+            <a sec:authorize="hasAuthority('testplan-create')" id="testplanCreate" href="/testplans/put" class="btn btn-primary" th:text="#{create.testplan}">Create Testplan</a>
         </div>
 
     </div>

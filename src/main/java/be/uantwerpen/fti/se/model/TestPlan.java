@@ -79,13 +79,16 @@ public class TestPlan extends MyAbstractPersistable<Long>{
         this.description = description;
     }
 
-
     public void setTemplates(List<TestTemplate> testTemplates) {
         this.testTemplates = testTemplates;
     }
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public int getAmountUsers() {
+        return users.size();
     }
 
     public void setUsers(List<User> users) {

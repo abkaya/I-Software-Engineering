@@ -1,7 +1,7 @@
 <!-- AUTEUR: Jan Huijghebaert -->
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <!-- Import header -->
 <head th:replace="layout :: head (title='#{device.management}')"></head>
 
@@ -49,14 +49,23 @@
                     <td class="deviceInUse" th:value="${device}" th:text="${device.inUse}">In use</td>
                     <td class="deviceDisabled" th:value="${device}" th:text="${device.disabled}">Disabled</td>
                     <td>
-                        <a th:href="@{/devices/{id}/(id=${device.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                        <a th:href="@{/devices/{id}/delete(id=${device.id})}"><span class="glyphicon glyphicon-trash"></span></a>
+                        <div sec:authorize="hasAuthority('device-edit')" role="presentation" th:class="${rolesActiveSettings}">
+                            <a th:href="@{/devices/{id}/(id=${device.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+
+                        </div>
+                        <div sec:authorize="hasAuthority('device-delete')" role="presentation" th:class="${rolesActiveSettings}">
+                            <a th:href="@{/devices/{id}/delete(id=${device.id})}"><span class="glyphicon glyphicon-trash"></span></a>
+                        </div>
+
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <a href="/devices/put" class="btn btn-primary" th:text="#{create.device}">Create device</a>
+            <div sec:authorize="hasAuthority('device-create')" role="presentation" th:class="${rolesActiveSettings}">
+                <a href="/devices/put" class="btn btn-primary" th:text="#{create.device}">Create device</a>
+            </div>
+
         </div>
     </div>
 </div>

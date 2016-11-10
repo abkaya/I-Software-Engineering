@@ -20,14 +20,7 @@ public class TestPlanService {
     private TestPlanRepository testPlanRepository;
 
     public Iterable<TestPlan> findByUserName(User user){
-        boolean admin=false;
-        for (Iterator<Role> iter = user.getRoles().iterator(); iter.hasNext(); ) {
-            Role userRole = iter.next();
-            if(userRole.getName() == "Administrator"){
-                admin=true;
-            }
-        }
-        if(admin){
+        if(user.isAdmin()){
             return testPlanRepository.findAll();
         }
         else{

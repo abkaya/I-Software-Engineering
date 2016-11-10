@@ -54,7 +54,7 @@
 
                     <!-- DROPDOWN FOR TEST MANAGEMENT-->
                     <li sec:authorize="hasAuthority('test-view')" role="presentation" th:class="${testsActiveSettings}" class = "dropdown">
-                        <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" th:text="#{test.management}">
+                        <a href = "#" class = "dropdown-toggle" style="padding-left: 30px; padding-right:30px;" data-toggle = "dropdown" th:text="#{test.management}">
                             Test Management
                             <b class="caret"></b>
                         </a>

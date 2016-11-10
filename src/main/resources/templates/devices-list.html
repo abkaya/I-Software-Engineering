@@ -50,7 +50,7 @@
                     <td class="deviceDisabled" th:value="${device}" th:text="${device.disabled}">Disabled</td>
                     <td>
                         <div sec:authorize="hasAuthority('device-edit')" role="presentation" th:class="${rolesActiveSettings}">
-                            <a th:href="@{/devices/{id}/(id=${device.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                            <a th:href="@{/devices/{id}/(id=${device.id})}"><span class="glyphicon glyphicon-edit"></span></a>
 
                         </div>
                         <div sec:authorize="hasAuthority('device-delete')" role="presentation" th:class="${rolesActiveSettings}">

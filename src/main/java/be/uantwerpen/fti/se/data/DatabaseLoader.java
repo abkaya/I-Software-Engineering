@@ -147,9 +147,7 @@ public class DatabaseLoader {
         TestPlan tp2 = new TestPlan("Testplan_0x02","08/08","09/08","This is a description for testplan");
         TestPlan tp3 = new TestPlan("Testplan_0x03","08/08","09/08","This is a description for testplan");
 
-        List<TestTemplate> testPlanTemplates = new ArrayList<TestTemplate>();
-        testPlanTemplates.add(t1);
-        tp1.setTemplates(testPlanTemplates);
+        tp1.setTestTemplate(t1);
         List<User> testPlanUsers = new ArrayList<User>();
         testPlanUsers.add(u1);
         tp1.setUsers(testPlanUsers);
@@ -158,9 +156,7 @@ public class DatabaseLoader {
         tp1.setDevices(testPlanDevices);
         testPlanRepository.save(tp1);
 
-        testPlanTemplates.clear();
-        testPlanTemplates.add(t2);
-        tp2.setTemplates(testPlanTemplates);
+        tp2.setTestTemplate(t2);
         testPlanUsers.clear();
         testPlanUsers.add(u2);
         tp2.setUsers(testPlanUsers);
@@ -169,9 +165,7 @@ public class DatabaseLoader {
         tp2.setDevices(testPlanDevices);
         testPlanRepository.save(tp2);
 
-        testPlanTemplates.clear();
-        testPlanTemplates.add(t3);
-        tp3.setTemplates(testPlanTemplates);
+        tp3.setTestTemplate(t3);
         testPlanUsers.clear();
         testPlanUsers.add(u2);
         tp3.setUsers(testPlanUsers);

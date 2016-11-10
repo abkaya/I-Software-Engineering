@@ -1,6 +1,11 @@
 package be.uantwerpen.fti.se.model;
 
+
+import javafx.scene.image.Image;
+import sun.awt.image.BufferedImageDevice;
+
 import javax.persistence.Entity;
+import java.io.File;
 
 /**
  * Created by Quentin Van Ravels and Jan Huijghebaert on 20-Oct-16.
@@ -14,6 +19,7 @@ public class Device extends MyAbstractPersistable<Long> {
     private String deviceClass;
     private String manufacturer;
     private String driver;
+    private String path;
     private boolean used;
     private boolean disabled;
 
@@ -22,19 +28,27 @@ public class Device extends MyAbstractPersistable<Long> {
         disabled = false;
     }
 
-    public Device(String deviceName, String type, String deviceClass, String manufacturer, String driver){
+    public Device(String deviceName, String type, String deviceClass, String manufacturer, String driver, File imageName, File f){
         this.deviceName = deviceName;
         this.type = type;
         this.deviceClass = deviceClass;
         this.manufacturer = manufacturer;
         this.driver = driver;
+        String foldername = "files_"+deviceName;
+        this.path = "C:\\Users\\Admin\\IdeaProjects\\repos\\src\\main\\resources\\static\\devices_files\\"+foldername;
+        File destfile = new File(path);
+        if(!destfile.exists()) {
+            destfile.mkdir();
+        }
         used = false;
         disabled = false;
     }
 
-    public String getDeviceName() {
-        return deviceName;
-    }
+    public String getPath() { return this.path; }
+
+    public void setPath (String p) { this.path = p; }
+
+    public String getDeviceName() {return deviceName;}
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
@@ -119,4 +133,5 @@ public class Device extends MyAbstractPersistable<Long> {
 
         return 0;
     }
+
 }

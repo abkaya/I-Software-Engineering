@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,12 +129,17 @@ public class DatabaseLoader {
         testTemplateRepository.save(t8);
 
     //voeg devices toe
-        Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver");
-        Device d2 = new Device("bDevice2", "bType2", "bClass2", "bManufacturer2", "bDriver2");
+        File f1 = new File("image11.png");
+        File f11 = new File("test1.txt");
+        File f2 = new File("image2.png");
+        File f22 = new File("test2.txt");
+        Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver", f1, f11);
+        Device d2 = new Device("bDevice2", "bType2", "bClass2", "bManufacturer2", "bDriver2", f2, f22);
         d1.setIsUsed();
         d2.setDisabled();
         deviceRepository.save(d1);
         deviceRepository.save(d2);
+
 
     }
 }

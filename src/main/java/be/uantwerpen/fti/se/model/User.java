@@ -5,6 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -69,6 +70,16 @@ public class User extends MyAbstractPersistable<Long>{
 
     public String getUserName() {
         return userName;
+    }
+
+    public boolean isAdmin() {
+        for (Iterator<Role> iter = roles.iterator(); iter.hasNext(); ) {
+            Role userRole = iter.next();
+            if(userRole.getName() == "Administrator"){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setUserName(String userName) {

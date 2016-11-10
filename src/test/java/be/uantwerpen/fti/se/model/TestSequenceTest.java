@@ -86,8 +86,8 @@ public class TestSequenceTest {
 
     @Test
     public void MaxErrorRateTest1(){
-        testSequence = new TestSequence(10,15);
+        testSequence = new TestSequence(9,15);
         testSequence.CalculateMaxErrorRate();
-        assertEquals(0.05,testSequence.getmaxErrorRate(),0.0001);
+        assertEquals(0.1,testSequence.getmaxErrorRate(),0.0001);
     }
 }

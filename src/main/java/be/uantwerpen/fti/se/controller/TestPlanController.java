@@ -60,7 +60,7 @@ public class TestPlanController {
 
     @RequestMapping(value="/testplans/{id}", method= RequestMethod.GET)
     public String viewEditUser(@PathVariable Long id, final ModelMap model){
-        model.addAttribute("testplan", testPlanRepository.findOne(id));
+        model.addAttribute("testPlan", testPlanRepository.findOne(id));
         model.addAttribute("allTemplates", testTemplateRepository.findAll());
         model.addAttribute("allUsers", userRepository.findAll());
         model.addAttribute("allDevices", deviceRepository.findAll());

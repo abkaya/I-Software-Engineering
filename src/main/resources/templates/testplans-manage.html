@@ -33,15 +33,14 @@
             <input class="form-control" type="text" th:field="*{name}" />
         </div>
 
-
-        <p><label th:text="#{testplan.template}">Test Templates</label>
-            <select th:field="*{testTemplates}" multiple="multiple">
-                <option th:each="testTemplate : ${allTemplates}"
-                        th:value="${{testTemplate}}"
-                        th:text="${testTemplate.id}">Wireframe
-                </option>
-            </select>
-        </p>
+<!--
+MAAK HIER DROPDOWN VAN ME ALLE OPTIES
+-->
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
+            <label class="control-label" th:text="#{testTemplate.name}">Name</label>
+            <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{testTemplate.name}">Testplan Name Error</span>
+            <input class="form-control" type="text" th:field="*{testTemplate.name}" />
+        </div>
 
 
         <!--

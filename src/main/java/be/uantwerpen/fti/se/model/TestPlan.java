@@ -23,6 +23,14 @@ public class TestPlan extends MyAbstractPersistable<Long>{
             inverseJoinColumns={@JoinColumn(name="TESTTEMPLATE_ID", referencedColumnName="ID")})
     private List<TestTemplate> testTemplates;
 
+    public TestTemplate getTestTemplate() {
+        return testTemplates.get(0);
+    }
+
+    public void setTestTemplates(TestTemplate testTemplate) {
+        this.testTemplates.set(0,testTemplate);
+    }
+
     @ManyToMany
     @JoinTable(
 

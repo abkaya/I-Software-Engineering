@@ -6,7 +6,7 @@
 	<groupId>org.test</groupId>
 	<artifactId>idtestmanager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>${packaging}</packaging>
 
 	<name>IDTestManager</name>
 	<description>Application to perform and manage input device efficiency tests</description>
@@ -21,6 +21,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<packaging>jar</packaging>
+		<finalName>${artifactId}-${version}</finalName>
 	</properties>
 
 	<dependencies>
@@ -101,6 +103,7 @@
     </dependencies>
 	
 	<build>
+		<finalName>${finalName}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

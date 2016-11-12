@@ -45,12 +45,12 @@ public class DeviceControllerTests {
     }
 
     @Test
-    public void viewDevicesManage() throws Exception {
+    public void viewManageDevices() throws Exception {
         mvc.perform(get("/devices/put")).andExpect(view().name("devices-manage"));
     }
 
     @Test
-    public void viewDevicesDelete() throws Exception {
+    public void viewDeleteDevices() throws Exception {
         mvc.perform(get("/devices/1/delete")).andExpect(view().name("devices-list"));
     }
 

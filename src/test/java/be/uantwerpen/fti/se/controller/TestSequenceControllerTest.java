@@ -45,17 +45,17 @@ public class TestSequenceControllerTest {
     }
 
     @Test
-    public void TestSequenceManage() throws Exception {
+    public void viewManageTestSequence() throws Exception {
         mvc.perform(get("/testSequences/put")).andExpect(view().name("testSequences-manage"));
     }
 
     @Test
-    public void TestSequenceManageId() throws Exception {
+    public void viewManageIdTestSequence() throws Exception {
         mvc.perform(get("/testSequence/1")).andExpect(view().name("testSequences-manage"));
     }
 
     @Test
-    public void TestSequenceDelete() throws Exception {
+    public void viewDeleteTestSequence() throws Exception {
         mvc.perform(get("/testSequence/1/delete")).andExpect(view().name("redirect:/testSequences"));
     }
 }

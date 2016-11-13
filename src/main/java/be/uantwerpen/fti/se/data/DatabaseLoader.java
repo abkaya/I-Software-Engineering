@@ -128,7 +128,7 @@ public class DatabaseLoader {
         testTemplateRepository.save(t6);
         testTemplateRepository.save(t8);
 
-        //voeg devices toe
+        //Add devices
         Device d1 = new Device("aDevice", "aType", "aVersion", "aManufacturer", "aDriver");
         Device d2 = new Device("aDevice2", "aType2", "aVersion2", "aManufacturer2", "aDriver2");
         Device d3 = new Device("aDevice3", "aType3", "aVersion3", "aManufacturer3", "aDriver3");
@@ -142,7 +142,10 @@ public class DatabaseLoader {
         deviceRepository.save(d3);
         deviceRepository.save(d4);
 
-        //Voeg testplans toe
+
+/* The templates added to a test plan lead to a query error upon trying to either edit or delete them
+
+        //Add test plans
         TestPlan tp1 = new TestPlan("Testplan_0x01","08/08","09/08","This is a description for testplan");
         TestPlan tp2 = new TestPlan("Testplan_0x02","08/08","09/08","This is a description for testplan");
         TestPlan tp3 = new TestPlan("Testplan_0x03","08/08","09/08","This is a description for testplan");
@@ -179,7 +182,7 @@ public class DatabaseLoader {
         testPlanDevices.add(d3);
         tp3.setDevices(testPlanDevices);
         testPlanRepository.save(tp3);
-
+*/
 
 
 

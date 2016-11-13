@@ -39,6 +39,7 @@ public class TestTemplateService {
             //html page still needs to support the editing of multiple attributes
             //tempTestTemplate.setTemplateDescription(testTemplate.getTemplateDescription());
             tempTestTemplate.setDescription(testTemplate.getDescription());
+            tempTestTemplate.generateTestSequences(testTemplate.getSeqCount(),testTemplate.getNumberOfTargets(),testTemplate.getTargetRadius1(),testTemplate.getTargetRadius2(),testTemplate.getCircleRadius1(),testTemplate.getCircleRadius2());
             tempTestTemplate.setTestSequences(testTemplate.getTestSequences());
             tempTestTemplate.setEditable(testTemplate.isEditable());
             tempTestTemplate.setName(testTemplate.getName());

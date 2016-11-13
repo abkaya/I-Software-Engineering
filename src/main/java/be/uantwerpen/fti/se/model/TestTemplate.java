@@ -15,6 +15,68 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     private int seqCount=0;
     private boolean editable=true;
 
+    public int getNumberOfTargets() {
+        return numberOfTargets;
+    }
+
+    public void setNumberOfTargets(int numberOfTargets) {
+        this.numberOfTargets = numberOfTargets;
+    }
+
+    private int numberOfTargets;
+
+    public double getTargetRadius1() {
+        return targetRadius1;
+    }
+
+    public void setTargetRadius1(double targetRadius1) {
+        this.targetRadius1 = targetRadius1;
+    }
+
+    public void setSeqCount(int seqCount) {
+        this.seqCount = seqCount;
+    }
+
+    public double getTargetRadius2() {
+        return targetRadius2;
+    }
+
+    public void setTargetRadius2(double targetRadius2) {
+        this.targetRadius2 = targetRadius2;
+    }
+
+    public double getCircleRadius1() {
+        return circleRadius1;
+    }
+
+    public void setCircleRadius1(double circleRadius1) {
+        this.circleRadius1 = circleRadius1;
+    }
+
+    public double getCircleRadius2() {
+        return circleRadius2;
+    }
+
+    public void setCircleRadius2(double circleRadius2) {
+        this.circleRadius2 = circleRadius2;
+    }
+
+    private double targetRadius1;
+    private double targetRadius2;
+    private double circleRadius1;
+    private double circleRadius2;
+
+    public List<TestPlan> getTestPlans() {
+        return testPlans;
+    }
+
+    public void setTestPlans(List<TestPlan> testPlans) {
+        this.testPlans = testPlans;
+    }
+
+    @ManyToMany(mappedBy="testTemplates")
+    private List<TestPlan> testPlans;
+
     @ManyToMany
     @JoinTable(
             name="TEMPLATE_SEQUENCE",
@@ -28,6 +90,15 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
 
     public void setTestSequences(List<TestSequence> testSequences) {
         this.testSequences = testSequences;
+    }
+
+    public void generateTestSequences(int seqCount, int numberOfTargets, double targetRadius1, double targetRadius2, double circleRadius1, double circleRadius2){
+        double targetRadiusDiff = (targetRadius2-targetRadius1)/seqCount;
+        double circleRadiusDiff = (circleRadius2-circleRadius1)/seqCount;
+        testSequences.clear();
+        for(int i = 0; i < seqCount; i++){
+            testSequences.add(new TestSequence(numberOfTargets,(i+1)*targetRadiusDiff, (i+1)*circleRadiusDiff));
+        }
     }
 
     public String getName() {
@@ -75,14 +146,6 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     }
 
     public TestTemplate(){};
-
-    /*
-    public TestTemplate(String templateName, String templateDescription, int seqCount, List<TestSequence> testSequences) {
-        this.templateName = templateName;
-        this.templateDescription = templateDescription;
-        this.seqCount = seqCount;
-        this.testSequences = testSequences;
-    }*/
 
 
     @Override

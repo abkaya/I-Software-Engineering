@@ -50,6 +50,15 @@ public class TestTemplateService {
         }
     }
 
+    public void copy(Long id){
+        /*Long newID = id;
+        while(testTemplateRepository.exists(newID))
+            newID++;*/
+        TestTemplate clone = testTemplateRepository.findOne(id).clone();
+        clone.setId(null);
+        testTemplateRepository.save(clone);
+    }
+
     private TestTemplate findOne(Long id) {
         return testTemplateRepository.findOne(id);
     }

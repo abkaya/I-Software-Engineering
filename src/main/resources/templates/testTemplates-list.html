@@ -43,7 +43,7 @@
                     <td>
                         <a th:href="@{/tests/{id}/(id=${testTemplate.id})}" th:remove="${!testTemplate.editable}? tag"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                         <a th:href="@{/tests/{id}/delete(id=${testTemplate.id})}" th:remove="${!testTemplate.editable}? tag"><span class="glyphicon glyphicon-trash"></span></a>
-                        <a><span class="glyphicon glyphicon-copy"></span></a>
+                        <a th:href="@{/tests/{id}/copy(id=${testTemplate.id})}"><span class="glyphicon glyphicon-copy"></span></a>
 
                     </td>
                 </tr>

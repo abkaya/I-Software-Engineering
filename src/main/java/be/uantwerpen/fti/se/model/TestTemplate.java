@@ -1,5 +1,7 @@
 package be.uantwerpen.fti.se.model;
 
+import org.aspectj.weaver.ast.Test;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,6 +16,22 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     private String description;
     private int seqCount=0;
     private boolean editable=true;
+    private int numberOfTargets;
+    private double targetRadius1;
+    private double targetRadius2;
+    private double circleRadius1;
+    private double circleRadius2;
+
+    @ManyToMany(mappedBy="testTemplates")
+    private List<TestPlan> testPlans;
+
+    @ManyToMany
+    @JoinTable(
+            name="TEMPLATE_SEQUENCE",
+            joinColumns={@JoinColumn(name="TEMPLATE_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="SEQUENCE_ID", referencedColumnName="ID")})
+    private List<TestSequence> testSequences;
+
 
     public int getNumberOfTargets() {
         return numberOfTargets;
@@ -22,8 +40,6 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     public void setNumberOfTargets(int numberOfTargets) {
         this.numberOfTargets = numberOfTargets;
     }
-
-    private int numberOfTargets;
 
     public double getTargetRadius1() {
         return targetRadius1;
@@ -61,11 +77,6 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
         this.circleRadius2 = circleRadius2;
     }
 
-    private double targetRadius1;
-    private double targetRadius2;
-    private double circleRadius1;
-    private double circleRadius2;
-
     public List<TestPlan> getTestPlans() {
         return testPlans;
     }
@@ -74,31 +85,12 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
         this.testPlans = testPlans;
     }
 
-    @ManyToMany(mappedBy="testTemplates")
-    private List<TestPlan> testPlans;
-
-    @ManyToMany
-    @JoinTable(
-            name="TEMPLATE_SEQUENCE",
-            joinColumns={@JoinColumn(name="TEMPLATE_ID", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="SEQUENCE_ID", referencedColumnName="ID")})
-    private List<TestSequence> testSequences;
-
     public List<TestSequence> getTestSequences() {
         return testSequences;
     }
 
     public void setTestSequences(List<TestSequence> testSequences) {
         this.testSequences = testSequences;
-    }
-
-    public void generateTestSequences(int seqCount, int numberOfTargets, double targetRadius1, double targetRadius2, double circleRadius1, double circleRadius2){
-        double targetRadiusDiff = (targetRadius2-targetRadius1)/seqCount;
-        double circleRadiusDiff = (circleRadius2-circleRadius1)/seqCount;
-        testSequences.clear();
-        for(int i = 0; i < seqCount; i++){
-            testSequences.add(new TestSequence(numberOfTargets,(i+1)*targetRadiusDiff, (i+1)*circleRadiusDiff));
-        }
     }
 
     public String getName() {
@@ -147,6 +139,26 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
 
     public TestTemplate(){};
 
+    public void generateTestSequences(int seqCount, int numberOfTargets, double targetRadius1, double targetRadius2, double circleRadius1, double circleRadius2){
+        double targetRadiusDiff = (targetRadius2-targetRadius1)/seqCount;
+        double circleRadiusDiff = (circleRadius2-circleRadius1)/seqCount;
+        testSequences.clear();
+        for(int i = 0; i < seqCount; i++){
+            testSequences.add(new TestSequence(numberOfTargets,(i+1)*targetRadiusDiff, (i+1)*circleRadiusDiff));
+        }
+    }
+
+    public TestTemplate clone() {
+        TestTemplate obj = new TestTemplate();
+        obj.setName(this.name+"_Copy");
+        obj.setDescription(this.description);
+        obj.setSeqCount(this.seqCount);
+        obj.setEditable(true);
+        //Copying sequences will result in a shared reference error. To prevent this, share the attributes to generate the same
+        //sequences instead
+        //obj.setTestSequences(this.testSequences);
+        return obj;
+    }
 
     @Override
     public boolean equals(Object o) {

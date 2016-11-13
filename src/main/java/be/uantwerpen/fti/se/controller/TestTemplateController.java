@@ -78,6 +78,14 @@ public class TestTemplateController {
         return "redirect:/tests";
     }
 
+    @RequestMapping(value = "/tests/{id}/copy")
+    public String copyTestTemplate(@PathVariable Long id, final ModelMap model) {
+        testTemplateService.copy(id);
+        //Set the navigation button Tests Management to active
+        model.addAttribute("testsActiveSettings", "active");
+        return "redirect:/tests";
+    }
+
     @RequestMapping(value = "/tests/{id}/delete")
     public String deleteTestTemplate(@PathVariable Long id, final ModelMap model) {
         if (testTemplateRepository.findOne(id).isEditable()) {

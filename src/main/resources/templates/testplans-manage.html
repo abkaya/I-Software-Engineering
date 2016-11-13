@@ -23,7 +23,7 @@
 
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
-    <form action="#" th:action="@{/testplans/{id}(id=${testplan})}" th:object="${testPlan}" method="post">
+    <form action="#" th:action="@{/testplans/{id}(id=${testPlan})}" th:object="${testPlan}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
 
 
@@ -48,8 +48,8 @@
 
         <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
             <label class="control-label" th:field="#{testTemplate.name}">Test Template Name</label>
-            <select class="form-control" th:field="*{testTemplate}" id="sel1">
-                <option th:value="${{testTemplate}}" th:text="${testTemplate.name}">Current Template</option>
+            <select class="form-control"  th:field="*{testTemplate}" id="sel1">
+                <option th:if="${#fields.hasErrors('name')}" th:errors="*{testTemplate}" th:value="${{testTemplate}}" th:text="${testTemplate.name}">Current Template</option>
 
                 <!--
                 <option th:each="template : ${allTemplates}"

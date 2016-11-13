@@ -50,41 +50,56 @@ public class TestPlanController {
     }
 
     @RequestMapping(value="/testplans/put", method= RequestMethod.GET)
-    public String viewCreateUser(final ModelMap model){
-        model.addAttribute("allTemplates", testTemplateRepository.findAll());
-        model.addAttribute("allUsers", userRepository.findAll());
-        model.addAttribute("allDevices", deviceRepository.findAll());
-        model.addAttribute("testplan",new TestPlan());
-        return "testplans-manage";
+    public String viewCreateUser(Principal principal, final ModelMap model){
+        if(userRepository.findByUserName(principal.getName()).isAdmin()) {
+            model.addAttribute("allTemplates", testTemplateRepository.findAll());
+            model.addAttribute("allUsers", userRepository.findAll());
+            model.addAttribute("allDevices", deviceRepository.findAll());
+            model.addAttribute("testPlan", new TestPlan());
+            return "testplans-manage";
+        }
+        else{
+            return "redirect:/testplans";
+        }
     }
 
     @RequestMapping(value="/testplans/{id}", method= RequestMethod.GET)
-    public String viewEditUser(@PathVariable Long id, final ModelMap model){
-        model.addAttribute("testPlan", testPlanRepository.findOne(id));
-        model.addAttribute("allTemplates", testTemplateRepository.findAll());
-        model.addAttribute("testTemplate", testPlanRepository.findOne(id).getTestTemplate());
-        model.addAttribute("allUsers", userRepository.findAll());
-        model.addAttribute("allDevices", deviceRepository.findAll());
-        return "testplans-manage";
-    }
-
-    @RequestMapping(value={"/testplans/", "/testplans/{id}"}, method= RequestMethod.POST)
-    public String addUser(@Valid TestPlan testplan, BindingResult result, final ModelMap model){
-        if(result.hasErrors()){
+    public String viewEditUser(Principal principal, @PathVariable Long id, final ModelMap model){
+        if(userRepository.findByUserName(principal.getName()).isAdmin()) {
+            model.addAttribute("testPlan", testPlanRepository.findOne(id));
             model.addAttribute("allTemplates", testTemplateRepository.findAll());
+            model.addAttribute("testTemplate", testPlanRepository.findOne(id).getTestTemplate());
             model.addAttribute("allUsers", userRepository.findAll());
             model.addAttribute("allDevices", deviceRepository.findAll());
             return "testplans-manage";
         }
-        testPlanService.saveSomeAttributes(testplan);
+        else{
+            return "redirect:/testplans";
+        }
+    }
+
+    @RequestMapping(value={"/testplans/", "/testplans/{id}"}, method= RequestMethod.POST)
+    public String addUser(Principal principal, @Valid TestPlan testplan, BindingResult result, final ModelMap model){
+        if(userRepository.findByUserName(principal.getName()).isAdmin()) {
+            if (result.hasErrors()) {
+                model.addAttribute("allTemplates", testTemplateRepository.findAll());
+                model.addAttribute("allUsers", userRepository.findAll());
+                model.addAttribute("allDevices", deviceRepository.findAll());
+                return "testplans-manage";
+            }
+            testPlanService.saveSomeAttributes(testplan);
+        }
         return "redirect:/testplans";
     }
 
     @RequestMapping(value="/testplans/{id}/delete")
-    public String deleteUser(@PathVariable Long id, final ModelMap model){
-        testPlanRepository.delete(id);
-        model.clear();
+    public String deleteUser(Principal principal, @PathVariable Long id, final ModelMap model){
+        if(userRepository.findByUserName(principal.getName()).isAdmin()) {
+            testPlanRepository.delete(id);
+            model.clear();
+        }
         return "redirect:/testplans";
+
     }
 
 }

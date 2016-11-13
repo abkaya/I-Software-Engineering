@@ -34,21 +34,24 @@ public class TestPlanService {
             tempTestPlan.setStartDate(testPlan.getStartDate());
             tempTestPlan.setEndDate(testPlan.getEndDate());
             tempTestPlan.setDescription(testPlan.getDescription());
-
-            testPlan.getTestTemplate().setEditable(false);
             tempTestPlan.setTestTemplate(testPlan.getTestTemplate());
             tempTestPlan.setUsers(testPlan.getUsers());
-
-            for (Iterator<Device> iter = testPlan.getDevices().iterator(); iter.hasNext(); ) {
-                Device device = iter.next();
-                device.setIsInUse();
-            }
             tempTestPlan.setDevices(testPlan.getDevices());
+
+            if(testPlan.getTestTemplate() != null)
+                testPlan.getTestTemplate().setEditable(false);
+            if(testPlan.getDevices() != null)
+                for (Iterator<Device> iter = testPlan.getDevices().iterator(); iter.hasNext(); ) {
+                    Device device = iter.next();
+                    device.setIsInUse();
+                }
 
 
             testPlanRepository.save(tempTestPlan);
         } else {
+            if(testPlan.getTestTemplate() != null)
             testPlan.getTestTemplate().setEditable(false);
+            if(testPlan.getDevices() != null)
             for (Iterator<Device> iter = testPlan.getDevices().iterator(); iter.hasNext(); ) {
                 Device device = iter.next();
                 device.setIsInUse();

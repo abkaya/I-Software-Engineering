@@ -33,6 +33,11 @@
             <input class="form-control" type="text" th:field="*{name}" />
         </div>
 
+        <div class="form-group">
+            <label for="comment" th:text="#{testplan.description}">Description</label>
+            <textarea class="form-control" rows="5" id="comment" th:field="*{description}"></textarea>
+        </div>
+
         <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
             <label class="control-label" th:text="#{testplan.startDate}">Name</label>
             <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{startDate}">Testplan Name Error</span>

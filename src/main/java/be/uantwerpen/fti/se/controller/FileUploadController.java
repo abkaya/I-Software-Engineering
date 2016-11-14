@@ -10,12 +10,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -49,6 +51,17 @@ public class FileUploadController {
 		return "load-file";
 	}
 
+	@GetMapping("/devices/{id}/files/{file}/delete")
+	public String deleteFile(@PathVariable Long id, @PathVariable String file) {
+
+		/*
+		Device dev = deviceRepository.findOne(id);
+		storageService.deleteFile(dev, filename);
+		*/
+		return "redirect:/devices/{id}/files";
+
+	}
+
 	@GetMapping("/devices/{id}/files/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
@@ -58,19 +71,30 @@ public class FileUploadController {
 				.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
 				.body(file);
+
 	}
 
 	@PostMapping("/devices/{id}/files")
 	public String handleFileUpload(@Valid Device device, @PathVariable Long id, @RequestParam("file") MultipartFile file,
 								   RedirectAttributes redirectAttributes) {
 
-		System.out.println("TESTESTEST");
 		storageService.store(file, device);
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 
 		return "redirect:/devices/{id}/files";
 	}
+
+	/*
+	@PostMapping(value = "/devices/{id}/files/delete")
+	public String deleteFile(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+		Device dev = deviceRepository.findOne(id);
+		String f = file.toString();
+		System.out.println("TESTESTEST");
+		//storageService.deleteFile(dev, filename);
+		return "redirect:/devices/{id}/files";
+	}
+	*/
 
 	@ExceptionHandler(StorageFileNotFoundException.class)
 	public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {

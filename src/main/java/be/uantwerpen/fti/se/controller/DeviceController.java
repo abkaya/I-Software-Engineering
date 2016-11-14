@@ -47,12 +47,9 @@ public class DeviceController {
     }
 
     @RequestMapping(value = {"/devices/", "/devices/{id}"}, method = RequestMethod.POST)
-    public String addDevice(@Valid Device device, BindingResult result, @RequestParam("file") MultipartFile file, final ModelMap model)   {
+    public String addDevice(@Valid Device device, BindingResult result, final ModelMap model)   {
         if(result.hasErrors())  {
             return "devices-manage";
-        }
-        if (!file.isEmpty()) {
-            return "/home";
         }
         deviceRepository.save(device);
         model.addAttribute("devicesActiveSettings","active");

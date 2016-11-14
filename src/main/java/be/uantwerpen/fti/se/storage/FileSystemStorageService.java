@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+
+import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 @Service
 public class FileSystemStorageService implements StorageService {
@@ -83,6 +86,14 @@ public class FileSystemStorageService implements StorageService {
     public void deleteAll(Device device) {
         //Path rootLocation = Paths.get(device.getPath());
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
+
+    @Override
+    public void deleteFile(Device device, String filename) {
+        String foldername = "files_"+device.getDeviceName();
+        String path = "C:\\Users\\Admin\\IdeaProjects\\repos\\src\\main\\resources\\static\\devices_files\\"+foldername+"\\"+filename;
+        File file = new File(path);
+        FileSystemUtils.deleteRecursively(file);
     }
 
     @Override

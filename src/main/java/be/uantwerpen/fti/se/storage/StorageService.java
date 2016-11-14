@@ -21,4 +21,6 @@ public interface StorageService {
 
     void deleteAll(Device device);
 
+    void deleteFile(Device device, String filename);
+
 }

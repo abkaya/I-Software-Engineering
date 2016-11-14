@@ -34,24 +34,35 @@ public class Device extends MyAbstractPersistable<Long> {
         this.deviceClass = deviceClass;
         this.manufacturer = manufacturer;
         this.driver = driver;
+        /*
         String foldername = "files_"+deviceName;
         this.path = "C:\\Users\\Admin\\IdeaProjects\\repos\\src\\main\\resources\\static\\devices_files\\"+foldername;
         File destfile = new File(path);
         if(!destfile.exists()) {
             destfile.mkdir();
         }
+        */
+        setPath(deviceName);
         used = false;
         disabled = false;
     }
 
     public String getPath() { return this.path; }
 
-    public void setPath (String p) { this.path = p; }
+    public void setPath (String dev) {
+        String foldername = "files_"+dev;
+        this.path = "C:\\Users\\Admin\\IdeaProjects\\repos\\src\\main\\resources\\static\\devices_files\\"+foldername;
+        File destfile = new File(path);
+        if(!destfile.exists()) {
+            destfile.mkdir();
+        }
+    }
 
     public String getDeviceName() {return deviceName;}
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
+        setPath(deviceName);
     }
 
     public String getType() {

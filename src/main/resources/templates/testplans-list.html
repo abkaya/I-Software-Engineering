@@ -69,10 +69,10 @@
 
                                     <hr style="width: 100%; color: black; height: 1px; background-color:lightgray;" />
 
-                                    <label class="control-label" th:text="#{testplan.testTemplate}">Testplan Template</label>
+                                    <label class="control-label" th:text="#{template.name}">Testplan Template</label>
                                     <p th:text="${testplan.testTemplate?.name}">Some text in the modal.</p>
 
-                                    <label class="control-label" th:text="#{testplan.users}">TestPlan Users</label>
+                                    <label class="control-label" th:text="#{user.management}">TestPlan Users</label>
                                     <ul class="list-group">
                                         <li class="list-group-item" style="height: 30px; padding: 5px 10px;" th:each="user : ${testplan.users}" th:text="${user.userName}">User Name</li>
                                     </ul>
@@ -85,6 +85,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button sec:authorize="hasAuthority('testplan-complete')" type="button" class="btn btn-default">Complete</button>
                                 </div>
                             </div>
 

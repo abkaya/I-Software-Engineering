@@ -65,7 +65,7 @@
             </select>
         </div>
 
-        <p> <label th:text="#{user.name}">Users</label>
+        <p> <label th:text="#{user.management}">Users</label>
             <select th:field="*{users}" multiple="multiple">
                 <option th:each="user : ${allUsers}"
                         th:value="${{user}}"
@@ -73,7 +73,7 @@
             </select>
         </p>
 
-        <p> <label th:text="#{device.name}">Users</label>
+        <p> <label th:text="#{testplan.devices}">Users</label>
             <select th:field="*{devices}" multiple="multiple">
                 <option th:each="device : ${allDevices}"
                         th:value="${{device}}"

@@ -16,12 +16,20 @@ public class TestPlan extends MyAbstractPersistable<Long>{
     private String endDate;
     private String description;
 
-    @ManyToMany
+    @ManyToOne
     @JoinTable(
             name="TESTPLAN_TESTTEMPLATE",
             joinColumns={@JoinColumn(name="TESTPLAN_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="TESTTEMPLATE_ID", referencedColumnName="ID")})
-    private List<TestTemplate> testTemplates;
+    private TestTemplate testTemplate;
+
+    public TestTemplate getTestTemplate() {
+        return testTemplate;
+    }
+
+    public void setTestTemplate(TestTemplate testTemplate) {
+        this.testTemplate = testTemplate;
+    }
 
     @ManyToMany
     @JoinTable(
@@ -77,10 +85,6 @@ public class TestPlan extends MyAbstractPersistable<Long>{
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setTemplates(List<TestTemplate> testTemplates) {
-        this.testTemplates = testTemplates;
     }
 
     public List<User> getUsers() {

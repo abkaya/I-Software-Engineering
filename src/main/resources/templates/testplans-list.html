@@ -37,14 +37,61 @@
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
                 <tr th:each="testplan : ${allTestplans}" >
-                    <td class="testplanName" th:value="${testplan}" th:text="${testplan.name}">Name</td>
-                    <td class="testplanStartDate" th:value="${testplan}" th:text="${testplan.startDate}">Start Date</td>
-                    <td class="testplanEndDate" th:value="${testplan}" th:text="${testplan.endDate}">Start Date</td>
-                    <td class="testplanEndDate" th:value="${testplan}" th:text="${testplan.users.size()}"># Users</td>
+                    <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.name}">Name</td>
+                    <td class="testplanStartDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.startDate}">Start Date</td>
+                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.endDate}">Start Date</td>
+                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.users.size()}"># Users</td>
                     <td>
                         <a sec:authorize="hasAuthority('testplan-edit')" th:href="@{/testplans/{id}/(id=${testplan.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                         <a sec:authorize="hasAuthority('testplan-delete')" th:href="@{/testplans/{id}/delete(id=${testplan.id})}"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
+
+                    <!-- Modal (zorg dat de juiste ID overeenkomt met uw data target -->
+                    <div th:attr="id='testPlanModel'+${testplan.id }" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <!-- Pas hier de titel aan-->
+                                    <h4 class="modal-title" th:value="${testplan}" th:text="${testplan.name}">Test Plan Name</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Hier komt de body, dus de context van uw box-->
+                                    <p th:text="${testplan.description}">Description</p>
+
+                                    <label class="control-label" th:text="#{testplan.startDate}">Testplan Start Date</label>
+                                    <p th:text="${testplan.startDate}">startdate</p>
+
+                                    <label class="control-label" th:text="#{testplan.endDate}">Testplan End Date</label>
+                                    <p th:text="${testplan.endDate}">enddate</p>
+
+                                    <hr style="width: 100%; color: black; height: 1px; background-color:lightgray;" />
+
+                                    <label class="control-label" th:text="#{template.name}">Testplan Template</label>
+                                    <p th:text="${testplan.testTemplate?.name}">Some text in the modal.</p>
+
+                                    <label class="control-label" th:text="#{user.management}">TestPlan Users</label>
+                                    <ul class="list-group">
+                                        <li class="list-group-item" style="height: 30px; padding: 5px 10px;" th:each="user : ${testplan.users}" th:text="${user.userName}">User Name</li>
+                                    </ul>
+
+                                    <label class="control-label" th:text="#{testplan.devices}">TestPlan Devices</label>
+                                    <ul class="list-group">
+                                        <li class="list-group-item" style="height: 30px; padding: 5px 10px;" th:each="device : ${testplan.devices}" th:text="${device.deviceName}">User Name</li>
+                                    </ul>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button sec:authorize="hasAuthority('testplan-complete')" type="button" class="btn btn-default">Complete</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </tr>
                 </tbody>
             </table>

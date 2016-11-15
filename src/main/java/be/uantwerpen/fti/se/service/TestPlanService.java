@@ -1,9 +1,7 @@
 
 package be.uantwerpen.fti.se.service;
 
-import be.uantwerpen.fti.se.model.Role;
-import be.uantwerpen.fti.se.model.TestPlan;
-import be.uantwerpen.fti.se.model.User;
+import be.uantwerpen.fti.se.model.*;
 import be.uantwerpen.fti.se.repository.TestPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +26,45 @@ public class TestPlanService {
         }
     }
 
-    public void save(final TestPlan testplan) {
-        this.testPlanRepository.save(testplan);
+    public void saveSomeAttributes(TestPlan testPlan) {
+        TestPlan tempTestPlan = testPlan.getId() == null ? null : findOne(testPlan.getId());
+        if (tempTestPlan != null) {
+
+            tempTestPlan.setName(testPlan.getName());
+            tempTestPlan.setStartDate(testPlan.getStartDate());
+            tempTestPlan.setEndDate(testPlan.getEndDate());
+            tempTestPlan.setDescription(testPlan.getDescription());
+            tempTestPlan.setTestTemplate(testPlan.getTestTemplate());
+            tempTestPlan.setUsers(testPlan.getUsers());
+            tempTestPlan.setDevices(testPlan.getDevices());
+
+            if(testPlan.getTestTemplate() != null)
+                testPlan.getTestTemplate().setEditable(false);
+            if(testPlan.getDevices() != null)
+                for (Iterator<Device> iter = testPlan.getDevices().iterator(); iter.hasNext(); ) {
+                    Device device = iter.next();
+                    device.setIsInUse();
+                }
+
+
+            testPlanRepository.save(tempTestPlan);
+        } else {
+            if(testPlan.getTestTemplate() != null)
+            testPlan.getTestTemplate().setEditable(false);
+            if(testPlan.getDevices() != null)
+            for (Iterator<Device> iter = testPlan.getDevices().iterator(); iter.hasNext(); ) {
+                Device device = iter.next();
+                device.setIsInUse();
+            }
+            testPlanRepository.save(testPlan);
+        }
     }
 
     public void delete(Long id) {
         this.testPlanRepository.delete(id);
     }
 
+    private TestPlan findOne(Long id) {
+        return testPlanRepository.findOne(id);
+    }
 }

@@ -23,8 +23,9 @@
 
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
-    <form action="#" th:action="@{/testplans/{id}(id=${testplan})}" th:object="${testplan}" method="post">
+    <form action="#" th:action="@{/testplans/{id}(id=${testPlan})}" th:object="${testPlan}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
+
 
         <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
             <label class="control-label" th:text="#{name}">Name</label>
@@ -32,40 +33,98 @@
             <input class="form-control" type="text" th:field="*{name}" />
         </div>
 
-        <p>
-            <label class="control-label"th:text="#{template}">Template</label>
-            <select class="form-control" th:field="*{template}" id="sel1">
+        <div class="form-group">
+            <label for="comment" th:text="#{testplan.description}">Description</label>
+            <textarea class="form-control" rows="5" id="comment" th:field="*{description}"></textarea>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
+            <label class="control-label" th:text="#{testplan.startDate}">Name</label>
+            <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{startDate}">Testplan Name Error</span>
+            <input class="form-control" type="text" th:field="*{startDate}" />
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
+            <label class="control-label" th:text="#{testplan.endDate}">Name</label>
+            <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{endDate}">Testplan Name Error</span>
+            <input class="form-control" type="text" th:field="*{endDate}" />
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label" th:field="#{testTemplate.name}">Test Template Name</label>
+            <select class="form-control" th:field="*{testTemplate}" id="sel1">
+                <option th:value="${{testTemplate}}" th:text="${testTemplate?.name}">Current Template</option>
+
+
                 <option th:each="template : ${allTemplates}"
                         th:value="${{template}}"
                         th:text="${template.name}">Wireframe</option>
-            </select>
-        </p>
 
-        <p> <label th:text="#{users}">Users</label>
+
+            </select>
+        </div>
+
+        <p> <label th:text="#{user.management}">Users</label>
             <select th:field="*{users}" multiple="multiple">
-                <option th:each="role : ${allUsers}"
+                <option th:each="user : ${allUsers}"
                         th:value="${{user}}"
                         th:text="${user.userName}">Wireframe</option>
             </select>
         </p>
 
-        <p> <label th:text="#{devices}">Devices</label>
+        <p> <label th:text="#{testplan.devices}">Users</label>
             <select th:field="*{devices}" multiple="multiple">
-                <option th:each="role : ${allDevices}"
+                <option th:each="device : ${allDevices}"
                         th:value="${{device}}"
-                        th:text="${device.name}">Wireframe</option>
+                        th:text="${device.deviceName}">Wireframe</option>
             </select>
         </p>
-        <p>
 
 
+        <!--
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
+            <label class="control-label" th:text="#{testTemplate.name}">Name</label>
+            <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{testTemplate}">Testplan Name Error</span>
+            <input class="form-control" type="text" th:field="*{testTemplate}" />
+        </div>
+        -->
 
-        <p>
-            <a href="/testplans" th:text="#{close}" class="btn btn-primary">Close</a>
-            <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
-        </p>
+        <!--
+              <p>
+                  <label class="control-label" th:text="#{template}"> Template </label>
+                  <select class="form-control" th:field="*{template}" id="sel1">
+                      <option th:each="template : ${allTemplates}"
+                              th:value="${{template}}"
+                              th:text="${template.name}">Wireframe</option>
+                  </select>
+              </p>
 
-    </form>
-</div>
-</body>
-</html>
+                      <p> <label th:text="#{users}">Users</label>
+                          <select th:field="*{users}" multiple="multiple">
+                              <option th:each="role : ${allUsers}"
+                                      th:value="${{user}}"
+                                      th:text="${user.userName}">Wireframe</option>
+                          </select>
+                      </p>
+
+                      <p> <label th:text="#{devices}">Devices</label>
+                          <select th:field="*{devices}" multiple="multiple">
+                              <option th:each="role : ${allDevices}"
+                                      th:value="${{device}}"
+                                      th:text="${device.name}">Wireframe</option>
+                          </select>
+                      </p>
+                      <p>
+
+
+      -->
+                <p>
+                    <a href="/testplans" th:text="#{close}" class="btn btn-primary">Close</a>
+                    <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
+                </p>
+
+            </form>
+        </div>
+        </body>
+        </html>

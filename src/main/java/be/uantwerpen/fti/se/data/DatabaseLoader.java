@@ -3,7 +3,6 @@ package be.uantwerpen.fti.se.data;
 import be.uantwerpen.fti.se.model.*;
 import be.uantwerpen.fti.se.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -24,22 +23,24 @@ public class DatabaseLoader {
     private final TestTemplateRepository testTemplateRepository;
     private final TestSequenceRepository testSequenceRepository;
     private final DeviceRepository deviceRepository;
+    private final TestPlanRepository testPlanRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository, TestSequenceRepository testSequenceRepository, DeviceRepository deviceRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository, TestSequenceRepository testSequenceRepository, DeviceRepository deviceRepository, TestPlanRepository testPlanRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.testTemplateRepository = testTemplateRepository;
         this.testSequenceRepository = testSequenceRepository;
         this.deviceRepository = deviceRepository;
+        this.testPlanRepository = testPlanRepository;
     }
 
     @PostConstruct
     private void initDatabase() {
         //Array of permissions, to be saved in p and later to be assigned to the administrator role.
         String[] allPermissions = {"user-view", "user-create", "user-edit", "user-delete",
-                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-view", "device-create", "device-edit", "devioe-delete"};
+                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-view", "device-create", "device-edit", "device-delete",  "testplan-view", "testplan-create", "testplan-edit", "testplan-delete",};
         for (String p : allPermissions) {
             permissionRepository.save(new Permission(p));
         }
@@ -127,13 +128,64 @@ public class DatabaseLoader {
         testTemplateRepository.save(t6);
         testTemplateRepository.save(t8);
 
-        //voeg devices toe
-        Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver");
-        Device d2 = new Device("bDevice2", "bType2", "bClass2", "bManufacturer2", "bDriver2");
+        //Add devices
+        Device d1 = new Device("aDevice", "aType", "aVersion", "aManufacturer", "aDriver");
+        Device d2 = new Device("aDevice2", "aType2", "aVersion2", "aManufacturer2", "aDriver2");
+        Device d3 = new Device("aDevice3", "aType3", "aVersion3", "aManufacturer3", "aDriver3");
+        Device d4 = new Device("aDevice4", "aType4", "aVersion4", "aManufacturer4", "aDriver4");
         d1.setIsUsed();
+        d2.setIsUsed();
         d2.setDisabled();
+        d3.setIsInUse();
         deviceRepository.save(d1);
         deviceRepository.save(d2);
+        deviceRepository.save(d3);
+        deviceRepository.save(d4);
+
+
+/* The templates added to a test plan lead to a query error upon trying to either edit or delete them
+
+        //Add test plans
+        TestPlan tp1 = new TestPlan("Testplan_0x01","08/08","09/08","This is a description for testplan");
+        TestPlan tp2 = new TestPlan("Testplan_0x02","08/08","09/08","This is a description for testplan");
+        TestPlan tp3 = new TestPlan("Testplan_0x03","08/08","09/08","This is a description for testplan");
+
+        List<TestTemplate> testPlanTemplates = new ArrayList<TestTemplate>();
+        testPlanTemplates.add(t1);
+        tp1.setTemplates(testPlanTemplates);
+        List<User> testPlanUsers = new ArrayList<User>();
+        testPlanUsers.add(u1);
+        tp1.setUsers(testPlanUsers);
+        List<Device> testPlanDevices = new ArrayList<Device>();
+        testPlanDevices.add(d1);
+        tp1.setDevices(testPlanDevices);
+        testPlanRepository.save(tp1);
+
+        testPlanTemplates.clear();
+        testPlanTemplates.add(t2);
+        tp2.setTemplates(testPlanTemplates);
+        testPlanUsers.clear();
+        testPlanUsers.add(u2);
+        tp2.setUsers(testPlanUsers);
+        testPlanDevices.clear();
+        testPlanDevices.add(d2);
+        tp2.setDevices(testPlanDevices);
+        testPlanRepository.save(tp2);
+
+        testPlanTemplates.clear();
+        testPlanTemplates.add(t3);
+        tp3.setTemplates(testPlanTemplates);
+        testPlanUsers.clear();
+        testPlanUsers.add(u2);
+        tp3.setUsers(testPlanUsers);
+        testPlanDevices.clear();
+        testPlanDevices.add(d3);
+        tp3.setDevices(testPlanDevices);
+        testPlanRepository.save(tp3);
+*/
+
+
+
 
     }
 }

@@ -40,7 +40,7 @@ public class DatabaseLoader {
     private void initDatabase() {
         //Array of permissions, to be saved in p and later to be assigned to the administrator role.
         String[] allPermissions = {"user-view", "user-create", "user-edit", "user-delete",
-                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-view", "device-create", "device-edit", "device-delete",  "testplan-view", "testplan-create", "testplan-edit", "testplan-delete",};
+                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-view", "device-create", "device-edit", "device-delete",  "testplan-view", "testplan-create", "testplan-edit", "testplan-delete","testplan-complete"};
         for (String p : allPermissions) {
             permissionRepository.save(new Permission(p));
         }
@@ -147,14 +147,18 @@ public class DatabaseLoader {
         TestPlan tp2 = new TestPlan("Testplan_0x02","08/08","09/08","This is a description for testplan");
         TestPlan tp3 = new TestPlan("Testplan_0x03","08/08","09/08","This is a description for testplan");
 
+
         tp1.setTestTemplate(t1);
         List<User> testPlanUsers = new ArrayList<User>();
         testPlanUsers.add(u1);
         tp1.setUsers(testPlanUsers);
         List<Device> testPlanDevices = new ArrayList<Device>();
         testPlanDevices.add(d1);
+        d1.setIsInUse();
         tp1.setDevices(testPlanDevices);
         testPlanRepository.save(tp1);
+
+
 
         tp2.setTestTemplate(t2);
         testPlanUsers.clear();
@@ -164,7 +168,7 @@ public class DatabaseLoader {
         testPlanDevices.add(d2);
         tp2.setDevices(testPlanDevices);
         testPlanRepository.save(tp2);
-
+/*
         tp3.setTestTemplate(t3);
         testPlanUsers.clear();
         testPlanUsers.add(u2);
@@ -173,7 +177,7 @@ public class DatabaseLoader {
         testPlanDevices.add(d3);
         tp3.setDevices(testPlanDevices);
         testPlanRepository.save(tp3);
-
+        */
 
 
 

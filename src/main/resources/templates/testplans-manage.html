@@ -56,11 +56,11 @@
             <select class="form-control" th:field="*{testTemplate}" id="sel1">
                 <option th:value="${{testTemplate}}" th:text="${testTemplate?.name}">Current Template</option>
 
-                <!--
+
                 <option th:each="template : ${allTemplates}"
                         th:value="${{template}}"
                         th:text="${template.name}">Wireframe</option>
-                 -->
+
 
             </select>
         </div>

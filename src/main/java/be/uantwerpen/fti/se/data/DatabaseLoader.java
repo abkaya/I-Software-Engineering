@@ -143,46 +143,36 @@ public class DatabaseLoader {
         deviceRepository.save(d4);
 
 
-/* The templates added to a test plan lead to a query error upon trying to either edit or delete them
 
         //Add test plans
-        TestPlan tp1 = new TestPlan("Testplan_0x01","08/08","09/08","This is a description for testplan");
-        TestPlan tp2 = new TestPlan("Testplan_0x02","08/08","09/08","This is a description for testplan");
-        TestPlan tp3 = new TestPlan("Testplan_0x03","08/08","09/08","This is a description for testplan");
+        TestPlan tp1 = new TestPlan("Testplan_0x01","08/08","09/08","This is a description for testplan 1");
+        TestPlan tp2 = new TestPlan("Testplan_0x02","08/08","09/08","This is a description for testplan 2");
 
-        List<TestTemplate> testPlanTemplates = new ArrayList<TestTemplate>();
-        testPlanTemplates.add(t1);
-        tp1.setTemplates(testPlanTemplates);
+        t1.setEditable(false);
+        tp1.setTestTemplate(t1);
         List<User> testPlanUsers = new ArrayList<User>();
         testPlanUsers.add(u1);
         tp1.setUsers(testPlanUsers);
         List<Device> testPlanDevices = new ArrayList<Device>();
+        d1.setIsInUse();
+        d1.setIsUsed();
         testPlanDevices.add(d1);
+        d1.setIsInUse();
         tp1.setDevices(testPlanDevices);
         testPlanRepository.save(tp1);
 
-        testPlanTemplates.clear();
-        testPlanTemplates.add(t2);
-        tp2.setTemplates(testPlanTemplates);
+        t2.setEditable(false);
+        tp2.setTestTemplate(t2);
         testPlanUsers.clear();
         testPlanUsers.add(u2);
         tp2.setUsers(testPlanUsers);
         testPlanDevices.clear();
+        d2.setIsInUse();
+        d2.setIsUsed();
         testPlanDevices.add(d2);
         tp2.setDevices(testPlanDevices);
         testPlanRepository.save(tp2);
 
-        testPlanTemplates.clear();
-        testPlanTemplates.add(t3);
-        tp3.setTemplates(testPlanTemplates);
-        testPlanUsers.clear();
-        testPlanUsers.add(u2);
-        tp3.setUsers(testPlanUsers);
-        testPlanDevices.clear();
-        testPlanDevices.add(d3);
-        tp3.setDevices(testPlanDevices);
-        testPlanRepository.save(tp3);
-*/
 
 
 

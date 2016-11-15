@@ -22,9 +22,6 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     private double circleRadius1;
     private double circleRadius2;
 
-    @ManyToMany(mappedBy="testTemplates")
-    private List<TestPlan> testPlans;
-
     @ManyToMany
     @JoinTable(
             name="TEMPLATE_SEQUENCE",
@@ -75,14 +72,6 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
 
     public void setCircleRadius2(double circleRadius2) {
         this.circleRadius2 = circleRadius2;
-    }
-
-    public List<TestPlan> getTestPlans() {
-        return testPlans;
-    }
-
-    public void setTestPlans(List<TestPlan> testPlans) {
-        this.testPlans = testPlans;
     }
 
     public List<TestSequence> getTestSequences() {

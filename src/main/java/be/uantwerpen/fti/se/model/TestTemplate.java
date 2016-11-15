@@ -165,11 +165,11 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
         TestTemplate template = (TestTemplate) o;
 
         return name.equals(template.name);
     }
+
 
     @Override
     public int hashCode() {

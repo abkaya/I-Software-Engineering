@@ -33,16 +33,16 @@
     </div>
 
     <div>
-        <form>
+        <ul>
             <li th:each="file : ${files}">
                 <a th:href="${file}" th:text="${file}" />&nbsp;&nbsp;&nbsp;
                 <td>
-                    <a th:href="@{/devices/{id}/files/{f}/delete(id=${device.id},f=${file})}">
+                    <a th:href="@{/devices/{id}/files/delete(id=${device.id})}">
                         <span type="button" class="glyphicon glyphicon-trash"></span>
                     </a>
                 </td>
             </li>
-        </form>
+        </ul>
     </div>
 
 </div>

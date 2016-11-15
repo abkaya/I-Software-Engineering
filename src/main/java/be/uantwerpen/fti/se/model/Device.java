@@ -2,10 +2,13 @@ package be.uantwerpen.fti.se.model;
 
 
 import javafx.scene.image.Image;
+import org.springframework.web.multipart.MultipartFile;
 import sun.awt.image.BufferedImageDevice;
 
 import javax.persistence.Entity;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Created by Quentin Van Ravels and Jan Huijghebaert on 20-Oct-16.
@@ -19,7 +22,10 @@ public class Device extends MyAbstractPersistable<Long> {
     private String deviceClass;
     private String manufacturer;
     private String driver;
-    private String path;
+    private String filePath;
+    private String imagePath;
+    //private String imageName;
+    //private File image;
     private boolean used;
     private boolean disabled;
 
@@ -42,27 +48,52 @@ public class Device extends MyAbstractPersistable<Long> {
             destfile.mkdir();
         }
         */
-        setPath(deviceName);
+        setFilePath(deviceName);
+        setImagePath(deviceName);
         used = false;
         disabled = false;
     }
 
-    public String getPath() { return this.path; }
+    public String getFilePath() { return this.filePath; }
 
-    public void setPath (String dev) {
+    public void setFilePath (String dev) {
         String foldername = "files_"+dev;
-        this.path = "C:\\Users\\Admin\\IdeaProjects\\repos\\src\\main\\resources\\static\\devices_files\\"+foldername;
-        File destfile = new File(path);
+        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+        this.filePath = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername;
+        File destfile = new File(filePath);
         if(!destfile.exists()) {
             destfile.mkdir();
         }
     }
 
-    public String getDeviceName() {return deviceName;}
+    public String getImagePath() { return this.imagePath; }
+
+    public void setImagePath (String dev) {
+        String foldername = "files_"+dev;
+        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+        this.imagePath = parent+"\\src\\main\\resources\\static\\devices_images\\"+foldername;
+        File destfile = new File(imagePath);
+        if(!destfile.exists()) {
+            destfile.mkdir();
+        }
+    }
+
+    /*
+    public String getImageName(){return this.image.toString();}
+
+    //public void setImageName(String name){this.imageName = name;}
+
+    public File getImage(){return this.image;}
+
+    public void setImage(File im){this.image = im;}
+    */
+
+    public String getDeviceName() {return this.deviceName;}
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
-        setPath(deviceName);
+        setFilePath(deviceName);
+        setImagePath(deviceName);
     }
 
     public String getType() {

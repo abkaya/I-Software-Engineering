@@ -51,16 +51,18 @@ public class FileUploadController {
 		return "load-file";
 	}
 
+	/*
 	@GetMapping("/devices/{id}/files/{file}/delete")
 	public String deleteFile(@PathVariable Long id, @PathVariable String file) {
 
-		/*
+
 		Device dev = deviceRepository.findOne(id);
 		storageService.deleteFile(dev, filename);
-		*/
+
 		return "redirect:/devices/{id}/files";
 
 	}
+	*/
 
 	@GetMapping("/devices/{id}/files/{filename:.+}")
 	@ResponseBody
@@ -85,16 +87,16 @@ public class FileUploadController {
 		return "redirect:/devices/{id}/files";
 	}
 
-	/*
+
 	@PostMapping(value = "/devices/{id}/files/delete")
 	public String deleteFile(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
-		Device dev = deviceRepository.findOne(id);
-		String f = file.toString();
-		System.out.println("TESTESTEST");
+		//Device dev = deviceRepository.findOne(id);
+		//String f = file.toString();
+		//System.out.println("TESTESTEST");
 		//storageService.deleteFile(dev, filename);
 		return "redirect:/devices/{id}/files";
 	}
-	*/
+
 
 	@ExceptionHandler(StorageFileNotFoundException.class)
 	public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {

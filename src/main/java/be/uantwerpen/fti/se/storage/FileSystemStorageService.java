@@ -45,10 +45,30 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
+    public void storeImage(MultipartFile file, Device device) {
+
+        Path Location = Paths.get(device.getImagePath());
+
+        try {
+            if (file.isEmpty()) {
+                throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
+            }
+            String extension = "";
+            int i = file.getOriginalFilename().lastIndexOf('.');
+            if (i >= 0) {
+                extension = file.getOriginalFilename().substring(i+1);
+            }
+            Files.copy(file.getInputStream(), Location.resolve(device.getDeviceName()+"_version."+extension));
+        } catch (IOException e) {
+            throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
+        }
+    }
+
+    @Override
     public Stream<Path> loadAll(Device device) {
 
-        System.out.println(device.getPath());
-        this.rootLocation = Paths.get(device.getPath());
+        System.out.println(device.getFilePath());
+        this.rootLocation = Paths.get(device.getFilePath());
         try {
             return Files.walk(rootLocation, 1)
                     .filter(path -> !path.equals(rootLocation))
@@ -82,10 +102,20 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+    //Only for images
     @Override
-    public void deleteAll(Device device) {
-        //Path rootLocation = Paths.get(device.getPath());
-        FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    public void deleteAll(Device device, MultipartFile file) {
+        Path loc = Paths.get(device.getImagePath());
+        String extension = "";
+        int i = file.getOriginalFilename().lastIndexOf('.');
+        if (i >= 0) {
+            extension = file.getOriginalFilename().substring(i+1);
+        }
+        String temp = loc.toString();
+        temp = temp+"\\"+device.getDeviceName()+"_version."+extension;
+        System.out.println("DRIES: "+temp);
+        loc = Paths.get(temp);
+        FileSystemUtils.deleteRecursively(loc.toFile());
     }
 
     @Override

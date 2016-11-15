@@ -13,13 +13,15 @@ public interface StorageService {
 
     void store(MultipartFile file, Device device);
 
+    void storeImage(MultipartFile file, Device device);
+
     Stream<Path> loadAll(Device device);
 
     Path load(String filename);
 
     Resource loadAsResource(String filename);
 
-    void deleteAll(Device device);
+    void deleteAll(Device device, MultipartFile file);
 
     void deleteFile(Device device, String filename);
 

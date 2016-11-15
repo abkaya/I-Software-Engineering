@@ -32,10 +32,6 @@
                 <tbody class="list">
                 <tr th:each="testSequence : ${allTestSequences}">
                     <td class="difficulty" th:value="${testSequence}" th:text="${testSequence.difficulty}">Difficulty</td>
-                    <td>
-                        <a th:href="@{/testSequence/{id}/(id=${testSequence.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                        <a th:href="@{/testSequence/{id}/delete(id=${testSequence.id})}"><span class="glyphicon glyphicon-trash"></span></a>
-                    </td>
                 </tr>
                 </tbody>
             </table>

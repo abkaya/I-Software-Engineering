@@ -1,5 +1,6 @@
 package be.uantwerpen.fti.se.controller;
 
+import be.uantwerpen.fti.se.model.TestSequence;
 import be.uantwerpen.fti.se.model.TestTemplate;
 import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import be.uantwerpen.fti.se.repository.TestTemplateRepository;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by abdil on 22/10/2016.

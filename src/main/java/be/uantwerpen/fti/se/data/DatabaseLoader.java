@@ -109,18 +109,38 @@ public class DatabaseLoader {
         List<TestSequence> testSequences = new ArrayList<TestSequence>();
         testSequences.add(ts1);
 
-        t2.setTestSequences(testSequences);
-        testTemplateRepository.save(t2);
 
-        //add add all sequences to t1
-        testSequences = new ArrayList<TestSequence>();
-        for (TestSequence ts : testSequenceRepository.findAll()) {
-            testSequences.add(ts);
-        }
         t1.setTestSequences(testSequences);
         testTemplateRepository.save(t1);
 
+        //add add all sequences to t1
+        testSequences = new ArrayList<TestSequence>();
+        /*for (TestSequence ts : testSequenceRepository.findAll()) {
+            if(ts != ts1)
+             testSequences.add(ts);
+        }*/
+        testSequences.add(ts2);
+        testSequences.add(ts3);
+        t2.setTestSequences(testSequences);
+        testTemplateRepository.save(t2);
+
+        //test TemplateID dependent listing of sequences
+        ts2.setTemplateID(t2.getId());
+        ts3.setTemplateID(t2.getId());
+        testSequenceRepository.save(ts2);
+        testSequenceRepository.save(ts3);
+
+        //save template 3. This will create a crud repository Id
+        //next, set the sequence templateId to the Id of the template we're adding it to.
+        //Then save template 3 again. That should also be the workflow of creating templates whilst also creating sequences within.
         testTemplateRepository.save(t3);
+        testSequences = new ArrayList<TestSequence>();
+        ts4.setTemplateID(t3.getId());
+        testSequenceRepository.save(ts4);
+        testSequences.add(ts4);
+        t3.setTestSequences(testSequences);
+        testTemplateRepository.save(t3);
+
         testTemplateRepository.save(t4);
         testTemplateRepository.save(t5);
         testTemplateRepository.save(t6);
@@ -150,6 +170,7 @@ public class DatabaseLoader {
 
         t1.setEditable(false);
         tp1.setTestTemplate(t1);
+        testTemplateRepository.save(t1);
         List<User> testPlanUsers = new ArrayList<User>();
         testPlanUsers.add(u1);
         tp1.setUsers(testPlanUsers);
@@ -162,6 +183,7 @@ public class DatabaseLoader {
         testPlanRepository.save(tp1);
 
         t2.setEditable(false);
+        testTemplateRepository.save(t2); //enkel ter presentatie. Wordt op false gezet bij het aanmaken van testplan
         tp2.setTestTemplate(t2);
         testPlanUsers.clear();
         testPlanUsers.add(u2);
@@ -172,9 +194,6 @@ public class DatabaseLoader {
         testPlanDevices.add(d2);
         tp2.setDevices(testPlanDevices);
         testPlanRepository.save(tp2);
-
-
-
 
 
     }

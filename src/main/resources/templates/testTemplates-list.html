@@ -38,8 +38,8 @@
                 <tr th:each="testTemplate : ${allTestTemplates}">
                     <td class="id" th:value="${id}" th:text="${testTemplate.id}">templateId</td>
                     <td class="name" th:value="${testTemplate}" th:text="${testTemplate.name}">Name</td>
-                    <td class="id" th:value="${seqCount}" th:text="${testTemplate.seqCount}"># Test Sequences</td>
-                    <td class="name" th:value="${editable}" th:text="${testTemplate.editable}">editable</td>
+                    <td class="seqCount" th:value="${seqCount}" th:text="${testTemplate.seqCount}"># Test Sequences</td>
+                    <td class="editable" th:value="${editable}" th:text="${testTemplate.editable}">editable</td>
                     <td>
                         <a th:href="@{/tests/{id}/(id=${testTemplate.id})}" th:remove="${!testTemplate.editable}? tag"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                         <a th:href="@{/tests/{id}/delete(id=${testTemplate.id})}" th:remove="${!testTemplate.editable}? tag"><span class="glyphicon glyphicon-trash"></span></a>

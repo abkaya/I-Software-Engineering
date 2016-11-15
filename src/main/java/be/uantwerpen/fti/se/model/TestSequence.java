@@ -1,7 +1,6 @@
 package be.uantwerpen.fti.se.model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.awt.*;
 import java.util.*;
 
@@ -18,8 +17,20 @@ public class TestSequence extends MyAbstractPersistable<Long>{
     private float maxErrorRate;         //Between 0 and 1
     ArrayList<ArrayList<Integer>> sequences;
 
+    public Long getTemplateID() {
+        return templateID;
+    }
+
+    public void setTemplateID(Long templateID) {
+        this.templateID = templateID;
+    }
+
+    private Long templateID;
+
+    /*
     @ManyToMany(mappedBy="testSequences")
     private java.util.List<TestTemplate> testTemplates;
+*/
 
     //When you use the default constructor, you get the easiest difficulty
     public TestSequence() {
@@ -72,7 +83,8 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      * @param radiusSmall:     choice the radius of the small circles
      * @param radiusBig:       choice the radius of the big circle
      */
-    public TestSequence(int numberOfTargets, double radiusSmall, double radiusBig){
+    public TestSequence(Long templateID, int numberOfTargets, double radiusSmall, double radiusBig){
+        this.templateID = templateID;
         this.numberOfTargets = numberOfTargets;
         this.radiusSmall = radiusSmall;
         this.radiusBig = radiusBig;

@@ -1,5 +1,6 @@
 package be.uantwerpen.fti.se.model;
 
+import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import org.aspectj.weaver.ast.Test;
 
 import javax.persistence.*;
@@ -22,13 +23,12 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     private double circleRadius1;
     private double circleRadius2;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name="TEMPLATE_SEQUENCE",
             joinColumns={@JoinColumn(name="TEMPLATE_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="SEQUENCE_ID", referencedColumnName="ID")})
     private List<TestSequence> testSequences;
-
 
     public int getNumberOfTargets() {
         return numberOfTargets;
@@ -128,14 +128,16 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
 
     public TestTemplate(){};
 
+    /*
     public void generateTestSequences(int seqCount, int numberOfTargets, double targetRadius1, double targetRadius2, double circleRadius1, double circleRadius2){
         double targetRadiusDiff = (targetRadius2-targetRadius1)/seqCount;
         double circleRadiusDiff = (circleRadius2-circleRadius1)/seqCount;
-        testSequences.clear();
-        for(int i = 0; i < seqCount; i++){
-            testSequences.add(new TestSequence(numberOfTargets,(i+1)*targetRadiusDiff, (i+1)*circleRadiusDiff));
+        if(!testSequences.isEmpty())
+            testSequences.clear();
+        for(int i = 0; i < numberOfTargets; i++){
+            testSequences.add(new TestSequence(tesnumberOfTargets,(i+1)*targetRadiusDiff, (i+1)*circleRadiusDiff));
         }
-    }
+    }*/
 
     public TestTemplate clone() {
         TestTemplate obj = new TestTemplate();

@@ -26,7 +26,7 @@
             <input class="form-control" type="text" th:field="*{name}"/>
         </div>
 
-        <!-- Edit the description -->
+        <!-- description -->
         <div class="form-group" th:classappend="${#fields.hasErrors('description')}?'has-error': ''">
             <label class="control-label" th:text="#{description}">Name</label>
             <span class="control-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">description Error</span>
@@ -34,6 +34,47 @@
         </div>
 
 
+        <!-- seqCount-->
+        <div class="form-group" th:classappend="${#fields.hasErrors('seqCount')}?'has-error': ''">
+            <label class="control-label" th:text="#{seqCount}">seqCount</label>
+            <span class="control-label" th:if="${#fields.hasErrors('seqCount')}" th:errors="*{seqCount}">seqCount Error</span>
+            <input class="form-control" type="text" th:field="*{seqCount}"/>
+        </div>
+
+        <!-- numberOfTargets -->
+        <div class="form-group" th:classappend="${#fields.hasErrors('numberOfTargets')}?'has-error': ''">
+            <label class="control-label" th:text="#{numberOfTargets}">numberOfTargets</label>
+            <span class="control-label" th:if="${#fields.hasErrors('numberOfTargets')}" th:errors="*{name}">targetRadius1 Error</span>
+            <input class="form-control" type="text" th:field="*{numberOfTargets}"/>
+        </div>
+
+        <!-- targetRadius1 -->
+        <div class="form-group" th:classappend="${#fields.hasErrors('targetRadius1')}?'has-error': ''">
+            <label class="control-label" th:text="#{targetRadius1}">targetRadius1</label>
+            <span class="control-label" th:if="${#fields.hasErrors('targetRadius1')}" th:errors="*{targetRadius1}">targetRadius1 Error</span>
+            <input class="form-control" type="text" th:field="*{targetRadius1}"/>
+        </div>
+
+        <!-- targetRadius2 -->
+        <div class="form-group" th:classappend="${#fields.hasErrors('targetRadius2')}?'has-error': ''">
+            <label class="control-label" th:text="#{targetRadius2}">targetRadius2</label>
+            <span class="control-label" th:if="${#fields.hasErrors('targetRadius2')}" th:errors="*{targetRadius2}">Name Error</span>
+            <input class="form-control" type="text" th:field="*{targetRadius2}"/>
+        </div>
+
+        <!-- circleRadius1-->
+        <div class="form-group" th:classappend="${#fields.hasErrors('circleRadius1')}?'has-error': ''">
+            <label class="control-label" th:text="#{circleRadius1}">circleRadius1</label>
+            <span class="control-label" th:if="${#fields.hasErrors('circleRadius1')}" th:errors="*{circleRadius1}">circleRadius1 Error</span>
+            <input class="form-control" type="text" th:field="*{circleRadius1}"/>
+        </div>
+
+        <!-- circleRadius2 -->
+        <div class="form-group" th:classappend="${#fields.hasErrors('circleRadius2')}?'has-error': ''">
+            <label class="control-label" th:text="#{circleRadius2}">circleRadius2</label>
+            <span class="control-label" th:if="${#fields.hasErrors('circleRadius2')}" th:errors="*{circleRadius2}">circleRadius2 Error</span>
+            <input class="form-control" type="text" th:field="*{circleRadius2}"/>
+        </div>
         <!-- seaCount doesn't need editing right now
         <div class="form-group" th:classappend="${#fields.hasErrors('seqCount')}?'has-error': ''">
             <label class="control-label" th:text="#{seqCount}">Name</label>
@@ -41,7 +82,7 @@
             <input class="form-control" type="text" th:field="*{seqCount}" />
         </div> -->
 
-
+        <!--
         <p><label th:text="#{testSequences}">Test Sequences</label>
             <select th:field="*{testSequences}" multiple="multiple">
                 <option th:each="testSequence : ${allTestSequences}"
@@ -49,9 +90,9 @@
                         th:text="${testSequence.id}">Wireframe
                 </option>
             </select>
-        </p>
 
-        <!--
+
+
         <div th:classappend="${#fields.hasErrors('editable')}?'has-error': ''">
             <label>Placeholder buttons </label>
             <span class="control-label" th:if="${#fields.hasErrors('editable')}" th:errors="*{editable}">editable Error</span>
@@ -61,14 +102,47 @@
             <input type="checkbox" th:field="*{editable}" value="false" />
 
         </div>
-        -->
-
+        </p> -->
 
         <p>
             <a href="/tests" th:text="#{close}" class="btn btn-primary">Close</a>
             <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
         </p>
+
+
+
+        <h4>Sequences <a href="#" data-toggle="tooltip" data-placement="right"
+                         title="The sequences list will be updated once you confirm your changes.">?</a></h4>
+        <script>
+            $(function () {
+                $("[data-toggle = 'tooltip']").tooltip();
+            });
+        </script>
     </form>
+    <div id="testSequence-list">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th th:text="#{sequence.name}">Sequence Name</th>
+                <th th:text="#{testSequence.numberOfTargets}">#Targets</th>
+                <th th:text="#{testSequence.targetRadius}">Target Radius</th>
+                <th th:text="#{testSequence.circleRadius}">Circle Radius</th>
+            </tr>
+            </thead>
+
+            <!--This populates the sequence list, only if the sequence templateIDs match the current template's ID.-->
+            <tbody class="list">
+            <tr th:each="testSequence : ${allTestSequences}"
+                th:object="${testSequence}"
+                th:if="${testSequence.templateID} == *{id}">
+                <td class="id" th:value="${testSequence}" th:text="${testSequence.id}">ID</td>
+                <td class="id" th:value="${numberOfTargets}" th:text="${testSequence.numberOfTargets}">#Targets</td>
+                <td class="id" th:value="${radiusSmall}" th:text="${testSequence.radiusSmall}">Target Radius</td>
+                <td class="id" th:value="${radiusBig}" th:text="${testSequence.radiusBig}">Circle Radius</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

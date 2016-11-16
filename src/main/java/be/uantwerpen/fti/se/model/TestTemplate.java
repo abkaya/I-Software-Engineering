@@ -12,11 +12,11 @@ import java.util.List;
 
 
 @Entity
-public class TestTemplate extends MyAbstractPersistable<Long>{
+public class TestTemplate extends MyAbstractPersistable<Long> {
     private String name;
     private String description;
-    private int seqCount=0;
-    private boolean editable=true;
+    private int seqCount = 0;
+    private boolean editable = true;
     private int numberOfTargets;
     private double targetRadius1;
     private double targetRadius2;
@@ -25,9 +25,9 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
 
     @OneToMany
     @JoinTable(
-            name="TEMPLATE_SEQUENCE",
-            joinColumns={@JoinColumn(name="TEMPLATE_ID", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="SEQUENCE_ID", referencedColumnName="ID")})
+            name = "TEMPLATE_SEQUENCE",
+            joinColumns = {@JoinColumn(name = "TEMPLATE_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SEQUENCE_ID", referencedColumnName = "ID")})
     private List<TestSequence> testSequences;
 
     public int getNumberOfTargets() {
@@ -103,7 +103,7 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
     }
 
     public void setSeqCount() {
-        this.seqCount = testSequences.size();;
+        this.seqCount = testSequences.size();
     }
 
     public boolean isEditable() {
@@ -141,9 +141,14 @@ public class TestTemplate extends MyAbstractPersistable<Long>{
 
     public TestTemplate clone() {
         TestTemplate obj = new TestTemplate();
-        obj.setName(this.name+"_Copy");
+        obj.setName(this.name);
         obj.setDescription(this.description);
         obj.setSeqCount(this.seqCount);
+        obj.setNumberOfTargets(this.numberOfTargets);
+        obj.setTargetRadius1(this.targetRadius1);
+        obj.setTargetRadius2(this.targetRadius2);
+        obj.setCircleRadius1(this.circleRadius1);
+        obj.setCircleRadius2(this.circleRadius2);
         obj.setEditable(true);
         //Copying sequences will result in a shared reference error. To prevent this, share the attributes to generate the same
         //sequences instead

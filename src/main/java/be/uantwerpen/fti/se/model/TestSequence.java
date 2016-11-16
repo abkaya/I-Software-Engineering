@@ -27,7 +27,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
 
     private Long templateID;
 
-    /*
+/*
     @ManyToMany(mappedBy="testSequences")
     private java.util.List<TestTemplate> testTemplates;
 */

@@ -84,7 +84,7 @@ public class DatabaseLoader {
         userRepository.save(u2);
 
         //create sequences and add these to the repository
-        TestSequence ts0 = new TestSequence();
+        /*TestSequence ts0 = new TestSequence();
         TestSequence ts1 = new TestSequence(3, 10, 1, 3);
         TestSequence ts2 = new TestSequence();
         TestSequence ts3 = new TestSequence();
@@ -93,7 +93,7 @@ public class DatabaseLoader {
         testSequenceRepository.save(ts1);
         testSequenceRepository.save(ts2);
         testSequenceRepository.save(ts3);
-        testSequenceRepository.save(ts4);
+        testSequenceRepository.save(ts4);*/
 
         //test creating a template and adding it to the repo
         TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.");
@@ -106,41 +106,9 @@ public class DatabaseLoader {
         TestTemplate t8 = new TestTemplate("Template_0x08_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. CHANGES WILL NOT BE SAVED");
         t8.setEditable(false);
 
-        List<TestSequence> testSequences = new ArrayList<TestSequence>();
-        testSequences.add(ts1);
-
-
-        t1.setTestSequences(testSequences);
         testTemplateRepository.save(t1);
-
-        //add add all sequences to t1
-        testSequences = new ArrayList<TestSequence>();
-        /*for (TestSequence ts : testSequenceRepository.findAll()) {
-            if(ts != ts1)
-             testSequences.add(ts);
-        }*/
-        testSequences.add(ts2);
-        testSequences.add(ts3);
-        t2.setTestSequences(testSequences);
         testTemplateRepository.save(t2);
-
-        //test TemplateID dependent listing of sequences
-        ts2.setTemplateID(t2.getId());
-        ts3.setTemplateID(t2.getId());
-        testSequenceRepository.save(ts2);
-        testSequenceRepository.save(ts3);
-
-        //save template 3. This will create a crud repository Id
-        //next, set the sequence templateId to the Id of the template we're adding it to.
-        //Then save template 3 again. That should also be the workflow of creating templates whilst also creating sequences within.
         testTemplateRepository.save(t3);
-        testSequences = new ArrayList<TestSequence>();
-        ts4.setTemplateID(t3.getId());
-        testSequenceRepository.save(ts4);
-        testSequences.add(ts4);
-        t3.setTestSequences(testSequences);
-        testTemplateRepository.save(t3);
-
         testTemplateRepository.save(t4);
         testTemplateRepository.save(t5);
         testTemplateRepository.save(t6);
@@ -168,9 +136,9 @@ public class DatabaseLoader {
         TestPlan tp1 = new TestPlan("Testplan_0x01","08/08","09/08","This is a description for testplan 1");
         TestPlan tp2 = new TestPlan("Testplan_0x02","08/08","09/08","This is a description for testplan 2");
 
-        t1.setEditable(false);
-        tp1.setTestTemplate(t1);
-        testTemplateRepository.save(t1);
+        //t1.setEditable(false);   //Add sequences to templates, templates to plans at runtime in order to keep things working.
+        //tp1.setTestTemplate(t1);
+        //testTemplateRepository.save(t1);
         List<User> testPlanUsers = new ArrayList<User>();
         testPlanUsers.add(u1);
         tp1.setUsers(testPlanUsers);
@@ -182,9 +150,9 @@ public class DatabaseLoader {
         tp1.setDevices(testPlanDevices);
         testPlanRepository.save(tp1);
 
-        t2.setEditable(false);
-        testTemplateRepository.save(t2); //enkel ter presentatie. Wordt op false gezet bij het aanmaken van testplan
-        tp2.setTestTemplate(t2);
+        //t2.setEditable(false);
+        //testTemplateRepository.save(t2);
+        //tp2.setTestTemplate(t2);
         testPlanUsers.clear();
         testPlanUsers.add(u2);
         tp2.setUsers(testPlanUsers);

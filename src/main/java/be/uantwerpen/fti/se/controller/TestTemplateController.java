@@ -92,6 +92,7 @@ public class TestTemplateController {
     @RequestMapping(value = "/tests/{id}/delete")
     public String deleteTestTemplate(@PathVariable Long id, final ModelMap model) {
         if (testTemplateRepository.findOne(id).isEditable()) {
+            testTemplateService.deleteLinkedSequences(id);
             testTemplateRepository.delete(id);
             model.clear();
         }

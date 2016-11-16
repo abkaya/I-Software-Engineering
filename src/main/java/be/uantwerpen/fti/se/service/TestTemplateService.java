@@ -15,7 +15,7 @@ import java.util.List;
  * Created by abdil on 22/10/2016.
  */
 @Service
-public class TestTemplateService{
+public class TestTemplateService {
     @Autowired
     private TestTemplateRepository testTemplateRepository;
 
@@ -45,50 +45,61 @@ public class TestTemplateService{
         TestTemplate tempTestTemplate = testTemplate.getId() == null ? null : findOne(testTemplate.getId());
         if (tempTestTemplate != null) {
             tempTestTemplate.setDescription(testTemplate.getDescription());
-            tempTestTemplate.setTestSequences(generateTestSequences(testTemplate.getId(),testTemplate.getSeqCount(),testTemplate.getNumberOfTargets(),testTemplate.getTargetRadius1(),testTemplate.getTargetRadius2(),testTemplate.getCircleRadius1(),testTemplate.getCircleRadius2()));
             tempTestTemplate.setTestSequences(testTemplate.getTestSequences());
+            tempTestTemplate.setTestSequences(generateTestSequences(testTemplate.getId(), testTemplate.getSeqCount(), testTemplate.getNumberOfTargets(), testTemplate.getTargetRadius1(), testTemplate.getTargetRadius2(), testTemplate.getCircleRadius1(), testTemplate.getCircleRadius2()));
             tempTestTemplate.setEditable(testTemplate.isEditable());
             tempTestTemplate.setName(testTemplate.getName());
-            for(int i = 0; i < 30 ; i++){
-                System.out.print(tempTestTemplate.getSeqCount());
-            }
             tempTestTemplate.setSeqCount(testTemplate.getSeqCount());
+            tempTestTemplate.setNumberOfTargets(testTemplate.getNumberOfTargets());
+            tempTestTemplate.setTargetRadius1(testTemplate.getTargetRadius1());
+            tempTestTemplate.setTargetRadius2(testTemplate.getTargetRadius2());
+            tempTestTemplate.setCircleRadius1(testTemplate.getCircleRadius1());
+            tempTestTemplate.setCircleRadius2(testTemplate.getCircleRadius2());
             testTemplateRepository.save(tempTestTemplate);
         } else {
             testTemplateRepository.save(testTemplate);
         }
     }
 
-    public void copy(Long id){
-        /*Long newID = id;
-        while(testTemplateRepository.exists(newID))
-            newID++;*/
+    public void copy(Long id) {
         TestTemplate clone = testTemplateRepository.findOne(id).clone();
-        clone.setId(null);
+        testTemplateRepository.save(clone);
+        //the clone now has its own unique id
+        clone.setName(clone.getName()+"_Copy_"+clone.getId());
+        clone.setTestSequences(generateTestSequences(clone.getId(), clone.getSeqCount(), clone.getNumberOfTargets(), clone.getTargetRadius1(), clone.getTargetRadius2(), clone.getCircleRadius1(), clone.getCircleRadius2()));
         testTemplateRepository.save(clone);
     }
 
-    private List<TestSequence> generateTestSequences(Long templateID, int seqCount, int numberOfTargets, double targetRadius1, double targetRadius2, double circleRadius1, double circleRadius2){
+    private List<TestSequence> generateTestSequences(Long templateID, int seqCount, int numberOfTargets, double targetRadius1, double targetRadius2, double circleRadius1, double circleRadius2) {
         List<TestSequence> testSequences = new ArrayList<TestSequence>();
         TestSequence ts = null;
-        double targetRadiusDiff = (targetRadius2-targetRadius1)/seqCount;
-        double circleRadiusDiff = (circleRadius2-circleRadius1)/seqCount;
+        double targetRadiusDiff = (targetRadius2 - targetRadius1) / (seqCount - 1);
+        double circleRadiusDiff = (circleRadius2 - circleRadius1) / (seqCount - 1);
 
-        for(int i = 0; i < seqCount; i++){
-            ts = new TestSequence(templateID,numberOfTargets,(i+1)*targetRadiusDiff, (i+1)*circleRadiusDiff);
+        deleteLinkedSequences(templateID);
+
+        for (int i = 0; i < seqCount; i++) {
+            ts = new TestSequence(templateID, numberOfTargets, (i) * targetRadiusDiff + targetRadius1, (i) * circleRadiusDiff + circleRadius1);
             testSequences.add(ts);
         }
-        for(TestSequence seq : testSequences) {
+        for (TestSequence seq : testSequences) {
             testSequenceRepository.save(seq);
         }
         testSequences = new ArrayList<TestSequence>();
 
-        for(TestSequence seq : testSequenceRepository.findAll())
-        {
-            if(templateID == seq.getTemplateID())
+        for (TestSequence seq : testSequenceRepository.findAll()) {
+            if (templateID.equals(seq.getTemplateID()))
                 testSequences.add(seq);
         }
         return testSequences;
+    }
+
+    public void deleteLinkedSequences(Long templateID) {
+        testTemplateRepository.findOne(templateID).setTestSequences(null);
+        for (TestSequence s : testSequenceRepository.findAll()) {
+            if (s.getTemplateID().equals(templateID))
+                testSequenceRepository.delete(s.getId());
+        }
     }
 
     private TestTemplate findOne(Long id) {

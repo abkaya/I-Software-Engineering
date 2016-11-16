@@ -17,6 +17,8 @@ public interface StorageService {
 
     Stream<Path> loadAll(Device device);
 
+    //String[] loadAll(Device device);
+
     Path load(String filename);
 
     Resource loadAsResource(String filename);

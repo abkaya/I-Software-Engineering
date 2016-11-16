@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,7 +36,7 @@ public class FileUploadController {
 	}
 
 	@GetMapping("/devices/{id}/files")
-	public String listUploadedFiles(Model model, @PathVariable Long id) throws IOException {
+	public String listUploadedFiles(Model model, @PathVariable Long id, RedirectAttributes red) throws IOException {
 
 		Device device =deviceRepository.findOne(id);
 		model.addAttribute("device",device);
@@ -48,21 +49,23 @@ public class FileUploadController {
 								.build().toString())
 				.collect(Collectors.toList()));
 
+		model.addAttribute("filenames", storageService.loadAll(device).collect(Collectors.toList()));
+
 		return "load-file";
 	}
 
-	/*
-	@GetMapping("/devices/{id}/files/{file}/delete")
-	public String deleteFile(@PathVariable Long id, @PathVariable String file) {
 
+	@GetMapping("/devices/{id}/files/{filename}/delete")
+	public String deleteFile(@PathVariable Long id, @PathVariable String filename) {
 
+		//String name = filename.toString();
 		Device dev = deviceRepository.findOne(id);
 		storageService.deleteFile(dev, filename);
 
 		return "redirect:/devices/{id}/files";
 
 	}
-	*/
+
 
 	@GetMapping("/devices/{id}/files/{filename:.+}")
 	@ResponseBody
@@ -80,23 +83,15 @@ public class FileUploadController {
 	public String handleFileUpload(@Valid Device device, @PathVariable Long id, @RequestParam("file") MultipartFile file,
 								   RedirectAttributes redirectAttributes) {
 
-		storageService.store(file, device);
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file.getOriginalFilename() + "!");
+		if (!file.isEmpty()) {
+			storageService.store(file, device);
+		}else{
+			redirectAttributes.addFlashAttribute("message",
+					"There was no file selected");
+		}
 
 		return "redirect:/devices/{id}/files";
 	}
-
-
-	@PostMapping(value = "/devices/{id}/files/delete")
-	public String deleteFile(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
-		//Device dev = deviceRepository.findOne(id);
-		//String f = file.toString();
-		//System.out.println("TESTESTEST");
-		//storageService.deleteFile(dev, filename);
-		return "redirect:/devices/{id}/files";
-	}
-
 
 	@ExceptionHandler(StorageFileNotFoundException.class)
 	public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {

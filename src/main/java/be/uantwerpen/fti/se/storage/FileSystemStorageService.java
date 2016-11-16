@@ -34,14 +34,26 @@ public class FileSystemStorageService implements StorageService {
     public void store(MultipartFile file, Device device) {
 
         //Path rootLocation = Paths.get(device.getPath());
-        try {
-            if (file.isEmpty()) {
-                throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
+        File dir = new File(rootLocation.toString());
+        String files[] = dir.list();
+        boolean exists = false;
+
+        for(int i=0;i<(files.length);i++){
+            if (files[i].toString().equals(file.getOriginalFilename().toString())){
+                exists=true;
             }
-            Files.copy(file.getInputStream(), rootLocation.resolve(file.getOriginalFilename()));
-        } catch (IOException e) {
-            throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
         }
+
+            try {
+                if (file.isEmpty()) {
+                     throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
+                 }
+                if(exists==false) {
+                    Files.copy(file.getInputStream(), rootLocation.resolve(file.getOriginalFilename()));
+                }
+            } catch (IOException e) {
+                throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
+             }
     }
 
     @Override
@@ -63,6 +75,7 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
         }
     }
+
 
     @Override
     public Stream<Path> loadAll(Device device) {
@@ -121,7 +134,8 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void deleteFile(Device device, String filename) {
         String foldername = "files_"+device.getDeviceName();
-        String path = "C:\\Users\\Admin\\IdeaProjects\\repos\\src\\main\\resources\\static\\devices_files\\"+foldername+"\\"+filename;
+        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+        String path = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername+"\\"+filename;
         File file = new File(path);
         FileSystemUtils.deleteRecursively(file);
     }

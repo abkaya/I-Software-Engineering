@@ -141,6 +141,15 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
+    public void deleteDevice(Device device) {
+        String foldername = "files_"+device.getDeviceName();
+        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+        String path = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername;
+        File file = new File(path);
+        FileSystemUtils.deleteRecursively(file);
+    }
+
+    @Override
     public void init(Device device) {
         //Path rootLocation = Paths.get(device.getPath());
         try {

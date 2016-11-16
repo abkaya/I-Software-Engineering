@@ -77,6 +77,9 @@ public class DeviceController {
 
     @RequestMapping(value = "/devices/{id}/delete")
     public String deleteDevice(@PathVariable Long id, final ModelMap model) {
+        if(deviceRepository.findOne(id).isUsed()==false) {
+            storageService.deleteDevice(deviceRepository.findOne(id));
+        }
         deviceService.delete(id);
         model.clear();
         model.addAttribute("devicesActiveSettings","active");

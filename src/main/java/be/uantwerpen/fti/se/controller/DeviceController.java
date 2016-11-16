@@ -42,9 +42,6 @@ public class DeviceController {
         Device device = deviceRepository.findOne(id);
         if(device.isUsed() || device.isInUse() || device.isDisabled())
         {
-            //model.addAttribute("allDevices", deviceRepository.findAll());
-            //model.addAttribute("devicesActiveSettings","active");
-            //return "devices-list";
             return "redirect:/devices";
         }else {
             model.addAttribute("device", deviceRepository.findOne(id));

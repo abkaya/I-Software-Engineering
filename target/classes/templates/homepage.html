@@ -4,14 +4,48 @@
 <head th:replace="layout :: head (title='Home')"></head>
 
 
-<body>
+<body onload="initPage()">
+
+<script type="text/javascript">
+    function initPage() {
+    var options = {
+    valueNames: ['name']
+    };
+
+    var deviceList = new List('homepage-list', options);
+    }
+</script>
 
 <div class="container">
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
 
-    <span th:text="#{homepage.hello}"/> <br/>
+   <!-- <span th:text="#{homepage.hello}"/> <br/> -->
 
-</div>
-</body>
-</html>
+
+    <div class="content">
+        <div id="homepage-list">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{homepage.noUsers}">noUsers</th>
+                    <th th:text="#{homepage.noDevices}">noDevices</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                   <tbody class="list">
+              <!--     <td class="noUsers" th:value="${noUsers}" th:text="${homepage.noUsers}">noUsers</td> -->
+                <!--   <td class="noDevices" th:value="${noDevices}" th:text="${homepage.noDevices}">noDevices</td> -->
+                   <td class="noUsers" th:value="${noUsers}" th:text="${noUsers}">noUsers</td>
+                   <td class="noDevices" th:value="${noDevices}" th:text="${noDevices}">noDevices</td>
+                   </tbody>
+               </table>
+
+           </div>
+       </div>
+
+
+   </div>
+   </body>
+   </html>

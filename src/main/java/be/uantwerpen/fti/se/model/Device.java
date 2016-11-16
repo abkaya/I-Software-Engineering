@@ -26,6 +26,7 @@ public class Device extends MyAbstractPersistable<Long> {
     public Device(){
         used = false;
         disabled = false;
+        inUse = false;
     }
 
     public Device(String deviceName, String type, String version, String manufacturer, String driver, boolean imageAvailable){

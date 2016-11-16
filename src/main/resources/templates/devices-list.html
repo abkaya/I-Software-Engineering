@@ -60,10 +60,13 @@
                     <td class="deviceInUse" th:value="${device}" th:text="${device.inUse}">In use</td>
                     <td class="deviceDisabled" th:value="${device}" th:text="${device.disabled}">Disabled</td>
                     <td>
-                        <a th:href="@{/devices/{id}/(id=${device.id})}" th:if="${device.disabled}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                        <a th:href="@{/devices/{id}/delete(id=${device.id})}" th:if="${device.disabled}"><span class="glyphicon glyphicon-trash"></span></a>
-                        <!--<a href=""><span class="glyphicon glyphicon-duplicate"></span></a>&nbsp;-->
-                        <!--<a href="/homepage.html"><span class="glyphicon glyphicon-folder-open"></span></a>-->
+                        <div sec:authorize="hasAuthority('device-edit')" role="presentation" th:class="${rolesActiveSettings}">
+                            <a th:href="@{/devices/{id}/(id=${device.id})}"><span class="glyphicon glyphicon-edit"></span></a>
+
+                        </div>
+                        <div sec:authorize="hasAuthority('device-delete')" role="presentation" th:class="${rolesActiveSettings}">
+                            <a th:href="@{/devices/{id}/delete(id=${device.id})}"><span class="glyphicon glyphicon-trash"></span></a>
+                        </div>
                     </td>
 
                     <script th:inline="javascript">

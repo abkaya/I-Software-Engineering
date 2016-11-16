@@ -17,13 +17,18 @@ public class Device extends MyAbstractPersistable<Long> {
     private boolean used;
     private boolean inUse;
     private boolean disabled;
+    private boolean imageAvailable;
+    private String imageName;
+    private String imageExtension;
+    private String imagePath;
+
 
     public Device(){
         used = false;
         disabled = false;
     }
 
-    public Device(String deviceName, String type, String version, String manufacturer, String driver){
+    public Device(String deviceName, String type, String version, String manufacturer, String driver, boolean imageAvailable){
         this.deviceName = deviceName;
         this.type = type;
         this.version = version;
@@ -32,6 +37,16 @@ public class Device extends MyAbstractPersistable<Long> {
         used = false;
         inUse = false;
         disabled = false;
+        // Added by Jan for image
+        this.imageAvailable = imageAvailable;
+        imageName = "no_image";
+        if(imageAvailable)  {
+            imageExtension = "jpg"; // Search extension!!!
+            imageName = deviceName + "_" + version + "." + imageExtension;
+            imagePath = "devices_images/" + imageName;
+        } else {
+            imagePath = "devices_images/no_image.jpg";
+        }
     }
 
     public String getDeviceName() {
@@ -72,6 +87,22 @@ public class Device extends MyAbstractPersistable<Long> {
 
     public void setDriver(String driver) {
         this.driver = driver;
+    }
+
+    public String getImageName()    {
+        return imageName;
+    }
+
+    public void setImageName(String imageName)  {
+        this.imageName = imageName;
+    }
+
+    public String getImagePath()    {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath)  {
+        this.imagePath = imagePath;
     }
 
     public boolean isUsed() {

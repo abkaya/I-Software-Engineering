@@ -19,7 +19,7 @@
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
     <form action="#" th:action="@{/roles/{id}(id=${role})}" th:object="${role}" method="post">
-        <input th:type="hidden" th:field="*{id}"/>
+        <input th:type="hidden" th:field="*{id}"/>²
         <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
             <label class="control-label" th:text="#{name}">Name</label>
             <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>

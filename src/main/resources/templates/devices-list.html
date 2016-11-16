@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <!-- Import header -->
-<head th:replace="layout :: head (title='#{device.management}')"></head>
+<head th:replace="layout :: head (title='#{device.management}')">
+</head>
 
 <body onload="initPage()">
 <script type="text/javascript">
@@ -11,21 +12,30 @@
         var options = {
             valueNames: ['deviceName']
         };
-
         var deviceList = new List('device-list', options);
     }
 </script>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span class="close">×</span>
+    <img class="modal-content" id="img01"/>
+    <div id="caption"></div>
+</div>
 
 <div class="container">
     <div th:replace="layout :: navbar"></div>
 
     <div class="content">
+
         <div id="device-list">
+
             <input class="search" placeholder="Search" />
 
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th th:text="#{device.picture}">Picture</th>
                     <th th:text="#{device.name}">Device</th>
                     <th th:text="#{device.type}">Type</th>
                     <th th:text="#{device.version}">Version</th>
@@ -40,6 +50,7 @@
 
                 <tbody class="list">
                 <tr th:each="device : ${allDevices}">
+                    <td><img th:id="${device.imageName}" th:src="${device.imagePath}" th:alt="${device.imageName}" th:width="100px" th:height="100px" style="border-radius:10px; cursor:pointer; transition:0.3s;"/></td>
                     <td class="deviceName" th:value="${device}" th:text="${device.deviceName}">Device</td>
                     <td class="deviceType" th:value="${device}" th:text="${device.type}">Type</td>
                     <td class="deviceClass" th:value="${device}" th:text="${device.version}">Class</td>
@@ -50,14 +61,35 @@
                     <td class="deviceDisabled" th:value="${device}" th:text="${device.disabled}">Disabled</td>
                     <td>
                         <div sec:authorize="hasAuthority('device-edit')" role="presentation" th:class="${rolesActiveSettings}">
-                            <a th:href="@{/devices/{id}/(id=${device.id})}"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a th:href="@{/devices/{id}/(id=${device.id})}" th:if="${not device.disabled and not device.inUse and not device.used}" ><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
 
                         </div>
                         <div sec:authorize="hasAuthority('device-delete')" role="presentation" th:class="${rolesActiveSettings}">
-                            <a th:href="@{/devices/{id}/delete(id=${device.id})}"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a th:href="@{/devices/{id}/delete(id=${device.id})}" th:if="${not device.disabled and not device.inUse and not device.used}"><span class="glyphicon glyphicon-trash"></span></a>&nbsp;
                         </div>
 
+                        <a href="/homepage.html"><span class="glyphicon glyphicon-folder-open"></span></a>
+
                     </td>
+
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        var modal = document.getElementById('myModal');
+                        var img = document.getElementById(/*[[${device.imageName}]]*/);
+                        var modalImg = document.getElementById("img01");
+                        var captionText = document.getElementById("caption");
+                        img.onclick = function(){
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                        var span = document.getElementsByClassName("close")[0];
+                        span.onclick = function() {
+                            modal.style.display = "none";
+                        }
+                        /*]]>*/
+                    </script>
+
                 </tr>
                 </tbody>
             </table>
@@ -68,6 +100,8 @@
 
         </div>
     </div>
+
 </div>
+
 </body>
 </html>

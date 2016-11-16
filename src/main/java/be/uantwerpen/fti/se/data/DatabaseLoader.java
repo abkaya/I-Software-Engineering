@@ -119,10 +119,10 @@ public class DatabaseLoader {
 
 
         //Add devices
-        Device d1 = new Device("aDevice", "aType", "aVersion", "aManufacturer", "aDriver");
-        Device d2 = new Device("aDevice2", "aType2", "aVersion2", "aManufacturer2", "aDriver2");
-        Device d3 = new Device("aDevice3", "aType3", "aVersion3", "aManufacturer3", "aDriver3");
-        Device d4 = new Device("aDevice4", "aType4", "aVersion4", "aManufacturer4", "aDriver4");
+        Device d1 = new Device("aDevice", "aType", "aVersion", "aManufacturer", "aDriver", true);
+        Device d2 = new Device("aDevice2", "aType2", "aVersion2", "aManufacturer2", "aDriver2", false);
+        Device d3 = new Device("aDevice3", "aType3", "aVersion3", "aManufacturer3", "aDriver3", true);
+        Device d4 = new Device("aDevice4", "aType4", "aVersion4", "aManufacturer4", "aDriver4", true);
         d1.setIsUsed();
         d2.setIsUsed();
         d2.setDisabled();

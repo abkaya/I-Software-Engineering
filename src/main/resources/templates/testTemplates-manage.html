@@ -94,6 +94,7 @@
                 <th th:text="#{testSequence.numberOfTargets}">#Targets</th>
                 <th th:text="#{testSequence.targetRadius}">Target Radius</th>
                 <th th:text="#{testSequence.circleRadius}">Circle Radius</th>
+                <th th:text="#{difficulty}">Difficulty</th>
             </tr>
             </thead>
 
@@ -106,6 +107,7 @@
                 <td class="id" th:value="${numberOfTargets}" th:text="${testSequence.numberOfTargets}">#Targets</td>
                 <td class="id" th:value="${radiusSmall}" th:text="${testSequence.radiusSmall}">Target Radius</td>
                 <td class="id" th:value="${radiusBig}" th:text="${testSequence.radiusBig}">Circle Radius</td>
+                <td class="id" th:value="${difficulty}" th:text="${testSequence.difficulty}">Difficulty</td>
             </tr>
             </tbody>
         </table>

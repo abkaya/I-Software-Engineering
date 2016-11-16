@@ -90,6 +90,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         this.radiusBig = radiusBig;
         this.sequences = new ArrayList<ArrayList<Integer>>();
         this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
+        CalculateDifficulty();
     }
 
     /**

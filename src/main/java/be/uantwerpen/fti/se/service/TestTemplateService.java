@@ -43,11 +43,12 @@ public class TestTemplateService {
 
     public void saveSomeAttributes(TestTemplate testTemplate) {
         TestTemplate tempTestTemplate = testTemplate.getId() == null ? null : findOne(testTemplate.getId());
+        //if the template is existent
         if (tempTestTemplate != null) {
             tempTestTemplate.setDescription(testTemplate.getDescription());
-            tempTestTemplate.setTestSequences(testTemplate.getTestSequences());
+            tempTestTemplate.setTestSequences(null);
             tempTestTemplate.setTestSequences(generateTestSequences(testTemplate.getId(), testTemplate.getSeqCount(), testTemplate.getNumberOfTargets(), testTemplate.getTargetRadius1(), testTemplate.getTargetRadius2(), testTemplate.getCircleRadius1(), testTemplate.getCircleRadius2()));
-            tempTestTemplate.setEditable(testTemplate.isEditable());
+            //tempTestTemplate.setEditable(testTemplate.isEditable());
             tempTestTemplate.setName(testTemplate.getName());
             tempTestTemplate.setSeqCount(testTemplate.getSeqCount());
             tempTestTemplate.setNumberOfTargets(testTemplate.getNumberOfTargets());
@@ -56,7 +57,11 @@ public class TestTemplateService {
             tempTestTemplate.setCircleRadius1(testTemplate.getCircleRadius1());
             tempTestTemplate.setCircleRadius2(testTemplate.getCircleRadius2());
             testTemplateRepository.save(tempTestTemplate);
-        } else {
+        }
+        //if it is a new template, first save it to acquire a template id, then generate the sequences
+        else {
+            testTemplateRepository.save(testTemplate);
+            testTemplate.setTestSequences(generateTestSequences(testTemplate.getId(), testTemplate.getSeqCount(), testTemplate.getNumberOfTargets(), testTemplate.getTargetRadius1(), testTemplate.getTargetRadius2(), testTemplate.getCircleRadius1(), testTemplate.getCircleRadius2()));
             testTemplateRepository.save(testTemplate);
         }
     }

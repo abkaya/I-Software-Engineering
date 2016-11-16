@@ -67,6 +67,7 @@
                         <div sec:authorize="hasAuthority('device-delete')" role="presentation" th:class="${rolesActiveSettings}">
                             <a th:href="@{/devices/{id}/delete(id=${device.id})}"><span class="glyphicon glyphicon-trash"></span></a>
                         </div>
+
                     </td>
 
                     <script th:inline="javascript">

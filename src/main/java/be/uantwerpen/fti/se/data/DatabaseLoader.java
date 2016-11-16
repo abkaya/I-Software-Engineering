@@ -127,6 +127,7 @@ public class DatabaseLoader {
         testTemplateRepository.save(t6);
         testTemplateRepository.save(t8);
 
+        //Add devices
         Device d1 = new Device("aDevice", "aType", "aVersion", "aManufacturer", "aDriver");
         Device d2 = new Device("aDevice2", "aType2", "aVersion2", "aManufacturer2", "aDriver2");
         Device d3 = new Device("aDevice3", "aType3", "aVersion3", "aManufacturer3", "aDriver3");

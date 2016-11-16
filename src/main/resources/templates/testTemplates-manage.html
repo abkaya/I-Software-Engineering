@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:spring="http://jboss.org/xml/ns/javax/validation/mapping" xmlns:form="">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.css" rel="stylesheet"/>
 <!-- Import header -->
 <head th:replace="layout :: head (title='Test Template management')"></head>
 
@@ -48,67 +49,33 @@
             <input class="form-control" type="text" th:field="*{numberOfTargets}"/>
         </div>
 
-        <!-- targetRadius1 -->
-        <div class="form-group" th:classappend="${#fields.hasErrors('targetRadius1')}?'has-error': ''">
+        <!-- targetRadius1 to targetRadius2-->
+        <div class="input-group" th:classappend="${#fields.hasErrors('targetRadius1')}?'has-error': ''">
             <label class="control-label" th:text="#{targetRadius1}">targetRadius1</label>
             <span class="control-label" th:if="${#fields.hasErrors('targetRadius1')}" th:errors="*{targetRadius1}">targetRadius1 Error</span>
             <input class="form-control" type="text" th:field="*{targetRadius1}"/>
-        </div>
-
-        <!-- targetRadius2 -->
-        <div class="form-group" th:classappend="${#fields.hasErrors('targetRadius2')}?'has-error': ''">
+            <span class="input-group-addon">to</span>
             <label class="control-label" th:text="#{targetRadius2}">targetRadius2</label>
             <span class="control-label" th:if="${#fields.hasErrors('targetRadius2')}" th:errors="*{targetRadius2}">Name Error</span>
             <input class="form-control" type="text" th:field="*{targetRadius2}"/>
         </div>
 
-        <!-- circleRadius1-->
-        <div class="form-group" th:classappend="${#fields.hasErrors('circleRadius1')}?'has-error': ''">
+
+        <!-- circleRadius1 to circleRadius2 -->
+        <div class="input-group" th:classappend="${#fields.hasErrors('targetRadius1')}?'has-error': ''">
             <label class="control-label" th:text="#{circleRadius1}">circleRadius1</label>
             <span class="control-label" th:if="${#fields.hasErrors('circleRadius1')}" th:errors="*{circleRadius1}">circleRadius1 Error</span>
             <input class="form-control" type="text" th:field="*{circleRadius1}"/>
-        </div>
-
-        <!-- circleRadius2 -->
-        <div class="form-group" th:classappend="${#fields.hasErrors('circleRadius2')}?'has-error': ''">
+            <span class="input-group-addon">to</span>
             <label class="control-label" th:text="#{circleRadius2}">circleRadius2</label>
             <span class="control-label" th:if="${#fields.hasErrors('circleRadius2')}" th:errors="*{circleRadius2}">circleRadius2 Error</span>
             <input class="form-control" type="text" th:field="*{circleRadius2}"/>
         </div>
-        <!-- seaCount doesn't need editing right now
-        <div class="form-group" th:classappend="${#fields.hasErrors('seqCount')}?'has-error': ''">
-            <label class="control-label" th:text="#{seqCount}">Name</label>
-            <span class="control-label" th:if="${#fields.hasErrors('seqCount')}" th:errors="*{seqCount}">seqCount Error</span>
-            <input class="form-control" type="text" th:field="*{seqCount}" />
-        </div> -->
-
-        <!--
-        <p><label th:text="#{testSequences}">Test Sequences</label>
-            <select th:field="*{testSequences}" multiple="multiple">
-                <option th:each="testSequence : ${allTestSequences}"
-                        th:value="${{testSequence}}"
-                        th:text="${testSequence.id}">Wireframe
-                </option>
-            </select>
-
-
-
-        <div th:classappend="${#fields.hasErrors('editable')}?'has-error': ''">
-            <label>Placeholder buttons </label>
-            <span class="control-label" th:if="${#fields.hasErrors('editable')}" th:errors="*{editable}">editable Error</span>
-            <input type="radio" th:value="*{editable}" value="true"/>true
-            <input type="radio" th:value="*{editable}" value="false"/>false
-
-            <input type="checkbox" th:field="*{editable}" value="false" />
-
-        </div>
-        </p> -->
 
         <p>
             <a href="/tests" th:text="#{close}" class="btn btn-primary">Close</a>
             <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
         </p>
-
 
 
         <h4>Sequences <a href="#" data-toggle="tooltip" data-placement="right"

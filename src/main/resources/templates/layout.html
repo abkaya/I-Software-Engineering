@@ -52,6 +52,9 @@
                         <a href="/roles" th:text="#{role.management}">Role management <span class="sr-only">(role management)</span></a>
                     </li>
 
+
+                    <li sec:authorize="hasAuthority('device-view')" role="presentation" th:class="${devicesActiveSettings}"><a href="/devices" th:text="#{device.management}">Device management <span class="sr-only">(device management)</span> </a></li>
+
                     <!-- DROPDOWN FOR TEST MANAGEMENT-->
                     <li sec:authorize="hasAuthority('test-view')" role="presentation" th:class="${testsActiveSettings}" class = "dropdown">
                         <a href = "#" class = "dropdown-toggle" style="padding-left: 30px; padding-right:30px;" data-toggle = "dropdown" th:text="#{test.management}">
@@ -66,10 +69,6 @@
                             <li><a href = "/testplans">Test plan</a></li>
                         </ul>
                     </li>
-
-
-                    <li sec:authorize="hasAuthority('device-view')" role="presentation" th:class="${devicesActiveSettings}"><a href="/devices" th:text="#{device.management}">Device management <span class="sr-only">(device management)</span> </a></li>
-
 
                     <li>
                         <a href="/logout">Logout <span class="sr-only">(logout)</span></a>

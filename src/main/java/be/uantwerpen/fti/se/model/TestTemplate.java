@@ -10,7 +10,6 @@ import java.util.List;
  * Created by abdil on 20/10/2016.
  */
 
-
 @Entity
 public class TestTemplate extends MyAbstractPersistable<Long> {
     private String name;
@@ -128,17 +127,6 @@ public class TestTemplate extends MyAbstractPersistable<Long> {
 
     public TestTemplate(){};
 
-    /*
-    public void generateTestSequences(int seqCount, int numberOfTargets, double targetRadius1, double targetRadius2, double circleRadius1, double circleRadius2){
-        double targetRadiusDiff = (targetRadius2-targetRadius1)/seqCount;
-        double circleRadiusDiff = (circleRadius2-circleRadius1)/seqCount;
-        if(!testSequences.isEmpty())
-            testSequences.clear();
-        for(int i = 0; i < numberOfTargets; i++){
-            testSequences.add(new TestSequence(tesnumberOfTargets,(i+1)*targetRadiusDiff, (i+1)*circleRadiusDiff));
-        }
-    }*/
-
     public TestTemplate clone() {
         TestTemplate obj = new TestTemplate();
         obj.setName(this.name);
@@ -151,8 +139,7 @@ public class TestTemplate extends MyAbstractPersistable<Long> {
         obj.setCircleRadius2(this.circleRadius2);
         obj.setEditable(true);
         //Copying sequences will result in a shared reference error. To prevent this, share the attributes to generate the same
-        //sequences instead
-        //obj.setTestSequences(this.testSequences);
+        //sequences with a unique id instead
         return obj;
     }
 

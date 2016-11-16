@@ -112,9 +112,12 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      * Calculate the difficulty  with parameters radiusSmall, radiusBig and numberOfTargets
      */
     public double CalculateDifficulty(){
-        double dif = 0;
-        if(radiusSmall < 3){
-            radiusSmall = 3;
+
+        //using the following algorithm to define the difficulty http://i.imgur.com/kaur2CC.png
+        difficulty = (Math.log((2*radiusBig+2*radiusSmall)/(2*radiusSmall)) / Math.log(2));
+
+        /*if(radiusSmall < 3){
+            radiusSmall = 3; //why is this necessary?
             difficulty = 10;
         }
         else if (radiusSmall > 30){
@@ -139,7 +142,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         }
         if((radiusBig < 200)&& (difficulty > 1)){
             difficulty--;
-        }
+        }*/
         return difficulty;
     }
 

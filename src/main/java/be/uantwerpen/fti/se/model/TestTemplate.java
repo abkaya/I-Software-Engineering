@@ -299,7 +299,7 @@ public class TestTemplate extends MyAbstractPersistable<Long> {
 
     /**
      * Overrides the default hashcode method and returns the hashcode of the name attribute of this template object.
-     * @return hashCode 
+     * @return hashCode
      */
     @Override
     public int hashCode() {

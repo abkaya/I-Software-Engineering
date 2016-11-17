@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='Show device image')"></head>
+
+<body>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+
+    <div>
+        <form method="POST" enctype="multipart/form-data" th:action="@{/devices/{id}/files(id=${device.id})}">
+            <table>
+                <tr>
+                    <td>File to upload:</td>
+                    <td>
+                        <input type="file" name="file" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Upload" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div th:if="${message}">
+        <p style="color:red" th:text="${message}"/>
+    </div>
+    <p>&nbsp;</p>
+    <div>
+        <ol>
+            <li th:each="filename : ${filenames}">
+                <label th:text="${filename}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <td>
+                    <a th:href="@{/devices/{id}/files/{filename}/delete(id=${device.id}, filename=${filename})}">
+                        <span type="button" class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </li>
+            <p>&nbsp;</p>
+        </ol>
+        <p><u>Download links</u></p>
+        <ol>
+            <li th:each="file : ${files}">
+                <a th:href="${file}" th:text="${file}" />
+            </li>
+        </ol>
+    </div>
+
+</div>
+</body>
+</html>

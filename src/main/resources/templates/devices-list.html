@@ -68,7 +68,8 @@
                             <a th:href="@{/devices/{id}/delete(id=${device.id})}" th:if="${not device.disabled and not device.inUse and not device.used}"><span class="glyphicon glyphicon-trash"></span></a>&nbsp;
                         </div>
 
-                        <a href="/homepage.html"><span class="glyphicon glyphicon-folder-open"></span></a>
+                        <a th:href="@{/devices/{id}/files(id=${device.id})}"><span class="glyphicon glyphicon-folder-open"></span></a>
+
 
                     </td>
 

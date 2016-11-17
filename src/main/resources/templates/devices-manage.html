@@ -14,7 +14,7 @@
 
 
 
-    <form action="#" th:action="@{/devices/{id}(id=${device})}" th:object="${device}" method="post">
+    <form action="#" th:action="@{/devices/{id}(id=${device})}" enctype="multipart/form-data" th:object="${device}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
 
         <div class="form-group" th:classappend="${#fields.hasErrors('deviceName')}?'has-error': ''">
@@ -45,6 +45,18 @@
             <label class="control-label" th:text="#{device.driver}">Driver</label>
             <span class="control-label" th:if="${#fields.hasErrors('driver')}" th:errors="*{driver}">Device driver Error</span>
             <input class="form-control" type="text" th:field="*{driver}" />
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <td>File to upload:</td>
+                    <td>
+                        <input class="form-control" type="file" name="file" accept="image/*" width="256" height="256"/>
+                    </td>
+                </tr>
+            </table>
+            <p>&nbsp;</p>
         </div>
 
         <p>

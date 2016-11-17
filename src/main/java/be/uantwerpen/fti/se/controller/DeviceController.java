@@ -58,7 +58,7 @@ public class DeviceController {
         }else {
             model.addAttribute("device", deviceRepository.findOne(id));
             model.addAttribute("devicesActiveSettings", "active");
-            deviceRepository.delete(id);
+
             return "devices-manage";
         }
     }
@@ -82,7 +82,7 @@ public class DeviceController {
             Boolean duplicate = false;
             for(Device devices : deviceRepository.findAll()) {
 
-                if (device.getDeviceName().equals(devices.getDeviceName())) {
+                if (device.getDeviceName().equals(devices.getDeviceName()) && device.getId().equals(devices.getId())) {
                     if (device.getVersion().equals(devices.getVersion())) {
                         duplicate = true;
                     }

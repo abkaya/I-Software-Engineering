@@ -64,8 +64,10 @@ public class Device extends MyAbstractPersistable<Long> {
         String parent = Paths.get(".").toAbsolutePath().normalize().toString();
         this.filePath = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername;
         File destfile = new File(filePath);
+        System.out.println("do this");
         if(!destfile.exists()) {
             destfile.mkdir();
+            System.out.println("also do this");
         }
     }
 

@@ -50,24 +50,24 @@
         </div>
 
         <!-- targetRadius1 to targetRadius2-->
+        <label class="control-label" th:text="#{targetRadius1}">targetRadius1</label>
         <div class="input-group" th:classappend="${#fields.hasErrors('targetRadius1')}?'has-error': ''">
-            <label class="control-label" th:text="#{targetRadius1}">targetRadius1</label>
             <span class="control-label" th:if="${#fields.hasErrors('targetRadius1')}" th:errors="*{targetRadius1}">targetRadius1 Error</span>
             <input class="form-control" type="text" th:field="*{targetRadius1}"/>
             <span class="input-group-addon">to</span>
-            <label class="control-label" th:text="#{targetRadius2}">targetRadius2</label>
+            <!--<label class="control-label" th:text="#{targetRadius2}">targetRadius2</label>-->
             <span class="control-label" th:if="${#fields.hasErrors('targetRadius2')}" th:errors="*{targetRadius2}">Name Error</span>
             <input class="form-control" type="text" th:field="*{targetRadius2}"/>
         </div>
 
 
         <!-- circleRadius1 to circleRadius2 -->
+        <label class="control-label" th:text="#{circleRadius1}">circleRadius1</label>
         <div class="input-group" th:classappend="${#fields.hasErrors('targetRadius1')}?'has-error': ''">
-            <label class="control-label" th:text="#{circleRadius1}">circleRadius1</label>
             <span class="control-label" th:if="${#fields.hasErrors('circleRadius1')}" th:errors="*{circleRadius1}">circleRadius1 Error</span>
             <input class="form-control" type="text" th:field="*{circleRadius1}"/>
             <span class="input-group-addon">to</span>
-            <label class="control-label" th:text="#{circleRadius2}">circleRadius2</label>
+            <!--<label class="control-label" th:text="#{circleRadius2}">circleRadius2</label>-->
             <span class="control-label" th:if="${#fields.hasErrors('circleRadius2')}" th:errors="*{circleRadius2}">circleRadius2 Error</span>
             <input class="form-control" type="text" th:field="*{circleRadius2}"/>
         </div>

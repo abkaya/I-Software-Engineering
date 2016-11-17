@@ -34,20 +34,12 @@ public class Device extends MyAbstractPersistable<Long> {
         disabled = false;
     }
 
-    public Device(String deviceName, String type, String deviceClass, String manufacturer, String driver, File imageName, File f){
+    public Device(String deviceName, String type, String version, String manufacturer, String driver, boolean imageAvailable){
         this.deviceName = deviceName;
         this.type = type;
         this.deviceClass = deviceClass;
         this.manufacturer = manufacturer;
         this.driver = driver;
-        /*
-        String foldername = "files_"+deviceName;
-        this.path = "C:\\Users\\Admin\\IdeaProjects\\repos\\src\\main\\resources\\static\\devices_files\\"+foldername;
-        File destfile = new File(path);
-        if(!destfile.exists()) {
-            destfile.mkdir();
-        }
-        */
         setFilePath(deviceName);
         setImagePath(deviceName);
         used = false;
@@ -77,16 +69,6 @@ public class Device extends MyAbstractPersistable<Long> {
             destfile.mkdir();
         }
     }
-
-    /*
-    public String getImageName(){return this.image.toString();}
-
-    //public void setImageName(String name){this.imageName = name;}
-
-    public File getImage(){return this.image;}
-
-    public void setImage(File im){this.image = im;}
-    */
 
     public String getDeviceName() {return this.deviceName;}
 

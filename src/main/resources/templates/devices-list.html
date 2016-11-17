@@ -47,9 +47,15 @@
                     <td class="deviceInUse" th:value="${device}" th:text="${device.used}">In use</td>
                     <td class="deviceDisabled" th:value="${device}" th:text="${device.disabled}">Disabled</td>
                     <td>
-                        <a th:href="@{/devices/{id}/(id=${device.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                        <a th:href="@{/devices/{id}/delete(id=${device.id})}"><span class="glyphicon glyphicon-trash"></span></a>&nbsp;
-                        <a th:href="@{/devices/{id}/files(id=${device.id})}"><span class="glyphicon glyphicon-folder-open"></span></a>
+                        <div sec:authorize="hasAuthority('device-edit')" role="presentation" th:class="${rolesActiveSettings}">
+                            <a th:href="@{/devices/{id}/(id=${device.id})}" th:if="${not device.disabled and not device.inUse and not device.used}" ><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+
+                        </div>
+                        <div sec:authorize="hasAuthority('device-delete')" role="presentation" th:class="${rolesActiveSettings}">
+                            <a th:href="@{/devices/{id}/delete(id=${device.id})}" th:if="${not device.disabled and not device.inUse and not device.used}"><span class="glyphicon glyphicon-trash"></span></a>&nbsp;
+                        </div>
+
+                        <a href="/homepage.html"><span class="glyphicon glyphicon-folder-open"></span></a>
                     </td>
                 </tr>
                 </tbody>

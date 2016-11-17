@@ -96,45 +96,30 @@ public class DatabaseLoader {
         testSequenceRepository.save(ts4);
 
         //test creating a template and adding it to the repo
-        TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.");
-        TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.");
-        TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.");
-        TestTemplate t4 = new TestTemplate("Template_0x04", "Brief description of the template.");
-        TestTemplate t5 = new TestTemplate("Template_0x05", "Brief description of the template.");
-        TestTemplate t6 = new TestTemplate("Template_0x06", "Brief description of the template.");
-        TestTemplate t7 = new TestTemplate("Template_0x07", "Brief description of the template.");
-        TestTemplate t8 = new TestTemplate("Template_0x08_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. CHANGES WILL NOT BE SAVED");
-        t8.setEditable(false);
+        TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", true, 5, 30, 1, 5, 30,50);
+        TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.", true, 10, 30, 1, 5, 30,50);
+        TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.", true, 20, 30, 1, 5, 30,50);
+        TestTemplate t4 = new TestTemplate("Template_0x04", "Brief description of the template.", true, 45, 30, 1, 5, 30,50);
+        TestTemplate t5 = new TestTemplate("Template_0x05_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. Copying is possible.",false, 65, 30, 1, 5, 30,50);
+        TestTemplate t6 = new TestTemplate("Template_0x06", "Brief description of the template.", true, 85, 30, 1, 5, 30,50);
+        TestTemplate t7 = new TestTemplate("Template_0x07", "Brief description of the template.", true, 105 , 30, 1, 5, 30,50);
+        TestTemplate t8 = new TestTemplate("Template_0x08_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. Copying is possible.", false, 135, 30, 1, 5, 30,50);
 
-        List<TestSequence> testSequences = new ArrayList<TestSequence>();
-        testSequences.add(ts1);
+        testTemplateService.saveSomeAttributes(t1);
+        testTemplateService.saveSomeAttributes(t2);
+        testTemplateService.saveSomeAttributes(t3);
+        testTemplateService.saveSomeAttributes(t4);
+        testTemplateService.saveSomeAttributes(t5);
+        testTemplateService.saveSomeAttributes(t6);
+        testTemplateService.saveSomeAttributes(t7);
+        testTemplateService.saveSomeAttributes(t8);
 
-        t2.setTestSequences(testSequences);
-        testTemplateRepository.save(t2);
 
-        //add add all sequences to t1
-        testSequences = new ArrayList<TestSequence>();
-        for (TestSequence ts : testSequenceRepository.findAll()) {
-            testSequences.add(ts);
-        }
-        t1.setTestSequences(testSequences);
-        testTemplateRepository.save(t1);
-
-        testTemplateRepository.save(t3);
-        testTemplateRepository.save(t4);
-        testTemplateRepository.save(t5);
-        testTemplateRepository.save(t6);
-        testTemplateRepository.save(t7);
-        testTemplateRepository.save(t6);
-        testTemplateRepository.save(t8);
-
-    //voeg devices toe
-        File f1 = new File("image11.png");
-        File f11 = new File("test1.txt");
-        File f2 = new File("image2.png");
-        File f22 = new File("test2.txt");
-        Device d1 = new Device("aDevice", "aType", "aClass", "aManufacturer", "aDriver", f1, f11);
-        Device d2 = new Device("bDevice2", "bType2", "bClass2", "bManufacturer2", "bDriver2", f2, f22);
+        //Add devices
+        Device d1 = new Device("aDevice", "aType", "aVersion", "aManufacturer", "aDriver", true);
+        Device d2 = new Device("aDevice2", "aType2", "aVersion2", "aManufacturer2", "aDriver2", false);
+        Device d3 = new Device("aDevice3", "aType3", "aVersion3", "aManufacturer3", "aDriver3", true);
+        Device d4 = new Device("aDevice4", "aType4", "aVersion4", "aManufacturer4", "aDriver4", true);
         d1.setIsUsed();
         d2.setDisabled();
         deviceRepository.save(d1);

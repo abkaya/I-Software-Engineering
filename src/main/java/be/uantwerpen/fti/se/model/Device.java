@@ -1,6 +1,8 @@
 package be.uantwerpen.fti.se.model;
 
 import javax.persistence.Entity;
+import java.io.File;
+import java.nio.file.Paths;
 
 /**
  * Created by Quentin Van Ravels and Jan Huijghebaert on 20-Oct-16.
@@ -21,6 +23,8 @@ public class Device extends MyAbstractPersistable<Long> {
     private String imageName;
     private String imageExtension;
     private String imagePath;
+    private String filePath;
+
 
 
     public Device(){
@@ -48,6 +52,32 @@ public class Device extends MyAbstractPersistable<Long> {
         } else {
             imagePath = "devices_images/no_image.jpg";
         }
+        setFilePath(deviceName);
+        setImagePath(deviceName);
+
+    }
+
+    public String getFilePath() { return this.filePath; }
+
+    public void setFilePath (String dev) {
+        String foldername = "files_"+dev;
+        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+        this.filePath = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername;
+        File destfile = new File(filePath);
+        if(!destfile.exists()) {
+            destfile.mkdir();
+        }
+    }
+
+    public String getImagePath() { return this.imagePath; }
+
+    public void setImagePath (String dev) {
+        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+        this.imagePath = parent+"\\src\\main\\resources\\static\\devices_images";
+        File destfile = new File(imagePath);
+        if(!destfile.exists()) {
+            destfile.mkdir();
+        }
     }
 
     public String getDeviceName() {
@@ -56,6 +86,8 @@ public class Device extends MyAbstractPersistable<Long> {
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
+        setFilePath(deviceName);
+        setImagePath(deviceName);
     }
 
     public String getType() {
@@ -96,14 +128,6 @@ public class Device extends MyAbstractPersistable<Long> {
 
     public void setImageName(String imageName)  {
         this.imageName = imageName;
-    }
-
-    public String getImagePath()    {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath)  {
-        this.imagePath = imagePath;
     }
 
     public boolean isUsed() {

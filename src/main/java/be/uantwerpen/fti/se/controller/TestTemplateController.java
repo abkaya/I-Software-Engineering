@@ -1,5 +1,6 @@
 package be.uantwerpen.fti.se.controller;
 
+import be.uantwerpen.fti.se.model.TestSequence;
 import be.uantwerpen.fti.se.model.TestTemplate;
 import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import be.uantwerpen.fti.se.repository.TestTemplateRepository;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by abdil on 22/10/2016.
@@ -78,9 +81,18 @@ public class TestTemplateController {
         return "redirect:/tests";
     }
 
+    @RequestMapping(value = "/tests/{id}/copy")
+    public String copyTestTemplate(@PathVariable Long id, final ModelMap model) {
+        testTemplateService.copy(id);
+        //Set the navigation button Tests Management to active
+        model.addAttribute("testsActiveSettings", "active");
+        return "redirect:/tests";
+    }
+
     @RequestMapping(value = "/tests/{id}/delete")
     public String deleteTestTemplate(@PathVariable Long id, final ModelMap model) {
         if (testTemplateRepository.findOne(id).isEditable()) {
+            testTemplateService.deleteLinkedSequences(id);
             testTemplateRepository.delete(id);
             model.clear();
         }

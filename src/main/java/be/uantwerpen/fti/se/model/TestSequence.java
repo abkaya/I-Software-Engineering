@@ -1,7 +1,6 @@
 package be.uantwerpen.fti.se.model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.awt.*;
 import java.util.*;
 
@@ -10,14 +9,28 @@ import java.util.*;
  */
 @Entity
 public class TestSequence extends MyAbstractPersistable<Long>{
-    private int difficulty;
+    private double difficulty;
     private int numberOfTargets;
-    private int radiusSmall;
-    private int radiusBig;
+    private double radiusSmall;
+    private double radiusBig;
+    private double distanceTargets;
+    private float maxErrorRate;         //Between 0 and 1
     ArrayList<ArrayList<Integer>> sequences;
 
+    public Long getTemplateID() {
+        return templateID;
+    }
+
+    public void setTemplateID(Long templateID) {
+        this.templateID = templateID;
+    }
+
+    private Long templateID;
+
+/*
     @ManyToMany(mappedBy="testSequences")
     private java.util.List<TestTemplate> testTemplates;
+*/
 
     //When you use the default constructor, you get the easiest difficulty
     public TestSequence() {
@@ -26,6 +39,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         this.radiusSmall = 33;
         this.radiusBig = 250;
         this.sequences = new ArrayList<ArrayList<Integer>>();
+        this.maxErrorRate = 1;
     }
 
     /**
@@ -39,7 +53,9 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         this.numberOfTargets = numberOfTargets;
         this.radiusSmall = 33;
         this.radiusBig = 250;
+        this.distanceTargets = 360/numberOfTargets;
         this.sequences = new ArrayList<ArrayList<Integer>>();
+        this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
     }
 
     /**
@@ -55,7 +71,79 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         this.numberOfTargets = numberOfTargets;
         this.radiusSmall = radiusSmall;
         this.radiusBig = radiusBig;
+        this.distanceTargets = 360/numberOfTargets;
         this.sequences = new ArrayList<ArrayList<Integer>>();
+        this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
+    }
+
+    /**
+     * Constructor with parameters numberOfTargets, radiusSmall and radiusBig
+     *
+     * @param numberOfTargets: choice the number of targets you want (11-25)
+     * @param radiusSmall:     choice the radius of the small circles
+     * @param radiusBig:       choice the radius of the big circle
+     */
+    public TestSequence(Long templateID, int numberOfTargets, double radiusSmall, double radiusBig){
+        this.templateID = templateID;
+        this.numberOfTargets = numberOfTargets;
+        this.radiusSmall = radiusSmall;
+        this.radiusBig = radiusBig;
+        this.sequences = new ArrayList<ArrayList<Integer>>();
+        this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
+        CalculateDifficulty();
+    }
+
+    /**
+     * Calculate the max error rate
+     */
+    public void CalculateMaxErrorRate(){
+        this.maxErrorRate = (float) (0.55 - (difficulty*0.05));
+    }
+
+
+    /**
+     * Calculate the number of targets
+     */
+    public void CalculateDistanceTargets(){
+        this.numberOfTargets = 360/numberOfTargets;
+    }
+
+    /**
+     * Calculate the difficulty  with parameters radiusSmall, radiusBig and numberOfTargets
+     */
+    public double CalculateDifficulty(){
+
+        //using the following algorithm to define the difficulty http://i.imgur.com/kaur2CC.png
+        difficulty = (Math.log((2*radiusBig+2*radiusSmall)/(2*radiusSmall)) / Math.log(2));
+
+        /*if(radiusSmall < 3){
+            radiusSmall = 3; //why is this necessary?
+            difficulty = 10;
+        }
+        else if (radiusSmall > 30){
+            difficulty = 1;
+        }
+        else{
+            double mod = radiusSmall % 3;
+            if(mod == 0){
+                dif = 0;
+            }
+            else {
+                dif = 3 - mod;
+            }
+            double calculation = (radiusSmall + dif) / 3;
+            difficulty = 11-calculation;
+        }
+        if((numberOfTargets > 20) && (difficulty < 10)){
+            difficulty++;
+        }
+        if((radiusBig > 250)&& (difficulty < 10)){
+            difficulty++;
+        }
+        if((radiusBig < 200)&& (difficulty > 1)){
+            difficulty--;
+        }*/
+        return difficulty;
     }
 
     /**
@@ -63,8 +151,8 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      *
      * @return the radius of the targets
      */
-    public int determineRadiusSmall() {
-        int initialradius = 36;
+    public double determineRadiusSmall() {
+        int initialradius = 33;
         if (difficulty > 10) {
             radiusSmall = 3;
             return 3;
@@ -79,7 +167,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      *
      * @return the radius of the circle
      */
-    public int determineRadiusBig() {
+    public double determineRadiusBig() {
         int initialradius = 135;
         if (difficulty > 10) {
             radiusBig = 300;
@@ -88,6 +176,25 @@ public class TestSequence extends MyAbstractPersistable<Long>{
             radiusBig = initialradius + (difficulty * 15);
             return initialradius + (difficulty * 15);
         }
+    }
+
+    /**
+     * Get the maximum error rate
+     *
+     * @return the maximum error rate
+     */
+    public float getmaxErrorRate(){
+        return maxErrorRate;
+    }
+
+    /**
+     * set the maximum error rate
+     *
+     * @param maxErrorRate: the new maxErrorRate
+     */
+    public void setMaxErrorRate(float maxErrorRate)
+    {
+        this.maxErrorRate = maxErrorRate;
     }
 
     /**
@@ -122,7 +229,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      *
      * @return the radius
      */
-    public int getRadiusSmall() {
+    public double getRadiusSmall() {
         return radiusSmall;
     }
 
@@ -131,7 +238,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      *
      * @return the radius
      */
-    public int getRadiusBig() {
+    public double getRadiusBig() {
         return radiusBig;
     }
 
@@ -140,7 +247,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      *
      * @return the difficulty
      */
-    public int getDifficulty() {
+    public double getDifficulty() {
         return difficulty;
     }
 
@@ -158,7 +265,7 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      *
      * @param small: the new small radius
      */
-    public void setRadiusSmall(int small) {
+    public void setRadiusSmall(double small) {
         radiusSmall = small;
     }
 
@@ -167,17 +274,17 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      *
      * @param big: the new big radius
      */
-    public void setRadiusBig(int big) {
+    public void setRadiusBig(double big) {
         radiusBig = big;
     }
 
     /**
      * Gst the difficulty of the test
      *
-     * @param diff: the new difficulty
+     * @param difficulty: the new difficulty
      */
-    public void setDifficulty(int diff) {
-        difficulty = diff;
+    public void setDifficulty(double difficulty) {
+        this.difficulty = difficulty;
     }
 
     /**
@@ -190,29 +297,6 @@ public class TestSequence extends MyAbstractPersistable<Long>{
         return p;
     }
 
-    /**
-     * Create a sequence
-     *
-     * @return sequence
-     */
-    public ArrayList<ArrayList<Integer>> CreateSequence() {
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        test.add(getDifficulty());
-        test.add(numberOfTargets);
-        test.add(determineRadiusSmall());
-        test.add(determineRadiusBig());
-        sequences.add(test);
-        return sequences;
-    }
-
-    /**
-     * Add a sequence to the list of test sequences
-     *
-     * @parameter sequence: the sequence we want to add
-     */
-    public void AddSequence(ArrayList<Integer> sequence){
-        this.sequences.add(sequence);
-    }
 
     /**
      * Delete a sequence

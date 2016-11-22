@@ -21,7 +21,7 @@ public class Device extends MyAbstractPersistable<Long> {
     private boolean disabled;
     private boolean imageAvailable;
     private String imageName;
-    private String imageExtension;
+    private String imageHTMLPath;
     private String imagePath;
     private String filePath;
 
@@ -33,7 +33,7 @@ public class Device extends MyAbstractPersistable<Long> {
         inUse = false;
     }
 
-    public Device(String deviceName, String type, String version, String manufacturer, String driver, boolean imageAvailable){
+    public Device(String deviceName, String type, String version, String manufacturer, String driver, String imageRawName){
         this.deviceName = deviceName;
         this.type = type;
         this.version = version;
@@ -42,38 +42,39 @@ public class Device extends MyAbstractPersistable<Long> {
         used = false;
         inUse = false;
         disabled = false;
-        // Added by Jan for image
-        this.imageAvailable = imageAvailable;
-        imageName = "no_image";
-        if(imageAvailable)  {
-            imageExtension = "jpg"; // Search extension!!!
-            imageName = deviceName + "_" + version + "." + imageExtension;
-            imagePath = "devices_images/" + imageName;
-        } else {
-            imagePath = "devices_images/no_image.jpg";
-        }
-        setFilePath(deviceName);
-        setImagePath(deviceName);
 
+        // View image (Jan)
+        imageName = deviceName + "_" + version;
+        if(imageRawName.equals("x"))    {
+            imageAvailable = false;
+            imageHTMLPath = "devices_images/no_image.jpg";
+        } else {
+            imageAvailable = true;
+            int loc = imageRawName.lastIndexOf('.');
+            String extension = imageRawName.substring(loc + 1);
+            imageHTMLPath = "devices_images/" + imageName + "." + extension;
+        }
+
+        // File & image upload (Dries)
+        setFilePath(deviceName + "_" + version);
+        setImagePath();
     }
 
     public String getFilePath() { return this.filePath; }
 
-    public void setFilePath (String dev) {
-        String foldername = "files_"+dev;
+    public void setFilePath (String folder_id) {
+        String foldername = "f_" + folder_id;
         String parent = Paths.get(".").toAbsolutePath().normalize().toString();
-        this.filePath = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername;
+        this.filePath = parent + "\\src\\main\\resources\\static\\devices_files\\" + foldername;
         File destfile = new File(filePath);
-        System.out.println("do this");
         if(!destfile.exists()) {
             destfile.mkdir();
-            System.out.println("also do this");
         }
     }
 
     public String getImagePath() { return this.imagePath; }
 
-    public void setImagePath (String dev) {
+    public void setImagePath () {
         String parent = Paths.get(".").toAbsolutePath().normalize().toString();
         this.imagePath = parent+"\\src\\main\\resources\\static\\devices_images";
         File destfile = new File(imagePath);
@@ -88,8 +89,7 @@ public class Device extends MyAbstractPersistable<Long> {
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
-        setFilePath(deviceName);
-        setImagePath(deviceName);
+        setFilePath(deviceName + "_" + version);
     }
 
     public String getType() {
@@ -124,12 +124,28 @@ public class Device extends MyAbstractPersistable<Long> {
         this.driver = driver;
     }
 
+    public boolean getImageAvailable()  {
+        return this.imageAvailable;
+    }
+
+    public void setImageAvailable(boolean imageAvailable)   {
+        this.imageAvailable = imageAvailable;
+    }
+
     public String getImageName()    {
         return imageName;
     }
 
     public void setImageName(String imageName)  {
         this.imageName = imageName;
+    }
+
+    public String getImageHTMLPath()    {
+        return imageHTMLPath;
+    }
+
+    public void setImageHTMLPath(String imageHTMLPath)  {
+        this.imageHTMLPath = imageHTMLPath;
     }
 
     public boolean isUsed() {

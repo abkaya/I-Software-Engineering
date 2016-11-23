@@ -81,9 +81,9 @@ public class FileUploadController {
 
     @PostMapping("/devices/{id}/files")
     public String handleFileUpload(@Valid Device device, @PathVariable Long id, @RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
 
-        if (!file.isEmpty()) {
+                                 RedirectAttributes redirectAttributes) {
+    if (!file.isEmpty()) {
             storageService.store(file, device);
         }else{
             redirectAttributes.addFlashAttribute("message",

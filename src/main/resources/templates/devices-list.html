@@ -16,13 +16,6 @@
     }
 </script>
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-    <span class="close">×</span>
-    <img class="modal-content" id="img01"/>
-    <div id="caption"></div>
-</div>
-
 <div class="container">
     <div th:replace="layout :: navbar"></div>
 
@@ -50,7 +43,7 @@
 
                 <tbody class="list">
                 <tr th:each="device : ${allDevices}">
-                    <td><img th:id="${device.imageName}" th:src="${device.imagePath}" th:alt="${device.imageName}" th:width="100px" th:height="100px" style="border-radius:10px; cursor:pointer; transition:0.3s;"/></td>
+                    <td><img th:id="${device.imageName}" th:src="${device.imageHTMLPath}" th:alt="${device.deviceName}" th:width="100px" th:height="100px" data-toggle="modal" th:attr="data-target='#'+${device.imageName}" /></td>
                     <td class="deviceName" th:value="${device}" th:text="${device.deviceName}">Device</td>
                     <td class="deviceType" th:value="${device}" th:text="${device.type}">Type</td>
                     <td class="deviceClass" th:value="${device}" th:text="${device.version}">Class</td>
@@ -73,23 +66,22 @@
 
                     </td>
 
-                    <script th:inline="javascript">
-                        /*<![CDATA[*/
-                        var modal = document.getElementById('myModal');
-                        var img = document.getElementById(/*[[${device.imageName}]]*/);
-                        var modalImg = document.getElementById("img01");
-                        var captionText = document.getElementById("caption");
-                        img.onclick = function(){
-                            modal.style.display = "block";
-                            modalImg.src = this.src;
-                            captionText.innerHTML = this.alt;
-                        }
-                        var span = document.getElementsByClassName("close")[0];
-                        span.onclick = function() {
-                            modal.style.display = "none";
-                        }
-                        /*]]>*/
-                    </script>
+                    <!-- Modal -->
+                    <div class="modal fade" th:id="${device.imageName}" role="dialog">
+                        <div class="modal-dialog" style="position:relative; display:table; overflow-y:auto; overflow-x:auto; width:auto; min-width:300px;">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" th:text="${device.deviceName}">Device name</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <img th:src="${device.imageHTMLPath}" th:alt="${device.deviceName}" style="max-height:500px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </tr>
                 </tbody>

@@ -64,16 +64,22 @@ public class DeviceController {
     @RequestMapping(value = {"/devices/", "/devices/{id}"}, method = RequestMethod.POST)
     public String addDevice(@Valid Device device, BindingResult result, final ModelMap model, @RequestParam("file") MultipartFile file)   {
 
-        /*
+
         if (!file.isEmpty()) {
             File dir = new File(device.getImagePath().toString());
-            if(dir.list().length>0) {
-                storageService.deleteAll(device, file);
+            String filename = device.getDeviceName()+"_"+device.getVersion()+".jpg";
+            boolean dup = false;
+            for(int i=0; i<dir.list().length; i++) {
+                if (dir.list()[i].equals(filename)) {
+                    //storageService.deleteAll(device, file);
+                    dup = true;
+                }
             }
-            storageService.storeImage(file, device);
-        }*/
-
-        storageService.storeImage(file, device);
+            if(dup==false) {
+                storageService.storeImage(file, device);
+            }
+            device.setImageHTMLPath("devices_images/"+device.getDeviceName()+"_"+device.getVersion()+"."+"jpg");
+        }
 
         if(result.hasErrors())  {
             return "devices-manage";
@@ -89,7 +95,6 @@ public class DeviceController {
                     }
                 }
             }
-
             if(duplicate){
 
             }else {
@@ -99,14 +104,6 @@ public class DeviceController {
 
         System.out.println(device.getImagePath());
         model.addAttribute("devicesActiveSettings","active");
-
-        /*
-        try {
-            Thread.sleep(5000);                 //1000 milliseconds is one second.
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-        */
 
         return "redirect:/devices";
     }

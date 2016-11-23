@@ -72,7 +72,6 @@ public class FileSystemStorageService implements StorageService {
             }
 
             Files.copy(file.getInputStream(), Location.resolve(device.getDeviceName()+"_"+device.getVersion()+"."+"jpg"));
-            device.setImageHTMLPath("devices_images/"+device.getDeviceName()+"_"+device.getVersion()+"."+"jpg");
 
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);

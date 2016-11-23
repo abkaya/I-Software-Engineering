@@ -99,9 +99,7 @@ public class Device extends MyAbstractPersistable<Long> {
         this.type = type;
     }
 
-    public String getVersion() {
-        return version;
-    }
+    public String getVersion() {return version;}
 
     public void setVersion(String version) {
         this.version = version;
@@ -139,10 +137,7 @@ public class Device extends MyAbstractPersistable<Long> {
         this.imageName = imageName;
     }
 
-    public String getImageHTMLPath()    {
-        System.out.println("test "+imageHTMLPath);
-        return imageHTMLPath;
-    }
+    public String getImageHTMLPath(){ return this.imageHTMLPath;}
 
     public void setImageHTMLPath(String imageHTMLPath)  {
         this.imageHTMLPath = imageHTMLPath;

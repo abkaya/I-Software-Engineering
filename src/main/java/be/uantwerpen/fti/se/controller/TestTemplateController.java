@@ -74,11 +74,10 @@ public class TestTemplateController {
         }
         if (testTemplate.isEditable()) {
             testTemplateService.saveSomeAttributes(testTemplate);
-
         }
         //Set the navigation button Test Management to active
         model.addAttribute("testsActiveSettings", "active");
-        return "redirect:/tests";
+        return "redirect:/tests/"+testTemplate.getId();
     }
 
     @RequestMapping(value = "/tests/{id}/copy")

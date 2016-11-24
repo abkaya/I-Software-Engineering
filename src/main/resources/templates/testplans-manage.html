@@ -33,19 +33,6 @@
             <textarea class="form-control" rows="5" id="comment" th:field="*{description}"></textarea>
         </div>
 
-        <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
-            <label class="control-label" th:text="#{testplan.startDate}">Name</label>
-            <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{startDate}">Testplan Name Error</span>
-            <input class="form-control" type="text" th:field="*{startDate}" />
-        </div>
-
-        <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
-            <label class="control-label" th:text="#{testplan.endDate}">Name</label>
-            <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{endDate}">Testplan Name Error</span>
-            <input class="form-control" type="text" th:field="*{endDate}" />
-        </div>
-
-
         <div class="form-group">
             <label class="control-label" th:field="#{testTemplate.name}">Test Template Name</label>
             <select class="form-control" th:field="*{testTemplate}" id="sel1">

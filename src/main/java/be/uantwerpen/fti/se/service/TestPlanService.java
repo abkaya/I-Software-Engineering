@@ -31,8 +31,6 @@ public class TestPlanService {
         if (tempTestPlan != null) {
 
             tempTestPlan.setName(testPlan.getName());
-            tempTestPlan.setStartDate(testPlan.getStartDate());
-            tempTestPlan.setEndDate(testPlan.getEndDate());
             tempTestPlan.setDescription(testPlan.getDescription());
             tempTestPlan.setTestTemplate(testPlan.getTestTemplate());
             tempTestPlan.setUsers(testPlan.getUsers());

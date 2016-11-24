@@ -41,12 +41,16 @@ public class TestPlanController {
     public String showTestplans(Principal principal, final ModelMap model){
         System.out.printf("\n The logged user is: " + principal.getName() + "\n" );
 
-
-        model.addAttribute("allTestplans", testPlanService.findByUserName(userRepository.findByUserName(principal.getName())));
+        if(userRepository.findByUserName(principal.getName()).isAdmin()) {
+            model.addAttribute("allTestplans", testPlanService.findByUserName(userRepository.findByUserName(principal.getName())));
         /*
         model.addAttribute("allTestplans", testPlanRepository.findAll());
         */
-        return "testplans-list";
+            return "testplans-list";
+        }
+        else{
+            return "redirect:/";
+        }
     }
 
     @RequestMapping(value="/testplans/put", method= RequestMethod.GET)
@@ -59,7 +63,7 @@ public class TestPlanController {
             return "testplans-manage";
         }
         else{
-            return "redirect:/testplans";
+            return "redirect:/";
         }
     }
 
@@ -74,7 +78,7 @@ public class TestPlanController {
             return "testplans-manage";
         }
         else{
-            return "redirect:/testplans";
+            return "redirect:/";
         }
     }
 
@@ -89,7 +93,7 @@ public class TestPlanController {
             }
             testPlanService.saveSomeAttributes(testplan);
         }
-        return "redirect:/testplans";
+        return "redirect:/";
     }
 
     @RequestMapping(value="/testplans/{id}/delete")
@@ -98,7 +102,7 @@ public class TestPlanController {
             testPlanRepository.delete(id);
             model.clear();
         }
-        return "redirect:/testplans";
+        return "redirect:/";
 
     }
 

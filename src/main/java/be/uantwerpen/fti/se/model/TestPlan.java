@@ -12,8 +12,6 @@ import java.util.List;
 @Entity
 public class TestPlan extends MyAbstractPersistable<Long>{
     private String name;
-    private String startDate;
-    private String endDate;
     private String description;
 
     @ManyToOne
@@ -48,10 +46,8 @@ public class TestPlan extends MyAbstractPersistable<Long>{
 
     public TestPlan() {}
 
-    public TestPlan(String name, String startDate, String endDate, String description) {
+    public TestPlan(String name, String description) {
         this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.description = description;
     }
 
@@ -61,22 +57,6 @@ public class TestPlan extends MyAbstractPersistable<Long>{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
     }
 
     public String getDescription() {

@@ -51,9 +51,10 @@
             <table>
                 <tr>
                     <td>File to upload:</td>
-                    <td>
-                        <input class="form-control" type="file" name="file" accept="image/*" width="256" height="256"/>
-                    </td>
+                    <div class="form-group">
+                        <label class="control-label" th:text="#{device.imageName}">device imageName</label>
+                        <input class="form-control" type="file" name="file" accept="image/*" width="256" height="256" id="image"/>
+                    </div>
                 </tr>
             </table>
             <p>&nbsp;</p>

@@ -25,8 +25,6 @@ public class Device extends MyAbstractPersistable<Long> {
     private String imagePath;
     private String filePath;
 
-
-
     public Device(){
         used = false;
         disabled = false;
@@ -90,6 +88,7 @@ public class Device extends MyAbstractPersistable<Long> {
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
         setFilePath(deviceName + "_" + version);
+        setImagePath();
     }
 
     public String getType() {
@@ -100,9 +99,7 @@ public class Device extends MyAbstractPersistable<Long> {
         this.type = type;
     }
 
-    public String getVersion() {
-        return version;
-    }
+    public String getVersion() {return version;}
 
     public void setVersion(String version) {
         this.version = version;
@@ -140,9 +137,7 @@ public class Device extends MyAbstractPersistable<Long> {
         this.imageName = imageName;
     }
 
-    public String getImageHTMLPath()    {
-        return imageHTMLPath;
-    }
+    public String getImageHTMLPath(){ return this.imageHTMLPath;}
 
     public void setImageHTMLPath(String imageHTMLPath)  {
         this.imageHTMLPath = imageHTMLPath;

@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.File;
@@ -66,12 +64,21 @@ public class DeviceController {
     @RequestMapping(value = {"/devices/", "/devices/{id}"}, method = RequestMethod.POST)
     public String addDevice(@Valid Device device, BindingResult result, final ModelMap model, @RequestParam("file") MultipartFile file)   {
 
+
         if (!file.isEmpty()) {
             File dir = new File(device.getImagePath().toString());
-            if(dir.list().length>0) {
-                storageService.deleteAll(device, file);
+            String filename = device.getDeviceName()+"_"+device.getVersion()+".jpg";
+            boolean dup = false;
+            for(int i=0; i<dir.list().length; i++) {
+                if (dir.list()[i].equals(filename)) {
+                    //storageService.deleteAll(device, file);
+                    dup = true;
+                }
             }
-            storageService.storeImage(file, device);
+            if(dup==false) {
+                storageService.storeImage(file, device);
+            }
+            device.setImageHTMLPath("devices_images/"+device.getDeviceName()+"_"+device.getVersion()+"."+"jpg");
         }
 
         if(result.hasErrors())  {
@@ -88,14 +95,16 @@ public class DeviceController {
                     }
                 }
             }
-
             if(duplicate){
 
             }else {
                 deviceRepository.save(device);
             }
         }
+
+        System.out.println(device.getImagePath());
         model.addAttribute("devicesActiveSettings","active");
+
         return "redirect:/devices";
     }
 

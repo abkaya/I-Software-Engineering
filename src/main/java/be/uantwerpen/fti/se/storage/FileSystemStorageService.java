@@ -70,7 +70,9 @@ public class FileSystemStorageService implements StorageService {
             if (i >= 0) {
                 extension = file.getOriginalFilename().substring(i+1);
             }
-            Files.copy(file.getInputStream(), Location.resolve(device.getDeviceName()+"_"+device.getVersion()+"."+extension));
+
+            Files.copy(file.getInputStream(), Location.resolve(device.getDeviceName()+"_"+device.getVersion()+"."+"jpg"));
+
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
         }
@@ -126,14 +128,13 @@ public class FileSystemStorageService implements StorageService {
         }
         String temp = loc.toString();
         temp = temp+"\\"+device.getDeviceName()+"_version."+extension;
-        System.out.println("DRIES: "+temp);
         loc = Paths.get(temp);
         FileSystemUtils.deleteRecursively(loc.toFile());
     }
 
     @Override
     public void deleteFile(Device device, String filename) {
-        String foldername = "files_"+device.getDeviceName();
+        String foldername = "f_"+device.getDeviceName()+"_"+device.getVersion();
         String parent = Paths.get(".").toAbsolutePath().normalize().toString();
         String path = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername+"\\"+filename;
         File file = new File(path);

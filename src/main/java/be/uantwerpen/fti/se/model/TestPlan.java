@@ -39,12 +39,12 @@ public class TestPlan extends MyAbstractPersistable<Long>{
             inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")})
     private List<User> users;
 
-    @OneToMany
+    @ManyToOne
     @JoinTable(
             name="TESTPLAN_DEVICE",
             joinColumns={@JoinColumn(name="TESTPLAN_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="DEVICE_ID", referencedColumnName="ID")})
-    private List<Device> devices;
+    private Device device;
 
     public TestPlan() {}
 
@@ -99,11 +99,11 @@ public class TestPlan extends MyAbstractPersistable<Long>{
         this.users = users;
     }
 
-    public List<Device> getDevices() {
-        return devices;
+    public Device getDevice() {
+        return device;
     }
 
-    public void setDevices(List<Device> devices) {
-        this.devices = devices;
+    public void setDevices(Device device) {
+        this.device = device;
     }
 }

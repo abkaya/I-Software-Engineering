@@ -72,14 +72,12 @@
                                     <label class="control-label" th:text="#{template.name}">Testplan Template</label>
                                     <p th:text="${testplan.testTemplate?.name}">Some text in the modal.</p>
 
+                                    <label class="control-label" th:text="#{device.name}">Testplan Template</label>
+                                    <p th:text="${testplan.device?.deviceName}">Some text in the modal.</p>
+
                                     <label class="control-label" th:text="#{user.management}">TestPlan Users</label>
                                     <ul class="list-group">
                                         <li class="list-group-item" style="height: 30px; padding: 5px 10px;" th:each="user : ${testplan.users}" th:text="${user.userName}">User Name</li>
-                                    </ul>
-
-                                    <label class="control-label" th:text="#{testplan.devices}">TestPlan Devices</label>
-                                    <ul class="list-group">
-                                        <li class="list-group-item" style="height: 30px; padding: 5px 10px;" th:each="device : ${testplan.devices}" th:text="${device.deviceName}">User Name</li>
                                     </ul>
 
                                 </div>

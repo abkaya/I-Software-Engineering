@@ -134,7 +134,7 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void deleteFile(Device device, String filename) {
-        String foldername = "files_"+device.getDeviceName();
+        String foldername = "f_"+device.getDeviceName()+"_"+device.getVersion();
         String parent = Paths.get(".").toAbsolutePath().normalize().toString();
         String path = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername+"\\"+filename;
         File file = new File(path);

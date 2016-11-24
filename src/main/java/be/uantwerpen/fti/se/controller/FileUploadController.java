@@ -36,7 +36,7 @@ public class FileUploadController {
     }
 
     @GetMapping("/devices/{id}/files")
-    public String listUploadedFiles(Model model, @PathVariable Long id, RedirectAttributes red) throws IOException {
+    public String listUploadedFiles(Model model, @PathVariable Long id) throws IOException {
 
         Device device =deviceRepository.findOne(id);
         model.addAttribute("device",device);

@@ -41,7 +41,7 @@
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.name}">Name</td>
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.testTemplate.name}">Test Template</td>
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.device.deviceName}">Device</td>
-                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.users.size()}">#Finished Testplans</td>
+                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.finsihedUsers.size()}">#Finished Testplans</td>
                     <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.users.size()}">#Users</td>
                     <td>
                         <a sec:authorize="hasAuthority('testplan-edit')" th:href="@{/testplans/{id}/(id=${testplan.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;

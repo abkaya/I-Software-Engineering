@@ -14,6 +14,8 @@ public class TestPlan extends MyAbstractPersistable<Long>{
     private String name;
     private String description;
 
+
+
     @ManyToOne
     @JoinTable(
             name="TESTPLAN_TESTTEMPLATE",
@@ -37,12 +39,32 @@ public class TestPlan extends MyAbstractPersistable<Long>{
             inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")})
     private List<User> users;
 
+    public List<User> getFinsihedUsers() {
+        return finsihedUsers;
+    }
+
+    public void setFinsihedUsers(List<User> finsihedUsers) {
+        this.finsihedUsers = finsihedUsers;
+    }
+
+    public void addFinsihedUsers(User finsihedUser) {
+        this.finsihedUsers.add(finsihedUser);
+    }
+
+
+    @Column
+    @ElementCollection(targetClass=User.class)
+    private List<User> finsihedUsers;
+
+
     @ManyToOne
     @JoinTable(
             name="TESTPLAN_DEVICE",
             joinColumns={@JoinColumn(name="TESTPLAN_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="DEVICE_ID", referencedColumnName="ID")})
     private Device device;
+
+
 
     public TestPlan() {}
 

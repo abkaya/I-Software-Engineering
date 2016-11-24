@@ -103,7 +103,7 @@ public class TestPlan extends MyAbstractPersistable<Long>{
         return device;
     }
 
-    public void setDevices(Device device) {
+    public void setDevice(Device device) {
         this.device = device;
     }
 }

@@ -36,7 +36,7 @@ public class TestPlanService {
             tempTestPlan.setDescription(testPlan.getDescription());
             tempTestPlan.setTestTemplate(testPlan.getTestTemplate());
             tempTestPlan.setUsers(testPlan.getUsers());
-            tempTestPlan.setDevices(testPlan.getDevice());
+            tempTestPlan.setDevice(testPlan.getDevice());
 
             if(testPlan.getTestTemplate() != null)
                 testPlan.getTestTemplate().setEditable(false);

@@ -92,6 +92,7 @@ public class TestPlanController {
                 return "testplans-manage";
             }
             testPlanService.saveSomeAttributes(testplan);
+            return "redirect:/testplans";
         }
         return "redirect:/";
     }
@@ -101,6 +102,7 @@ public class TestPlanController {
         if(userRepository.findByUserName(principal.getName()).isAdmin()) {
             testPlanRepository.delete(id);
             model.clear();
+            return "redirect:/testplans";
         }
         return "redirect:/";
 

@@ -41,6 +41,48 @@
                     40% Complete (success)
                 </div>
             </div>
+            <thead>
+            <tr>
+                <th th:text="#{vraag1}">Vraag1</th>
+                <th></th>
+            </tr>
+            </thead>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Perfect</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Acceptable</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Difficult</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Very difficult</input></label>
+            </div>
+
+            <thead>
+            <tr>
+                <th th:text="#{vraag2}">Vraag2</th>
+                <th></th>
+            </tr>
+            </thead>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Perfect</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Acceptable</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Could be better</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Bad</input></label>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">What's your opinion of this test?</label>
+                <textarea class="form-control" rows="5" id="comment"></textarea>
+            </div>
         </div>
 
     </div>

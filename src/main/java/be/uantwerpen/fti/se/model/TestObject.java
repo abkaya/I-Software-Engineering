@@ -46,8 +46,8 @@ public class TestObject extends MyAbstractPersistable<Long>{
         return sequences;
     }
 
-    public void addSequence(Long Id){
-        sequences.add(Id);
+    public void setSequences(List<Long> sequences) {
+        this.sequences = sequences;
         Collections.shuffle(sequences);
     }
 
@@ -55,8 +55,9 @@ public class TestObject extends MyAbstractPersistable<Long>{
         return results;
     }
 
-    public void addResult(Result result){
-        results.add(result);
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
+
 
 }

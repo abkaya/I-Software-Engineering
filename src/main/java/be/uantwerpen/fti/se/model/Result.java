@@ -11,17 +11,20 @@ public class Result extends MyAbstractPersistable<Long> {
     private double difficulty;
     private double throughtput;
     private double movementTime;
+    private double errorRate;
 
-    Result() {
+    public Result() {
         difficulty = 0;
         throughtput = 0;
         movementTime = 0;
+        errorRate = 0;
     }
 
-    Result(int difficulty, int throughput, int movementTime){
+    public Result(double difficulty, double throughput, double movementTime, double errorRate){
         this.difficulty = difficulty;
         this.throughtput = throughput;
         this.movementTime = movementTime;
+        this.errorRate = errorRate;
     }
 
     public double getDifficulty() {
@@ -46,5 +49,13 @@ public class Result extends MyAbstractPersistable<Long> {
 
     public void setMovementTime(double movementTime) {
         this.movementTime = movementTime;
+    }
+
+    public double getErrorRate() {
+        return errorRate;
+    }
+
+    public void setErrorRate(double errorRate) {
+        this.errorRate = errorRate;
     }
 }

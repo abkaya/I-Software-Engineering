@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class TestObjectService {
     @Autowired
     private TestObjectRepository testObjectRepository;
+
     public Iterable<TestObject> findAll() {return this.testObjectRepository.findAll();}
     public void add(final TestObject testObject){ this.testObjectRepository.save(testObject);}
     public void delete(Long id) {

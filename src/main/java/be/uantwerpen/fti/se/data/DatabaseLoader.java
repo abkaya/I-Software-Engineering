@@ -26,9 +26,11 @@ public class DatabaseLoader {
     private final TestSequenceRepository testSequenceRepository;
     private final DeviceRepository deviceRepository;
     private final TestPlanRepository testPlanRepository;
+    private final TestObjectRepository testObjectRepository;
+    private final ResultRepository resultRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository, TestTemplateService testTemplateService, TestSequenceRepository testSequenceRepository, DeviceRepository deviceRepository, TestPlanRepository testPlanRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository, TestTemplateService testTemplateService, TestSequenceRepository testSequenceRepository, DeviceRepository deviceRepository, TestPlanRepository testPlanRepository, TestObjectRepository testObjectRepository, ResultRepository resultRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
@@ -37,6 +39,8 @@ public class DatabaseLoader {
         this.testSequenceRepository = testSequenceRepository;
         this.deviceRepository = deviceRepository;
         this.testPlanRepository = testPlanRepository;
+        this.testObjectRepository = testObjectRepository;
+        this.resultRepository = resultRepository;
     }
 
     @PostConstruct
@@ -85,6 +89,12 @@ public class DatabaseLoader {
         roles.add(tester);
         u2.setRoles(roles);
         userRepository.save(u2);
+        User u3 = new User("user2", "user2");
+        roles = new ArrayList<>();
+        roles.add(tester);
+        u3.setRoles(roles);
+        userRepository.save(u3);
+
 
         //create sequences and add these to the repository
         /*TestSequence ts0 = new TestSequence();
@@ -164,6 +174,35 @@ public class DatabaseLoader {
         testPlanDevices.add(d2);
         tp2.setDevices(testPlanDevices);
         testPlanRepository.save(tp2);
+
+
+        TestObject to1 = new TestObject(t1.getId(), u2.getUserName());
+        List<Result> resList1 = null;
+        Result r1 = new Result(5,10,1000,2.53);
+        Result r2 = new Result(6,7,1200,5.6);
+        Result r3 = new Result(3,6.5,980,4);
+        Result r4 = new Result(4.3,8,1100,3.6);
+        resList1.add(r1);
+        resList1.add(r2);
+        resList1.add(r3);
+        resList1.add(r4);
+        to1.setResults(resList1);
+        testObjectRepository.save(to1);
+
+
+
+        TestObject to2 = new TestObject(t1.getId(), u3.getUserName());
+        Result r5 = new Result(6,7,970,3.8);
+        Result r6 = new Result(3.1,6.23,1235,3);
+        Result r7 = new Result(1.8,9.5,1300,1.5);
+        Result r8 = new Result(4,6.8,650,2);
+        List<Result> resList2 = null;
+        resList2.add(r5);
+        resList2.add(r6);
+        resList2.add(r7);
+        resList2.add(r8);
+        to1.setResults(resList2);
+        testObjectRepository.save(to1);
 
 
     }

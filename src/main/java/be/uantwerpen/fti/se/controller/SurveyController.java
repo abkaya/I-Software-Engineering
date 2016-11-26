@@ -36,15 +36,15 @@ public class SurveyController {
         return "survey-questions";
     }
 
-  /*  @RequestMapping(value="/questionssurvey/{id}", method= RequestMethod.GET)
+    @RequestMapping(value="/questionssurvey/{id}", method= RequestMethod.GET)
     public String viewEditTestSequence(@PathVariable Long id, final ModelMap model){
-       // model.addAttribute("allQOpinions", surveyRepository.findAll());
+        model.addAttribute("allQOpinions", surveyRepository.findAll());
         model.addAttribute("opinion",surveyRepository.findOne(id));
 
         //Set the navigation button Test Management to active
         model.addAttribute("SurveyQActiveSettings","active");
         return "redirect:/home";
-    }*/
+    }
 
     @RequestMapping(value={"/questionssurvey/", "/questionssurvey/{id}"}, method= RequestMethod.POST)
     public String addopin(@Valid Survey survey, BindingResult result, final ModelMap model){
@@ -55,7 +55,7 @@ public class SurveyController {
             return "survey-questions";
         }
         surveyService.saveSomeAttributes(survey);
-        return "redirect:/home";
+        return "redirect:/resultssurvey";
     }
 
 }

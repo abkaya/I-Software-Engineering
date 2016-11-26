@@ -18,10 +18,10 @@
 
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
-    <form action="#" th:action="@{/questionssurvey/}" th:object="${survey}" method="post">
+    <form action="#" th:action="@{/questionssurvey/{id}(id=${survey})}" th:object="${survey}" method="post">
         <input th:type="hidden"/>
         <div class="form-group">
-            <label for="comment" th:text="#{survey.opinions}">Opinion</label>
+            <label for="comment" th:text="#{survey.opinion}">Opinion</label>
             <textarea class="form-control" rows="5" id="comment"></textarea>
         </div>
 

@@ -177,11 +177,15 @@ public class DatabaseLoader {
 
 
         TestObject to1 = new TestObject(t1.getId(), u2.getUserName());
-        List<Result> resList1 = null;
+        List<Result> resList1 = new ArrayList<>();
         Result r1 = new Result(5,10,1000,2.53);
         Result r2 = new Result(6,7,1200,5.6);
         Result r3 = new Result(3,6.5,980,4);
         Result r4 = new Result(4.3,8,1100,3.6);
+        resultRepository.save(r1);
+        resultRepository.save(r2);
+        resultRepository.save(r3);
+        resultRepository.save(r4);
         resList1.add(r1);
         resList1.add(r2);
         resList1.add(r3);
@@ -196,7 +200,11 @@ public class DatabaseLoader {
         Result r6 = new Result(3.1,6.23,1235,3);
         Result r7 = new Result(1.8,9.5,1300,1.5);
         Result r8 = new Result(4,6.8,650,2);
-        List<Result> resList2 = null;
+        resultRepository.save(r5);
+        resultRepository.save(r6);
+        resultRepository.save(r7);
+        resultRepository.save(r8);
+        List<Result> resList2 = new ArrayList<>();
         resList2.add(r5);
         resList2.add(r6);
         resList2.add(r7);

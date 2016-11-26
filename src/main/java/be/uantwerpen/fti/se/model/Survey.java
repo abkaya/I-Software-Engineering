@@ -8,19 +8,19 @@ import javax.persistence.Entity;
 @Entity
 public class Survey extends MyAbstractPersistable<Long>{
     private String opinion;
-    private int evaluateDifficulty;
-    private int evaluateBER;
+  //  private int evaluateDifficulty;
+  //  private int evaluateBER;
 
     public Survey(){
         opinion = "";
-        evaluateDifficulty = 0;
-        evaluateBER = 0;
+    //    evaluateDifficulty = 0;
+    //    evaluateBER = 0;
     }
 
-    public Survey(String opinion, int evaluateBER, int evaluateDifficulty){
+    public Survey(String opinion){//}, int evaluateBER, int evaluateDifficulty){
         this.opinion = opinion;
-        this.evaluateDifficulty = evaluateDifficulty;
-        this.evaluateBER = evaluateBER;
+   //     this.evaluateDifficulty = evaluateDifficulty;
+    //    this.evaluateBER = evaluateBER;
     }
 
     public String getOpinion(){
@@ -31,7 +31,7 @@ public class Survey extends MyAbstractPersistable<Long>{
         this.opinion = opinion;
     }
 
-    public int getEvaluateDifficulty(){
+  /*  public int getEvaluateDifficulty(){
         return evaluateDifficulty;
     }
 
@@ -45,5 +45,5 @@ public class Survey extends MyAbstractPersistable<Long>{
 
     public void setEvaluateBER(int evaluateBER){
         this.evaluateBER = evaluateBER;
-    }
+    }*/
 }

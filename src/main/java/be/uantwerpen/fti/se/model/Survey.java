@@ -17,6 +17,12 @@ public class Survey extends MyAbstractPersistable<Long>{
         evaluateBER = 0;
     }
 
+    public Survey(String opinion, int evaluateBER, int evaluateDifficulty){
+        this.opinion = opinion;
+        this.evaluateDifficulty = evaluateDifficulty;
+        this.evaluateBER = evaluateBER;
+    }
+
     public String getOpinion(){
         return opinion;
     }

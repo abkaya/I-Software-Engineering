@@ -18,11 +18,15 @@ public class SurveyService {
         return this.surveyRepository.findAll();
     }
 
+    public void add(final Survey survey) {
+        this.surveyRepository.save(survey);
+    }
+
     public void saveSomeAttributes(Survey survey) {
         Survey s1 = survey.getId()==null?null:findOne(survey.getId());
         if (s1 != null){
-            s1.setEvaluateBER(survey.getEvaluateBER());
-            s1.setEvaluateDifficulty(survey.getEvaluateDifficulty());
+           // s1.setEvaluateBER(survey.getEvaluateBER());
+            //s1.setEvaluateDifficulty(survey.getEvaluateDifficulty());
             s1.setOpinion(survey.getOpinion());
             surveyRepository.save(s1);
         }

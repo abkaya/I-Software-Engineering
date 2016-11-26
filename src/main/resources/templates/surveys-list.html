@@ -7,7 +7,7 @@
 <script type="text/javascript">
     function initPage() {
         var options = {
-            valueNames: ['userName']
+            valueNames: ['opinions']
         };
         var surveyList = new List('survey-list', options);
     }
@@ -31,7 +31,7 @@
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
                 <tr th:each="survey : ${allOpinions}">
-                    <td class="difficulty" th:value="${survey}" th:text="${survey.opinion}">Opinion</td>
+                    <td class="opinion" th:value="${survey}" th:text="${survey.opinion}">Opinion</td>
                 </tr>
                 </tbody>
             </table>
@@ -41,6 +41,53 @@
                     40% Complete (success)
                 </div>
             </div>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{questions}">Questions</th>
+                    <th></th>
+                </tr>
+                </thead>
+            </table>
+            <thead>
+            <tr>
+                <th th:text="#{vraag1}">Vraag1</th>
+                <th></th>
+            </tr>
+            </thead>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Perfect</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Acceptable</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Difficult</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Very difficult</input></label>
+            </div>
+
+            <thead>
+            <tr>
+                <th th:text="#{vraag2}">Vraag2</th>
+                <th></th>
+            </tr>
+            </thead>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Perfect</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Acceptable</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Could be better</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Bad</input></label>
+            </div>
+
         </div>
 
     </div>

@@ -24,21 +24,23 @@ public class SurveyController {
     SurveyService surveyService;
 
     @RequestMapping(value="/resultssurvey", method = RequestMethod.GET)
-    public String showResultSurvey(final ModelMap model){
+    public String showResultSurvey(final ModelMap model) {
+        model.addAttribute("survey", new Survey());
         model.addAttribute("allOpinions", surveyRepository.findAll());
-        model.addAttribute("SurveyActiveSettings","active");
+        model.addAttribute("SurveyActiveSettings", "active");
         return "surveys-list";
     }
 
     @RequestMapping(value="/questionssurvey", method = RequestMethod.GET)
     public String showQuestionsSurvey(final ModelMap model){
+        model.addAttribute("survey", new Survey());
         model.addAttribute("SurveyQActiveSettings","active");
         return "survey-questions";
     }
 
     @RequestMapping(value="/questionssurvey/{id}", method= RequestMethod.GET)
     public String viewEditTestSequence(@PathVariable Long id, final ModelMap model){
-        model.addAttribute("allQOpinions", surveyRepository.findAll());
+        model.addAttribute("allOpinions", surveyRepository.findAll());
         model.addAttribute("opinion",surveyRepository.findOne(id));
 
         //Set the navigation button Test Management to active
@@ -49,13 +51,13 @@ public class SurveyController {
     @RequestMapping(value={"/questionssurvey/", "/questionssurvey/{id}"}, method= RequestMethod.POST)
     public String addopin(@Valid Survey survey, BindingResult result, final ModelMap model){
         if(result.hasErrors()){
-            model.addAttribute("allQOpinions", surveyRepository.findAll());
+            model.addAttribute("allOpinions", surveyRepository.findAll());
             //Set the navigation button User Management to active
             model.addAttribute("SurveyQActiveSettings","active");
             return "survey-questions";
         }
         surveyService.saveSomeAttributes(survey);
-        return "redirect:/resultssurvey";
+        return "redirect:/home";
     }
 
 }

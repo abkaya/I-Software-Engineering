@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- Import header -->
-<head th:replace="layout :: head (title='Survey.questions')"></head>
+<head th:replace="layout :: head (title='#{Survey.questions}')"></head>
 
 <body onload="initPage()">
 <script type="text/javascript">
     function initPage(){
-//        $('#permissions').multiSelect({});
-        /* $('#testSequences').multiSelect({
-         selectableHeader: '<div class="custom-header" th:text="#{selectable.items}">Available to add</div>',
-         selectionHeader: '<div class="custom-header" th:text="#{selected.items}">Added</div>'
-         });*/
-    }
+        /*var options = {
+            valueNames: [ 'userName']
+        };*/
 
+      //  var userList = new List('user-list', options);
+    }
 </script>
 <div class="container">
 
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
     <form action="#" th:action="@{/questionssurvey/{id}(id=${survey})}" th:object="${survey}" method="post">
-        <input th:type="hidden"/>
+        <input th:type="hidden" th:field="*{id}"/>
         <div class="form-group">
-            <label for="comment" th:text="#{survey.opinion}">Opinion</label>
-            <textarea class="form-control" rows="5" id="comment"></textarea>
+            <label for="comment" th:text="#{opinion}">Opinion</label>
+            <input class="form-control" rows="5" id="comment" th:field="*{opinion}"/>
         </div>
 
         <p>

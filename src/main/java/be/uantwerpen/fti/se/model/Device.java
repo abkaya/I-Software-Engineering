@@ -137,8 +137,11 @@ public class Device extends MyAbstractPersistable<Long> {
     }
 
     public void setNOImageFullPath()    {
-        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
-        this.imageFullPath = parent + "\\src\\main\\resources\\static\\images\\no_image.jpg";
+        // WERKT NIET:
+        //String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+        //this.imageFullPath = parent + "\\src\\main\\resources\\static\\images\\no_image.jpg";
+        // WERKT WEL:
+        this.imageFullPath = "images/no_image.jpg";
     }
 
     public String getFilesDirectoryPath()   {

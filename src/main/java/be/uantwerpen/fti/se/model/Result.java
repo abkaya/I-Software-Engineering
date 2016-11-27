@@ -9,20 +9,21 @@ import javax.persistence.Entity;
 public class Result extends MyAbstractPersistable<Long> {
 
     private double difficulty;
-    private double throughtput;
+    private double throughput;
     private double movementTime;
     private double errorRate;
 
     public Result() {
         difficulty = 0;
-        throughtput = 0;
+        throughput = 0;
         movementTime = 0;
+        //errorRate in percentages
         errorRate = 0;
     }
 
     public Result(double difficulty, double throughput, double movementTime, double errorRate){
         this.difficulty = difficulty;
-        this.throughtput = throughput;
+        this.throughput = throughput;
         this.movementTime = movementTime;
         this.errorRate = errorRate;
     }
@@ -35,12 +36,12 @@ public class Result extends MyAbstractPersistable<Long> {
         this.difficulty = difficulty;
     }
 
-    public double getThroughtput() {
-        return throughtput;
+    public double getThroughput() {
+        return throughput;
     }
 
-    public void setThroughtput(double throughtput) {
-        this.throughtput = throughtput;
+    public void setThroughput(double throughput) {
+        this.throughput = throughput;
     }
 
     public double getMovementTime() {

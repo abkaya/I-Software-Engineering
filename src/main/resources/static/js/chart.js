@@ -9,40 +9,30 @@ $(function () {
         },
 
         title: {
-            text: 'Highcharts Box Plot Example'
+            text: 'This is some difficulty range : e.g. 0-2 : easy'
         },
 
         legend: {
-            enabled: false
+            enabled: true
         },
 
         xAxis: {
-            categories: ['1', '2', '3', '4', '5'],
+            //Devices with results need to be populated from a query which gets appropriate difficulty data.
+            categories: ['Device1', 'Device2', 'Device3', 'Device4', 'Device5'],
             title: {
-                text: 'Experiment No.'
+                text: 'Device'
             }
         },
 
         yAxis: {
             title: {
-                text: 'Observations'
-            },
-            plotLines: [{
-                value: 932,
-                color: 'red',
-                width: 1,
-                label: {
-                    text: 'Theoretical mean: 932',
-                    align: 'center',
-                    style: {
-                        color: 'gray'
-                    }
-                }
-            }]
+                text: 'Error rate (%)'
+            }
         },
 
         series: [{
-            name: 'Observations',
+            name: 'Device',
+            //These values will also need to be populated using test results for each device, given certain difficulties.
             data: [
                 [760, 801, 848, 895, 965],
                 [733, 853, 939, 980, 1080],
@@ -51,25 +41,7 @@ $(function () {
                 [834, 836, 864, 882, 910]
             ],
             tooltip: {
-                headerFormat: '<em>Experiment No {point.key}</em><br/>'
-            }
-        }, {
-            name: 'Outlier',
-            color: Highcharts.getOptions().colors[0],
-            type: 'scatter',
-            data: [ // x, y positions where 0 is the first category
-                [0, 644],
-                [4, 718],
-                [4, 951],
-                [4, 969]
-            ],
-            marker: {
-                fillColor: 'white',
-                lineWidth: 1,
-                lineColor: Highcharts.getOptions().colors[0]
-            },
-            tooltip: {
-                pointFormat: 'Observation: {point.y}'
+                headerFormat: '<em>{point.key}</em><br/>'
             }
         }]
 

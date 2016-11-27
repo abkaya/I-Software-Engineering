@@ -178,10 +178,10 @@ public class DatabaseLoader {
 
         TestObject to1 = new TestObject(t1.getId(), u2.getUserName());
         List<Result> resList1 = new ArrayList<>();
-        Result r1 = new Result(5,10,1000,2.53);
-        Result r2 = new Result(6,7,1200,5.6);
-        Result r3 = new Result(3,6.5,980,4);
-        Result r4 = new Result(4.3,8,1100,3.6);
+        Result r1 = new Result(5,10,1000,25.3);
+        Result r2 = new Result(6,7,1200,56.2);
+        Result r3 = new Result(3,6.5,980,40.9);
+        Result r4 = new Result(4.3,8,1100,30.6);
         resultRepository.save(r1);
         resultRepository.save(r2);
         resultRepository.save(r3);
@@ -196,10 +196,10 @@ public class DatabaseLoader {
 
 
         TestObject to2 = new TestObject(t1.getId(), u3.getUserName());
-        Result r5 = new Result(6,7,970,3.8);
-        Result r6 = new Result(3.1,6.23,1235,3);
-        Result r7 = new Result(1.8,9.5,1300,1.5);
-        Result r8 = new Result(4,6.8,650,2);
+        Result r5 = new Result(6,7,970,38);
+        Result r6 = new Result(3.1,6.23,1235,80.3);
+        Result r7 = new Result(1.8,9.5,1300,15.2);
+        Result r8 = new Result(4,6.8,650,20.9);
         resultRepository.save(r5);
         resultRepository.save(r6);
         resultRepository.save(r7);
@@ -209,8 +209,8 @@ public class DatabaseLoader {
         resList2.add(r6);
         resList2.add(r7);
         resList2.add(r8);
-        to1.setResults(resList2);
-        testObjectRepository.save(to1);
+        to2.setResults(resList2);
+        testObjectRepository.save(to2);
 
 
     }

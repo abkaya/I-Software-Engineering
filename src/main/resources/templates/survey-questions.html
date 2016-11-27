@@ -32,19 +32,25 @@
             <th></th>
         </tr>
         </thead>
-        <div class="radio" th:field="*{evaluateDifficulty}">
-            <label><input type="radio" name="optradio">Perfect</input></label>
+        <div class="radio" id="filterDay">
+            <label><input type="radio" name="optradio" value="Perfect" id="Perfect">Perfect</input></label>
         </div>
         <div class="radio">
-            <label><input type="radio" name="optradio">Acceptable</input></label>
+            <label><input type="radio" name="optradio" value="Acceptable" id="Acceptable">Acceptable</input></label>
         </div>
         <div class="radio">
-            <label><input type="radio" name="optradio">Difficult</input></label>
+            <label><input type="radio" name="optradio" value="Difficult" id="Difficult">Difficult</input></label>
         </div>
         <div class="radio">
-            <label><input type="radio" name="optradio">Very difficult</input></label>
+            <label><input type="radio" name="optradio" value="Very Difficult" id="Very Difficult">Very difficult</input></label>
         </div>
-
+        <script>
+           // $(".alignment .radio").click(function() {
+                // whenever a button is clicked, set the hidden helper
+           //     $("#alignment").val($(this).text());
+           // });
+        </script>
+<!--        <input type="radio" th:field="*{evaluateDifficulty}" th:value=$('#filterDay label.active input').val() />-->
         <p>
             <a href="/home" th:text="#{close}" class="btn btn-primary">Close</a>
             <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>

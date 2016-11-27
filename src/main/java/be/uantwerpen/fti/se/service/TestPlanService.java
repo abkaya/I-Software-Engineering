@@ -19,6 +19,7 @@ public class TestPlanService {
 
     public Iterable<TestPlan> findByUserName(User user){
         if(user.isAdmin()){
+
             return testPlanRepository.findAll();
         }
         else{

@@ -12,7 +12,11 @@
 
         var testplansList = new List('testplans-list', options);
 
+
+
     }
+
+
 
 </script>
 <div class="container">
@@ -71,10 +75,14 @@
                                     <label class="control-label" th:text="#{device.name}">Testplan Template</label>
                                     <p th:text="${testplan.device?.deviceName}">Some text in the modal.</p>
 
-                                    <label class="control-label" th:text="#{user.management}">TestPlan Users</label>
-                                    <ul class="list-group">
-                                        <li class="list-group-item" style="height: 30px; padding: 5px 10px;" th:each="user : ${testplan.users}" th:text="${user.userName}">User Name</li>
-                                    </ul>
+
+
+
+                                                <label class="control-label" th:text="#{testplan.users}">TestPlan Users</label>
+                                                <ul class="list-group">
+                                                    <li class="list-group-item list-group-item-action" th:each="user : ${testplan.users}" th:text="${user.userName}" th:classappend="${testplan.isFinished(user)} ?  list-group-item-success : list-group-item-danger">User Name</li>
+                                                </ul>
+
 
                                 </div>
                                 <div class="modal-footer">

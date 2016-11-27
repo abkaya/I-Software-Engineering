@@ -3,6 +3,7 @@ package be.uantwerpen.fti.se.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -107,5 +108,15 @@ public class TestPlan extends MyAbstractPersistable<Long>{
 
     public void setDevice(Device device) {
         this.device = device;
+    }
+
+    public Boolean isFinished(User user){
+        for (Iterator<User> iter = finsihedUsers.iterator(); iter.hasNext(); ) {
+            User userF = iter.next();
+            if(userF.getUserName() == user.getUserName()){
+                return true;
+            }
+        }
+        return false;
     }
 }

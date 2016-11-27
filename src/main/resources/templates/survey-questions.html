@@ -19,9 +19,30 @@
     <div th:replace="layout :: navbar"></div>
     <form action="#" th:action="@{/questionssurvey/{id}(id=${survey})}" th:object="${survey}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
-        <div class="form-group">
-            <label for="comment" th:text="#{opinion}">Opinion</label>
-            <input class="form-control" rows="5" id="comment" th:field="*{opinion}"/>
+        <p>What's your general opinon about this test?</p>
+        <div class="form-group" th:classappend="${#fields.hasErrors('opinion')}?'has-error': ''">
+            <span class="control-label" th:if="${#fields.hasErrors('opinion')}" th:errors="*{opinion}">opinion Error</span>
+            <input class="form-control" type="text" th:field="*{opinion}" />
+        </div>
+
+
+        <thead>
+        <tr>
+            <th th:text="#{vraag1}">Vraag1</th>
+            <th></th>
+        </tr>
+        </thead>
+        <div class="radio" th:field="*{evaluateDifficulty}">
+            <label><input type="radio" name="optradio">Perfect</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio">Acceptable</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio">Difficult</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio">Very difficult</input></label>
         </div>
 
         <p>
@@ -41,32 +62,14 @@
                 </div>
             </div>
 
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th th:text="#{questions}">Questions</th>
-                    <th></th>
-                </tr>
-                </thead>
-            </table>
+  <table class="table table-hover">
             <thead>
             <tr>
-                <th th:text="#{vraag1}">Vraag1</th>
+                <th th:text="#{questions}">Questions</th>
                 <th></th>
             </tr>
             </thead>
-            <div class="radio">
-                <label><input type="radio" name="optradio">Perfect</input></label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">Acceptable</input></label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">Difficult</input></label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">Very difficult</input></label>
-            </div>
+        </table>
 
             <thead>
             <tr>

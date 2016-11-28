@@ -24,7 +24,7 @@ public class ResultService {
         if (tempResult != null) {
             tempResult.setDifficulty(result.getDifficulty());
             tempResult.setMovementTime(result.getMovementTime());
-            tempResult.setThroughtput(result.getThroughtput());
+            tempResult.setThroughput(result.getThroughput());
             tempResult.setErrorRate(result.getErrorRate());
             resultRepository.save(tempResult);
         } else {

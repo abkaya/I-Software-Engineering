@@ -16,6 +16,9 @@ public class TestObject extends MyAbstractPersistable<Long>{
     private long templateID;
     private String user;
 
+    @OneToOne
+    private TestPlan testPlan;
+
     @ElementCollection
     @CollectionTable(name="sequences", joinColumns=@JoinColumn(name="sequence_id"))
     @Column(name="sequences")
@@ -33,9 +36,11 @@ public class TestObject extends MyAbstractPersistable<Long>{
 
     }
 
-    public TestObject(long templateID, String user){
+    public TestObject(long templateID, String user, TestPlan testPlan){
         this.templateID = templateID;
         this.user = user;
+        this.testPlan = testPlan;
+
     }
 
     public String getUser() {
@@ -53,6 +58,14 @@ public class TestObject extends MyAbstractPersistable<Long>{
 
     public List<Result> getResults() {
         return results;
+    }
+
+    public TestPlan getTestPlan() {
+        return testPlan;
+    }
+
+    public void setTestPlan(TestPlan testPlan) {
+        this.testPlan = testPlan;
     }
 
     public void setResults(List<Result> results) {

@@ -176,7 +176,7 @@ public class DatabaseLoader {
         testPlanRepository.save(tp2);
 
 
-        TestObject to1 = new TestObject(t1.getId(), u2.getUserName());
+        TestObject to1 = new TestObject(t1.getId(), u2.getUserName(), tp1);
         List<Result> resList1 = new ArrayList<>();
         Result r1 = new Result(5,10,1000,2.53);
         Result r2 = new Result(6,7,1200,5.6);
@@ -195,7 +195,7 @@ public class DatabaseLoader {
 
 
 
-        TestObject to2 = new TestObject(t1.getId(), u3.getUserName());
+        TestObject to2 = new TestObject(t1.getId(), u3.getUserName(), tp1);
         Result r5 = new Result(6,7,970,3.8);
         Result r6 = new Result(3.1,6.23,1235,3);
         Result r7 = new Result(1.8,9.5,1300,1.5);

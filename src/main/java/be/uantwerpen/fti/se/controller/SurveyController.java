@@ -39,7 +39,7 @@ public class SurveyController {
     }
 
     @RequestMapping(value="/questionssurvey/{id}", method= RequestMethod.GET)
-    public String viewEditTestSequence(@PathVariable Long id, final ModelMap model){
+    public String viewEditSurvey(@PathVariable Long id, final ModelMap model){
         model.addAttribute("allOpinions", surveyRepository.findAll());
         model.addAttribute("opinion",surveyRepository.findOne(id));
 
@@ -49,7 +49,7 @@ public class SurveyController {
     }
 
     @RequestMapping(value={"/questionssurvey/", "/questionssurvey/{id}"}, method= RequestMethod.POST)
-    public String addopin(@Valid Survey survey, BindingResult result, final ModelMap model){
+    public String addOpinion(@Valid Survey survey, BindingResult result, final ModelMap model){
         if(result.hasErrors()){
             model.addAttribute("allOpinions", surveyRepository.findAll());
             //Set the navigation button User Management to active

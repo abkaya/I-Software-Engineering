@@ -7,6 +7,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
+
 /**
  * Created by Quentin Van Ravels on 26-Nov-16.
  */
@@ -18,9 +20,10 @@ public class TestObjectController {
     private TestObjectService testObjectService;
 
     @RequestMapping(value = "/testobjects", method = RequestMethod.GET)
-    public String showTestObject(final ModelMap model){
-
-        return "user-testobject";
+    public String showTestObject(Principal principal, final ModelMap model){
+        model.addAttribute("myTestObjects", testObjectService.findForUser(principal.getName()));
+        model.addAttribute("testObjectsActiveSettings", "active");
+        return "testobject-list";
     }
 
 }

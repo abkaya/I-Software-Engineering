@@ -66,6 +66,12 @@ public class TestPlan extends MyAbstractPersistable<Long>{
     @ElementCollection(targetClass=User.class)
     private List<User> finsihedUsers;
 
+    private void userFinished(User user){
+        finsihedUsers.add(user);
+        if(finsihedUsers.size() == users.size())
+            this.completed = true;
+    }
+
 
     @ManyToOne
     @JoinTable(

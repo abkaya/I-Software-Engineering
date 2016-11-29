@@ -41,7 +41,7 @@
                 </thead>
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
-                <tr th:each="testplan : ${allTestplans}" >
+                <tr class="" th:each="testplan : ${allTestplans}" th:classappend="${testplan.isCompleted()} ?  bg-success : table">
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.name}">Name</td>
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.testTemplate.name}">Test Template</td>
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.device.deviceName}">Device</td>
@@ -78,10 +78,10 @@
 
 
 
-                                                <label class="control-label" th:text="#{testplan.users}">TestPlan Users</label>
-                                                <ul class="list-group">
-                                                    <li class="list-group-item list-group-item-action" th:each="user : ${testplan.users}" th:text="${user.userName}" th:classappend="${testplan.isFinished(user)} ?  list-group-item-success : list-group-item-danger">User Name</li>
-                                                </ul>
+                                    <label class="control-label" th:text="#{testplan.users}">TestPlan Users</label>
+                                    <ul class="list-group">
+                                        <li class="list-group-item list-group-item-action" th:each="user : ${testplan.users}" th:text="${user.userName}" th:classappend="${testplan.isFinished(user)} ?  list-group-item-success : list-group-item-danger">User Name</li>
+                                    </ul>
 
 
                                 </div>

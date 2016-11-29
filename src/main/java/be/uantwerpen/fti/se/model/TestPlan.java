@@ -15,6 +15,15 @@ public class TestPlan extends MyAbstractPersistable<Long>{
     private String name;
     private String description;
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    private boolean completed = false;
 
 
     @ManyToOne

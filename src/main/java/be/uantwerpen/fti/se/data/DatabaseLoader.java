@@ -176,7 +176,7 @@ public class DatabaseLoader {
         testPlanRepository.save(tp2);
 
 
-        TestObject to1 = new TestObject(t1.getId(), u2.getUserName());
+        TestObject to1 = new TestObject("TestObject 1", t1.getId(), u2.getUserName(), tp1);
         List<Result> resList1 = new ArrayList<>();
         Result r1 = new Result(5,10,1000,2.53);
         Result r2 = new Result(6,7,1200,5.6);
@@ -186,6 +186,11 @@ public class DatabaseLoader {
         resultRepository.save(r2);
         resultRepository.save(r3);
         resultRepository.save(r4);
+        List<Long> seqList1 = new ArrayList<>();
+        seqList1.add(t1.getTestSequences().get(0).getId());
+        seqList1.add(t1.getTestSequences().get(1).getId());
+        seqList1.add(t1.getTestSequences().get(2).getId());
+        seqList1.add(t1.getTestSequences().get(3).getId());
         resList1.add(r1);
         resList1.add(r2);
         resList1.add(r3);
@@ -195,7 +200,7 @@ public class DatabaseLoader {
 
 
 
-        TestObject to2 = new TestObject(t1.getId(), u3.getUserName());
+        TestObject to2 = new TestObject("TestObject 2", t1.getId(), u3.getUserName(), tp1);
         Result r5 = new Result(6,7,970,38);
         Result r6 = new Result(3.1,6.23,1235,80.3);
         Result r7 = new Result(1.8,9.5,1300,15.2);
@@ -204,6 +209,12 @@ public class DatabaseLoader {
         resultRepository.save(r6);
         resultRepository.save(r7);
         resultRepository.save(r8);
+        List<Long> seqList2 = new ArrayList<>();
+        seqList2.add(t1.getTestSequences().get(0).getId());
+        seqList2.add(t1.getTestSequences().get(1).getId());
+        seqList2.add(t1.getTestSequences().get(2).getId());
+        seqList2.add(t1.getTestSequences().get(3).getId());
+        to1.setSequences(seqList2);
         List<Result> resList2 = new ArrayList<>();
         resList2.add(r5);
         resList2.add(r6);

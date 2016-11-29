@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 public class TestObject extends MyAbstractPersistable<Long>{
 
+    private String name;
     private long templateID;
     private String user;
 
@@ -36,11 +37,23 @@ public class TestObject extends MyAbstractPersistable<Long>{
 
     }
 
-    public TestObject(long templateID, String user, TestPlan testPlan){
+    public TestObject(String name, long templateID, String user, TestPlan testPlan){
+        this.name = name;
         this.templateID = templateID;
         this.user = user;
         this.testPlan = testPlan;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getUser() {
@@ -72,5 +85,11 @@ public class TestObject extends MyAbstractPersistable<Long>{
         this.results = results;
     }
 
+    public long getTemplateID() {
+        return templateID;
+    }
 
+    public void setTemplateID(long templateID) {
+        this.templateID = templateID;
+    }
 }

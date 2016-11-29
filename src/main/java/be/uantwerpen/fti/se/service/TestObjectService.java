@@ -7,6 +7,7 @@ import be.uantwerpen.fti.se.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class TestObjectService {
     }
 
     public Iterable<TestObject> findForUser(String name){
-        List<TestObject> myTests = null;
+        List<TestObject> myTests = new ArrayList<>();
         for(TestObject it : this.findAll())
         {
             if(it.getUser().equals(name))

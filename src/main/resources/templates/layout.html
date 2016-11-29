@@ -55,6 +55,11 @@
                     <li sec:authorize="hasAuthority('user-view')" role="presentation" th:class="${usersActiveSettings}">
                         <a href="/users" th:text="#{user.management}">User management <span class="sr-only">(user management)</span></a>
                     </li>
+
+                    <li role="presentation" th:class="${testObjectsActiveSettings}">
+                        <a href="/testobjects" th:text="#{testobject.title}">TestObject management <span class="sr-only">(testobject management)</span></a>
+                    </li>
+
                     <li sec:authorize="hasAuthority('role-view')" role="presentation" th:class="${rolesActiveSettings}">
                         <a href="/roles" th:text="#{role.management}">Role management <span class="sr-only">(role management)</span></a>
                     </li>

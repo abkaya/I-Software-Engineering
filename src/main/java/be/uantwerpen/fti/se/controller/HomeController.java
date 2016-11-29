@@ -3,6 +3,8 @@ package be.uantwerpen.fti.se.controller;
 import be.uantwerpen.fti.se.model.Device;
 import be.uantwerpen.fti.se.model.User;
 import be.uantwerpen.fti.se.repository.DeviceRepository;
+import be.uantwerpen.fti.se.repository.TestPlanRepository;
+import be.uantwerpen.fti.se.repository.TestTemplateRepository;
 import be.uantwerpen.fti.se.repository.UserRepository;
 import be.uantwerpen.fti.se.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,28 +20,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
     @Autowired
-    private UserService userService;
-    @Autowired
     private DeviceRepository deviceRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TestPlanRepository testPlanRepository;
+    @Autowired
+    private TestTemplateRepository testTemplateRepository;
 
     @RequestMapping({"/","/home"})
     @PreAuthorize("hasAuthority('logon')")
     public String showHomepage(final ModelMap model){
-        model.addAttribute("user", new User());
 
-        int size = 0;
-        for(User users : userRepository.findAll()){
-            size = size + 1;
-        }
-        model.addAttribute("noUsers", size);
-
-        size = 0;
-        for (Device devices : deviceRepository.findAll()) {
-            size = size + 1;
-        }
-        model.addAttribute("noDevices", size);
+        model.addAttribute("amountUsers", userRepository.count());
+        model.addAttribute("amountDevices", deviceRepository.count());
+        model.addAttribute("amountTestPlans", testPlanRepository.count());
+        model.addAttribute("amountTestTemplates", testTemplateRepository.count());
 
         //Set the navigation button Home Management to active
         model.addAttribute("homeActiveSettings","active");

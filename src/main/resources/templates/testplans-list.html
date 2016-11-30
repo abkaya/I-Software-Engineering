@@ -41,7 +41,7 @@
                 </thead>
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
-                <tr class="" th:each="testplan : ${allTestplans}" th:classappend="${testplan.isCompleted()} ?  success : table">
+                <tr class="" th:each="testplan : ${allTestplans}" th:classappend="${testplan.isCompleted()} ?  success : danger">
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.name}">Name</td>
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.testTemplate.name}">Test Template</td>
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.device.deviceName}">Device</td>

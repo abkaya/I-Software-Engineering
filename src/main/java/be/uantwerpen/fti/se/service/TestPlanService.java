@@ -19,6 +19,7 @@ public class TestPlanService {
 
     public Iterable<TestPlan> findByUserName(User user){
         if(user.isAdmin()){
+
             return testPlanRepository.findAll();
         }
         else{
@@ -31,31 +32,22 @@ public class TestPlanService {
         if (tempTestPlan != null) {
 
             tempTestPlan.setName(testPlan.getName());
-            tempTestPlan.setStartDate(testPlan.getStartDate());
-            tempTestPlan.setEndDate(testPlan.getEndDate());
             tempTestPlan.setDescription(testPlan.getDescription());
             tempTestPlan.setTestTemplate(testPlan.getTestTemplate());
             tempTestPlan.setUsers(testPlan.getUsers());
-            tempTestPlan.setDevices(testPlan.getDevices());
+            tempTestPlan.setDevice(testPlan.getDevice());
 
             if(testPlan.getTestTemplate() != null)
                 testPlan.getTestTemplate().setEditable(false);
-            if(testPlan.getDevices() != null)
-                for (Iterator<Device> iter = testPlan.getDevices().iterator(); iter.hasNext(); ) {
-                    Device device = iter.next();
-                    device.setIsInUse();
+            if(testPlan.getDevice() != null){
+                    testPlan.getDevice().setIsInUse();
                 }
-
-
             testPlanRepository.save(tempTestPlan);
         } else {
             if(testPlan.getTestTemplate() != null)
-            testPlan.getTestTemplate().setEditable(false);
-            if(testPlan.getDevices() != null)
-            for (Iterator<Device> iter = testPlan.getDevices().iterator(); iter.hasNext(); ) {
-                Device device = iter.next();
-                device.setIsInUse();
-            }
+                testPlan.getTestTemplate().setEditable(false);
+            if(testPlan.getDevice() != null)
+                testPlan.getTestTemplate().setEditable(false);
             testPlanRepository.save(testPlan);
         }
     }

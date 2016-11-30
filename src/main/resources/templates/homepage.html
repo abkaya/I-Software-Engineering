@@ -25,29 +25,8 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-    <div id="container" style="height: 400px; margin: auto; min-width: 310px; max-width: 600px"></div>
-    <script type="text/javascript" src="/js/chart.js"></script>
-
     <div class="content">
-        <div id="homepage-list">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th th:text="#{homepage.noUsers}">noUsers</th>
-                    <th th:text="#{homepage.noDevices}">noDevices</th>
-                    <th></th>
-                </tr>
-                </thead>
 
-                <tbody class="list">
-                <!--     <td class="noUsers" th:value="${noUsers}" th:text="${homepage.noUsers}">noUsers</td> -->
-                <!--   <td class="noDevices" th:value="${noDevices}" th:text="${homepage.noDevices}">noDevices</td> -->
-                <td class="noUsers" th:value="${noUsers}" th:text="${noUsers}">noUsers</td>
-                <td class="noDevices" th:value="${noDevices}" th:text="${noDevices}">noDevices</td>
-                </tbody>
-            </table>
-
-        </div>
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="panel panel-primary">
@@ -143,6 +122,10 @@
                 </div>
             </div>
         </div>
+
+        <div id="container" style="height: 400px; margin: auto; min-width: 310px; max-width: 600px"></div>
+        <script type="text/javascript" src="/js/chart.js"></script>
+
     </div>
 
 

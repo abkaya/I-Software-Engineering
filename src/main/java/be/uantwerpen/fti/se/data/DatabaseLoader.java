@@ -138,31 +138,28 @@ public class DatabaseLoader {
         TestPlan tp1 = new TestPlan("Testplan_0x01","This is a description for testplan 1");
         TestPlan tp2 = new TestPlan("Testplan_0x02","This is a description for testplan 2");
 
-        //t1.setEditable(false);   //Add sequences to templates, templates to plans at runtime in order to keep things working.
-        //tp1.setTestTemplate(t1);
-        //testTemplateRepository.save(t1);
+        t5.setEditable(false);   //Add sequences to templates, templates to plans at runtime in order to keep things working.
+        tp1.setTestTemplate(t5);
+        testTemplateRepository.save(t5);
         List<User> testPlanUsers = new ArrayList<User>();
         testPlanUsers.add(u1);
         tp1.setUsers(testPlanUsers);
-        List<Device> testPlanDevices = new ArrayList<Device>();
         d1.setIsInUse();
         d1.setIsUsed();
-        testPlanDevices.add(d1);
-        d1.setIsInUse();
         tp1.setDevice(d1);
+        deviceRepository.save(d1);
         testPlanRepository.save(tp1);
 
-        //t2.setEditable(false);
-        //testTemplateRepository.save(t2);
-        //tp2.setTestTemplate(t2);
+        t8.setEditable(false);
+        testTemplateRepository.save(t8);
+        tp2.setTestTemplate(t8);
         testPlanUsers.clear();
         testPlanUsers.add(u2);
         tp2.setUsers(testPlanUsers);
-        testPlanDevices.clear();
         d2.setIsInUse();
         d2.setIsUsed();
-        testPlanDevices.add(d2);
         tp2.setDevice(d2);
+        deviceRepository.save(d2);
         testPlanRepository.save(tp2);
 
 

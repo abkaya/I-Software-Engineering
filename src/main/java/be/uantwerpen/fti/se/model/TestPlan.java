@@ -15,6 +15,15 @@ public class TestPlan extends MyAbstractPersistable<Long>{
     private String name;
     private String description;
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    private boolean completed = false;
 
 
     @ManyToOne
@@ -56,6 +65,12 @@ public class TestPlan extends MyAbstractPersistable<Long>{
     @Column
     @ElementCollection(targetClass=User.class)
     private List<User> finsihedUsers;
+
+    private void userFinished(User user){
+        finsihedUsers.add(user);
+        if(finsihedUsers.size() == users.size())
+            this.completed = true;
+    }
 
 
     @ManyToOne

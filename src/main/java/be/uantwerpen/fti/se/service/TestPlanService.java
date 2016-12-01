@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Willem on 24/10/2016.
@@ -27,6 +28,31 @@ public class TestPlanService {
         }
     }
 
+    public Iterable<TestPlan> findCompletedTestPlans(){
+        List<TestPlan> testPlanList = null;
+        for (TestPlan  testPlan : testPlanRepository.findAll()) {
+            if(testPlan.isCompleted())
+                testPlanList.add(testPlan);
+        }
+        return testPlanList;
+    }
+
+    public Iterable<Device> findDevicesByUser(User user){
+        List<Device> devices = null;
+        for (TestPlan  testPlan : findByUserName(user)) {
+            devices.add(testPlan.getDevice());
+        }
+        return devices;
+    }
+
+    public Iterable<TestTemplate> findTestTemplateByUser(User user){
+        List<TestTemplate> testTemplates = null;
+        for (TestPlan  testPlan : findByUserName(user)) {
+            testTemplates.add(testPlan.getTestTemplate());
+        }
+        return testTemplates;
+    }
+
     public void saveSomeAttributes(TestPlan testPlan) {
         TestPlan tempTestPlan = testPlan.getId() == null ? null : findOne(testPlan.getId());
         if (tempTestPlan != null) {
@@ -40,8 +66,8 @@ public class TestPlanService {
             if(testPlan.getTestTemplate() != null)
                 testPlan.getTestTemplate().setEditable(false);
             if(testPlan.getDevice() != null){
-                    testPlan.getDevice().setIsInUse();
-                }
+                testPlan.getDevice().setIsInUse();
+            }
             testPlanRepository.save(tempTestPlan);
         } else {
             if(testPlan.getTestTemplate() != null)

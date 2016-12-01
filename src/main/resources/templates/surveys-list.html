@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#(survey.management)')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage() {
+        var options = {
+            valueNames: ['opinions']
+        };
+        var surveyList = new List('survey-list', options);
+    }
+</script>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="content">
+
+        <div id="survey-list">
+            <input class="search" placeholder="Search" />
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{opinion}">Opinions</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <!-- IMPORTANT, class="list" have to be at tbody -->
+                <tbody class="list">
+                <tr th:each="survey : ${allOpinions}">
+                    <td class="opinion" th:value="${survey}" th:text="${survey.opinion}">Opinion</td>
+           <!--         <td class="evaluateDifficulty" th:value="${survey}" th:text="${survey.evaluateDifficulty}">evaluatDifficulty</td>-->
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

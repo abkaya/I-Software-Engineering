@@ -27,6 +27,8 @@ public class HomeController {
     private TestPlanRepository testPlanRepository;
     @Autowired
     private TestTemplateRepository testTemplateRepository;
+    @Autowired
+    private TestTemplateRepository testObjectRepository;
 
     @RequestMapping({"/","/home"})
     @PreAuthorize("hasAuthority('logon')")
@@ -36,6 +38,7 @@ public class HomeController {
         model.addAttribute("amountDevices", deviceRepository.count());
         model.addAttribute("amountTestPlans", testPlanRepository.count());
         model.addAttribute("amountTestTemplates", testTemplateRepository.count());
+        model.addAttribute("allTestObjects", testObjectRepository.findAll());
 
         //Set the navigation button Home Management to active
         model.addAttribute("homeActiveSettings","active");

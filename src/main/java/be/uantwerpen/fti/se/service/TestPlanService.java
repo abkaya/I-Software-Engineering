@@ -6,6 +6,7 @@ import be.uantwerpen.fti.se.repository.TestPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class TestPlanService {
     }
 
     public Iterable<TestPlan> findCompletedTestPlans(){
-        List<TestPlan> testPlanList = null;
+        List<TestPlan> testPlanList = new ArrayList<TestPlan>();
         for (TestPlan  testPlan : testPlanRepository.findAll()) {
             if(testPlan.isCompleted())
                 testPlanList.add(testPlan);
@@ -38,7 +39,7 @@ public class TestPlanService {
     }
 
     public Iterable<Device> findDevicesByUser(User user){
-        List<Device> devices = null;
+        List<Device> devices = new ArrayList<Device>();
         for (TestPlan  testPlan : findByUserName(user)) {
             devices.add(testPlan.getDevice());
         }
@@ -46,7 +47,7 @@ public class TestPlanService {
     }
 
     public Iterable<TestTemplate> findTestTemplateByUser(User user){
-        List<TestTemplate> testTemplates = null;
+        List<TestTemplate> testTemplates = new ArrayList<TestTemplate>();
         for (TestPlan  testPlan : findByUserName(user)) {
             testTemplates.add(testPlan.getTestTemplate());
         }

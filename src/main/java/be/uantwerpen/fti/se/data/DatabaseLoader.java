@@ -26,9 +26,10 @@ public class DatabaseLoader {
     private final TestSequenceRepository testSequenceRepository;
     private final DeviceRepository deviceRepository;
     private final TestPlanRepository testPlanRepository;
+    private final SurveyRepository surveyRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository, TestTemplateService testTemplateService, TestSequenceRepository testSequenceRepository, DeviceRepository deviceRepository, TestPlanRepository testPlanRepository) {
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository, TestTemplateRepository testTemplateRepository, TestTemplateService testTemplateService, TestSequenceRepository testSequenceRepository, DeviceRepository deviceRepository, TestPlanRepository testPlanRepository, SurveyRepository surveyRepository) {
         this.permissionRepository = permissionRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
@@ -37,6 +38,7 @@ public class DatabaseLoader {
         this.testSequenceRepository = testSequenceRepository;
         this.deviceRepository = deviceRepository;
         this.testPlanRepository = testPlanRepository;
+        this.surveyRepository= surveyRepository;
     }
 
     @PostConstruct
@@ -48,24 +50,20 @@ public class DatabaseLoader {
             permissionRepository.save(new Permission(p));
         }
 
-        //create logon permission and save it to the repository
-        Permission p1 = new Permission("logon");
-        permissionRepository.save(p1);
+        for (String p : allPermissions) {
+            permissionRepository.save(new Permission(p));
+        }
 
         //create admin and tester roles
         Role administrator = new Role("Administrator");
         Role tester = new Role("Tester");
 
-        //add permission "logon" to the newly created list permissions.
-        List<Permission> permissions = new ArrayList<Permission>();
-        permissions.add(p1);
-
-        //now add all permissions in permissions to the tester role (currently just 1)
-        tester.setPermissions(permissions);
-        roleRepository.save(tester);
+        //create logon permission and save it to the repository
+        Permission p1 = new Permission("logon");
+        permissionRepository.save(p1);
 
         //now add all permissions from the String array above (allPermissions) to the newly created permissions.
-        permissions = new ArrayList<Permission>();
+        List<Permission> permissions = new ArrayList<Permission>();
         for (Permission p : permissionRepository.findAll()) {
             permissions.add(p);
         }
@@ -73,6 +71,20 @@ public class DatabaseLoader {
         //add all these permissions to the administrator role
         administrator.setPermissions(permissions);
         roleRepository.save(administrator);
+
+        Permission p2 = new Permission("surveyQ-view");
+        permissionRepository.save(p2);
+
+
+
+        //add permission "logon" to the newly created list permissions.
+        permissions = new ArrayList<Permission>();
+        permissions.add(p1);
+        permissions.add(p2);
+
+        //now add all permissions in permissions to the tester role (currently just 1)
+        tester.setPermissions(permissions);
+        roleRepository.save(tester);
 
         //create users and set roles
         User u1 = new User("admin", "admin");
@@ -165,6 +177,24 @@ public class DatabaseLoader {
         tp2.setDevice(d2);
         deviceRepository.save(d2);
         testPlanRepository.save(tp2);
+
+        Survey s1 = new Survey();
+        s1.setOpinion("Goed");
+        s1.setEvaluateDifficulty("Perfect");
+        surveyRepository.save(s1);
+        Survey s2 = new Survey();
+        s2.setOpinion("Bwa");
+        s2.setEvaluateDifficulty("Acceptable");
+        surveyRepository.save(s2);
+        Survey s3 = new Survey();
+        s3.setOpinion("Slecht");
+        s3.setEvaluateDifficulty("Difficult");
+        surveyRepository.save(s3);
+        Survey s4 = new Survey();
+        s4.setOpinion("Laten we verdergaan");
+        s4.setEvaluateDifficulty("Very Difficult");
+        surveyRepository.save(s4);
+
 
 
     }

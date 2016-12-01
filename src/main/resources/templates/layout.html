@@ -79,6 +79,14 @@
                         <a href="/roles" th:text="#{role.management}">Role management <span class="sr-only">(role management)</span></a>
                     </li>
 
+                    <li sec:authorize="hasAuthority('survey-view')" role="presentation" th:class="${SurveyActiveSettings}">
+                        <a href="/resultssurvey" th:text="#{survey.management}">Survey Results <span class="sr-only">(survey management)</span></a>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('surveyQ-view')" role="presentation" th:class="${SurveyQActiveSettings}">
+                        <a href="/questionssurvey" th:text="#{Survey.questions}">Survey Questions <span class="sr-only">(survey questions)</span></a>
+                    </li>
+
 
                     <li sec:authorize="hasAuthority('device-view')" role="presentation" th:class="${devicesActiveSettings}"><a href="/devices" th:text="#{device.management}">Device management <span class="sr-only">(device management)</span> </a></li>
 

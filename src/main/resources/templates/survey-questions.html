@@ -6,11 +6,10 @@
 <body onload="initPage()">
 <script type="text/javascript">
     function initPage(){
-        /*var options = {
-            valueNames: [ 'userName']
-        };*/
-
-      //  var userList = new List('user-list', options);
+        $('#answers').multiSelect({
+            selectableHeader: '<div class="custom-header" th:text="#{selectable.items}">Selectable items</div>',
+            selectionHeader: '<div class="custom-header" th:text="#{selected.items}">Selected items</div>'
+        });
     }
 </script>
 <div class="container">
@@ -24,7 +23,6 @@
             <span class="control-label" th:if="${#fields.hasErrors('opinion')}" th:errors="*{opinion}">opinion Error</span>
             <input class="form-control" type="text" th:field="*{opinion}" />
         </div>
-
 
       <!--  <thead>
         <tr>

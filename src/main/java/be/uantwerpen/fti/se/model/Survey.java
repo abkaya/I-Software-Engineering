@@ -7,6 +7,7 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Survey extends MyAbstractPersistable<Long>{
+
     private String opinion;
     private String evaluateDifficulty;
   //  private int evaluateBER;
@@ -15,6 +16,11 @@ public class Survey extends MyAbstractPersistable<Long>{
         opinion = "";
         evaluateDifficulty = "";
     //    evaluateBER = 0;
+    }
+
+    public Survey(String evaluateDifficulty){
+        opinion = "";
+        this.evaluateDifficulty = evaluateDifficulty;
     }
 
     public Survey(String opinion, String evaluateDifficulty){//}, int evaluateBER, int evaluateDifficulty){

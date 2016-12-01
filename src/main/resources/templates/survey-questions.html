@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#{Survey.questions}')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage(){
+        $('#answers').multiSelect({
+            selectableHeader: '<div class="custom-header" th:text="#{selectable.items}">Selectable items</div>',
+            selectionHeader: '<div class="custom-header" th:text="#{selected.items}">Selected items</div>'
+        });
+    }
+</script>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+    <form action="#" th:action="@{/questionssurvey/{id}(id=${survey})}" th:object="${survey}" method="post">
+        <input th:type="hidden" th:field="*{id}"/>
+        <p>What's your general opinon about this test?</p>
+        <div class="form-group" th:classappend="${#fields.hasErrors('opinion')}?'has-error': ''">
+            <span class="control-label" th:if="${#fields.hasErrors('opinion')}" th:errors="*{opinion}">opinion Error</span>
+            <input class="form-control" type="text" th:field="*{opinion}" />
+        </div>
+
+      <!--  <thead>
+        <tr>
+            <th th:text="#{vraag1}">Vraag1</th>
+            <th></th>
+        </tr>
+        </thead>
+        <div class="radio" id="filterDay">
+            <label><input type="radio" name="optradio" value="Perfect" id="Perfect">Perfect</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" value="Acceptable" id="Acceptable">Acceptable</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" value="Difficult" id="Difficult">Difficult</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" value="Very Difficult" id="Very Difficult">Very difficult</input></label>
+        </div>
+        <script>
+           // $(".alignment .radio").click(function() {
+                // whenever a button is clicked, set the hidden helper
+           //     $("#alignment").val($(this).text());
+           // });
+        </script>
+       <input type="radio" th:field="*{evaluateDifficulty}" th:value=$('#filterDay label.active input').val() />-->
+        <p>
+            <a href="/home" th:text="#{close}" class="btn btn-primary">Close</a>
+            <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
+        </p>
+    </form>
+</div>
+</body>
+</html>
+
+
+<!--  <div class="progress">
+                <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                    40% Complete (success)
+                </div>
+            </div>
+
+  <table class="table table-hover">
+            <thead>
+            <tr>
+                <th th:text="#{questions}">Questions</th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+
+            <thead>
+            <tr>
+                <th th:text="#{vraag2}">Vraag2</th>
+                <th></th>
+            </tr>
+            </thead>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Perfect</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Acceptable</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Could be better</input></label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio1">Bad</input></label>
+            </div>-->

@@ -32,7 +32,7 @@
                 <tbody class="list">
                 <tr th:each="survey : ${allOpinions}">
                     <td class="opinion" th:value="${survey}" th:text="${survey.opinion}">Opinion</td>
-           <!--         <td class="evaluateDifficulty" th:value="${survey}" th:text="${survey.evaluateDifficulty}">evaluatDifficulty</td>-->
+                    <td class="evaluateDifficulty" th:value="${survey}" th:text="${survey.powerControl}">evaluatDifficulty</td>
                 </tr>
                 </tbody>
             </table>

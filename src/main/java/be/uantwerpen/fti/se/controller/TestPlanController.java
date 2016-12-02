@@ -101,7 +101,7 @@ public class TestPlanController {
     @RequestMapping(value="/testplans/{id}/delete")
     public String deleteTestPlan(Principal principal, @PathVariable Long id, final ModelMap model){
         if(userRepository.findByUserName(principal.getName()).isAdmin()) {
-            testPlanRepository.delete(id);
+            testPlanService.delete(id);
             model.clear();
             return "redirect:/testplans";
         }

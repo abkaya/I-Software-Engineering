@@ -21,6 +21,8 @@ public class TestPlanService {
     private TestPlanRepository testPlanRepository;
     @Autowired
     private TestObjectRepository testObjectRepository;
+    @Autowired
+    private TestObjectService testObjectService;
 
     public Iterable<TestPlan> findByUserName(User user){
         if(user.isAdmin()){
@@ -83,6 +85,13 @@ public class TestPlanService {
     }
 
     public void delete(Long id) {
+        for(TestObject to : testObjectRepository.findAll())
+        {
+            if(to.getTestPlan().equals(findOne(id))){
+                testObjectService.delete(to.getId());
+            }
+        }
+
         this.testPlanRepository.delete(id);
     }
 
@@ -92,7 +101,7 @@ public class TestPlanService {
 
     public void createTestObject(TestPlan testplan){
         for(User user : testplan.getUsers()){
-            testObjectRepository.save(new TestObject("Test" + testplan.getTestTemplate().getId(), user.getUserName(), testplan ));
+            testObjectRepository.save(new TestObject(testplan.getName(), user.getUserName(), testplan ));
         }
     }
 }

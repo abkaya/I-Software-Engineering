@@ -137,20 +137,34 @@ public class DatabaseLoader {
 
 
         //Add devices
-        Device d1 = new Device("aDevice", "aType", "aVersion", "aManufacturer", "aDriver", "controller.jpg");
-        Device d2 = new Device("aDevice2", "aType2", "aVersion2", "aManufacturer2", "aDriver2", "x"); // "x" if no image
-        Device d3 = new Device("aDevice3", "aType3", "aVersion3", "aManufacturer3", "aDriver3", "joystick.jpg");
-        Device d4 = new Device("aDevice4", "aType4", "aVersion4", "aManufacturer4", "aDriver4", "mouse.jpg");
+        Device d1 = new Device("aDevice", "aType", "aVersion", "aManufacturer", "aDriver");
         d1.setIsUsed();
-        d2.setIsUsed();
-        d2.setDisabled();
-        d3.setIsInUse();
+        d1.setImageId(d1.getDeviceName(), d1.getVersion());
+        d1.setImageExtension("jpg");
+        d1.setImageFile(d1.getImageId(), d1.getImageExtension());
+        d1.setImageFullPath(d1.getImageFile());
         deviceRepository.save(d1);
+
+        Device d2 = new Device("aDevice2", "aType2", "aVersion2", "aManufacturer2", "aDriver2");
+        d2.setDisabled();
+        d2.setIsUsed();
+        // No image
         deviceRepository.save(d2);
+
+        Device d3 = new Device("aDevice3", "aType3", "aVersion3", "aManufacturer3", "aDriver3");
+        d3.setIsInUse();
+        d3.setImageId(d3.getDeviceName(), d3.getVersion());
+        d3.setImageExtension("jpg");
+        d3.setImageFile(d3.getImageId(), d3.getImageExtension());
+        d3.setImageFullPath(d3.getImageFile());
         deviceRepository.save(d3);
+
+        Device d4 = new Device("aDevice4", "aType4", "aVersion4", "aManufacturer4", "aDriver4");
+        d4.setImageId(d4.getDeviceName(), d4.getVersion());
+        d4.setImageExtension("jpg");
+        d4.setImageFile(d4.getImageId(), d4.getImageExtension());
+        d4.setImageFullPath(d4.getImageFile());
         deviceRepository.save(d4);
-
-
 
         //Add test plans
         TestPlan tp1 = new TestPlan("Testplan_0x01","This is a description for testplan 1");

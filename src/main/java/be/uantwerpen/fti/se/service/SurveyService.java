@@ -25,9 +25,9 @@ public class SurveyService {
     public void saveSomeAttributes(Survey survey) {
         Survey s1 = survey.getId()==null?null:findOne(survey.getId());
         if (s1 != null){
-           // s1.setEvaluateBER(survey.getEvaluateBER());
-            //s1.setEvaluateDifficulty(survey.getEvaluateDifficulty());
             s1.setOpinion(survey.getOpinion());
+            s1.setPowerControl(survey.getPowerControl());
+            s1.setDevice(survey.getDevice());
             surveyRepository.save(s1);
         }
         else{

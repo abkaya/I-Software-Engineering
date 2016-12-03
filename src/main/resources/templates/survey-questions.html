@@ -18,6 +18,17 @@
     <div th:replace="layout :: navbar"></div>
     <form action="#" th:action="@{/questionssurvey/{id}(id=${survey})}" th:object="${survey}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
+
+        <div class="form-group">
+            <label class="control-label" th:field="#{device.name}">Device Name</label>
+            <select class="form-control" th:field="*{device}" id="sel1">
+                <option th:value="${{device}}" th:text="${device?.deviceName}">Current Device</option>
+                <option th:each="device : ${allDevices}"
+                        th:value="${{device}}"
+                        th:text="${device.deviceName}">Wireframe</option>
+            </select>
+        </div>
+
         <div class="form-group" th:classappend="${#fields.hasErrors('opinion')}?'has-error': ''">
             <th th:text="#{q1}">Question1</th>
             <span class="control-label" th:if="${#fields.hasErrors('opinion')}" th:errors="*{opinion}">opinion Error</span>
@@ -67,31 +78,4 @@
                     40% Complete (success)
                 </div>
             </div>
-
-  <table class="table table-hover">
-            <thead>
-            <tr>
-                <th th:text="#{questions}">Questions</th>
-                <th></th>
-            </tr>
-            </thead>
-        </table>
-
-            <thead>
-            <tr>
-                <th th:text="#{vraag2}">Vraag2</th>
-                <th></th>
-            </tr>
-            </thead>
-            <div class="radio">
-                <label><input type="radio" name="optradio1">Perfect</input></label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio1">Acceptable</input></label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio1">Could be better</input></label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio1">Bad</input></label>
-            </div>-->
+-->

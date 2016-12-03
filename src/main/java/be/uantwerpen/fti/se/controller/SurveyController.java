@@ -30,6 +30,7 @@ public class SurveyController {
     public String showResultSurvey(final ModelMap model) {
         model.addAttribute("survey", new Survey());
         model.addAttribute("allOpinions", surveyRepository.findAll());
+        model.addAttribute("allDevices", deviceRepository.findAll());
         model.addAttribute("SurveyActiveSettings", "active");
         return "surveys-list";
     }

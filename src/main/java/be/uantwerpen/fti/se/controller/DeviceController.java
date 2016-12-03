@@ -64,7 +64,7 @@ public class DeviceController {
         if(!device.getDeviceName().isEmpty() && !device.getVersion().isEmpty() && !device.getType().isEmpty() && !device.getDriver().isEmpty() && !device.getManufacturer().isEmpty()) {
             boolean duplicate = false;
             for(Device devices : deviceRepository.findAll()) {
-                if (device.getDeviceName().equals(devices.getDeviceName()) && device.getId().equals(devices.getId())) {
+                if (device.getDeviceName().equals(devices.getDeviceName())) {
                     if (device.getVersion().equals(devices.getVersion())) {
                         duplicate = true;
                     }

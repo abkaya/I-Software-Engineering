@@ -17,6 +17,7 @@ public class TestObject extends MyAbstractPersistable<Long>{
     private String name;
     private long templateID;
     private String user;
+    private boolean complete;
 
     @OneToOne
     private TestPlan testPlan;
@@ -43,6 +44,7 @@ public class TestObject extends MyAbstractPersistable<Long>{
         this.templateID = testPlan.getTestTemplate().getId();
         this.user = user;
         this.testPlan = testPlan;
+        complete = false;
         List<Long> seqID = new ArrayList<>();
         for(TestSequence seq : testPlan.getTestTemplate().getTestSequences()){
             seqID.add(seq.getId());
@@ -97,5 +99,13 @@ public class TestObject extends MyAbstractPersistable<Long>{
 
     public void setTemplateID(long templateID) {
         this.templateID = templateID;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 }

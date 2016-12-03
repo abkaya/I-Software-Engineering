@@ -88,7 +88,6 @@ public class DeviceController {
         {
             Boolean duplicate = false;
             for(Device devices : deviceRepository.findAll()) {
-
                 if (device.getDeviceName().equals(devices.getDeviceName())) {
                     if (device.getVersion().equals(devices.getVersion())) {
                         duplicate = true;

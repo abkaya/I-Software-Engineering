@@ -37,7 +37,6 @@ public class FileUploadController {
 
     @GetMapping("/devices/{id}/files")
     public String listUploadedFiles(Model model, @PathVariable Long id) throws IOException {
-        System.out.println("---------------" + "FileUploadController - listUploadedFiles" +"---------------");
         Device device =deviceRepository.findOne(id);
         model.addAttribute("device",device);
         model.addAttribute("files", storageService
@@ -53,7 +52,6 @@ public class FileUploadController {
 
     @GetMapping("/devices/{id}/files/{filename}/delete")
     public String deleteFile(@PathVariable Long id, @PathVariable String filename) {
-        System.out.println("---------------" + "FileUploadController - deleteFile" +"---------------");
         Device dev = deviceRepository.findOne(id);
         storageService.deleteFile(dev, filename);
         return "redirect:/devices/{id}/files";
@@ -63,7 +61,6 @@ public class FileUploadController {
     @GetMapping("/devices/{id}/files/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-        System.out.println("---------------" + "FileUploadController - serveFile" +"---------------");
         Resource file = storageService.loadAsResource(filename);
         return ResponseEntity
                 .ok()
@@ -73,7 +70,6 @@ public class FileUploadController {
 
     @PostMapping("/devices/{id}/files")
     public String handleFileUpload(@Valid Device device, @PathVariable Long id, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-        System.out.println("---------------" + "FileUploadController - handleFileUpload" +"---------------");
         if (!file.isEmpty()) {
             storageService.store(file, device);
         } else {
@@ -84,7 +80,6 @@ public class FileUploadController {
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {
-        System.out.println("---------------" + "FileUploadController - handleStorageFileNotFound" +"---------------");
         return ResponseEntity.notFound().build();
     }
 }

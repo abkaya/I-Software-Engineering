@@ -16,7 +16,7 @@ public class Device extends MyAbstractPersistable<Long> {
     private String manufacturer;
     private String driver;
 
-    private String imagesDefaultLocPath;    // Example: parent + ...\devices_images
+    private String imagesDefaultLocPath;    // Example: parent + ...\templates.devices_images
     private String filesDefaultLocPath;     // Example: parent + ...\devices_files
     private String imageId;                 // deviceName_deviceVersion
     private String imageExtension;          // jpg, png, ...
@@ -137,10 +137,6 @@ public class Device extends MyAbstractPersistable<Long> {
     }
 
     public void setNOImageFullPath()    {
-        // WERKT NIET:
-        //String parent = Paths.get(".").toAbsolutePath().normalize().toString();
-        //this.imageFullPath = parent + "\\src\\main\\resources\\static\\images\\no_image.jpg";
-        // WERKT WEL:
         this.imageFullPath = "images/no_image.jpg";
     }
 

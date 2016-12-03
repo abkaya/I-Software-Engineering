@@ -84,8 +84,8 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public Resource loadAsResource(String filename) {
         try {
-            Path file = load(filename);
-            Resource resource = new UrlResource(file.toUri());
+            Path path = load(filename);
+            Resource resource = new UrlResource(path.toUri());
             if(resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
@@ -99,32 +99,22 @@ public class FileSystemStorageService implements StorageService {
     //Only for images
     @Override
     public void deleteAll(Device device, MultipartFile file) {
-        Path loc = Paths.get(device.getImagesDefaultLocPath());
-        String extension = "";
-        int i = file.getOriginalFilename().lastIndexOf('.');
-        if (i >= 0) {
-            extension = file.getOriginalFilename().substring(i+1);
-        }
-        String temp = loc.toString();
-        temp = temp+"\\"+device.getDeviceName()+"_version."+extension;
-        loc = Paths.get(temp);
-        FileSystemUtils.deleteRecursively(loc.toFile());
+        String location = Paths.get(device.getImagesDefaultLocPath()).toString();
+        location = location + "\\" + device.getImageFile();
+        Path path = Paths.get(location);
+        FileSystemUtils.deleteRecursively(path.toFile());
     }
 
     @Override
     public void deleteFile(Device device, String filename) {
-        String foldername = "f_"+device.getDeviceName()+"_"+device.getVersion();
-        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
-        String path = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername+"\\"+filename;
+        String path = device.getFilesDirectoryPath() + "\\" + filename;
         File file = new File(path);
         FileSystemUtils.deleteRecursively(file);
     }
 
     @Override
     public void deleteDevice(Device device) {
-        String foldername = "files_"+device.getDeviceName();
-        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
-        String path = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername;
+        String path = device.getFilesDirectoryPath();
         File file = new File(path);
         FileSystemUtils.deleteRecursively(file);
     }

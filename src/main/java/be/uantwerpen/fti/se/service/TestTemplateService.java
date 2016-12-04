@@ -148,4 +148,9 @@ public class TestTemplateService {
     private TestTemplate findOne(Long id) {
         return testTemplateRepository.findOne(id);
     }
+
+    private long size() {
+        System.out.println("testtest "+testTemplateRepository.count());
+        return testTemplateRepository.count();
+    }
 }

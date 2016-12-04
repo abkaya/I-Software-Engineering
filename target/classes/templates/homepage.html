@@ -25,7 +25,7 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-    <div class="content">
+    <div class="content" sec:authorize="hasAuthority('survey-view')">
 
         <div class="row">
             <div class="col-lg-3 col-md-6">
@@ -124,10 +124,13 @@
         </div>
 
         <div id="container" style="height: 400px; margin: auto; min-width: 310px; max-width: 600px"></div>
-        <script type="text/javascript" src="/js/chart.js"></script>
+        <script th:inline="javascript" src="/js/chart.js"></script>
 
     </div>
 
+    <div sec:authorize="hasAuthority('surveyQ-view')">
+        <meta http-equiv="refresh" content="0; url=https://localhost:8443/testobjects" />
+    </div>
 
 </div>
 </body>

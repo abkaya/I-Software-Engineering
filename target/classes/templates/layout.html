@@ -65,18 +65,26 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li role="presentation" th:class="${homeActiveSettings}">
+                    <li sec:authorize="hasAuthority('user-view')" role="presentation" th:class="${homeActiveSettings}">
                         <a href="/">Home <span class="sr-only">(homepage)</span></a></li>
                     <li sec:authorize="hasAuthority('user-view')" role="presentation" th:class="${usersActiveSettings}">
                         <a href="/users" th:text="#{user.management}">User management <span class="sr-only">(user management)</span></a>
                     </li>
 
-                    <li role="presentation" th:class="${testObjectsActiveSettings}">
+                    <li sec:authorize="hasAuthority('mytests')" role="presentation" th:class="${testObjectsActiveSettings}">
                         <a href="/testobjects" th:text="#{testobject.title}">TestObject management <span class="sr-only">(testobject management)</span></a>
                     </li>
 
                     <li sec:authorize="hasAuthority('role-view')" role="presentation" th:class="${rolesActiveSettings}">
                         <a href="/roles" th:text="#{role.management}">Role management <span class="sr-only">(role management)</span></a>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('survey-view')" role="presentation" th:class="${SurveyActiveSettings}">
+                        <a href="/resultssurvey" th:text="#{survey.management}">Survey Results <span class="sr-only">(survey management)</span></a>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('surveyQ-view')" role="presentation" th:class="${SurveyQActiveSettings}">
+                        <a href="/questionssurvey" th:text="#{Survey.questions}">Survey Questions <span class="sr-only">(survey questions)</span></a>
                     </li>
 
 

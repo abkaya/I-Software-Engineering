@@ -2,6 +2,7 @@
 package be.uantwerpen.fti.se.service;
 
 import be.uantwerpen.fti.se.model.*;
+import be.uantwerpen.fti.se.repository.TestObjectRepository;
 import be.uantwerpen.fti.se.repository.TestPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ import java.util.List;
 public class TestPlanService {
     @Autowired
     private TestPlanRepository testPlanRepository;
+    @Autowired
+    private TestObjectRepository testObjectRepository;
+    @Autowired
+    private TestObjectService testObjectService;
 
     public Iterable<TestPlan> findByUserName(User user){
         if(user.isAdmin()){
@@ -80,10 +85,23 @@ public class TestPlanService {
     }
 
     public void delete(Long id) {
+        for(TestObject to : testObjectRepository.findAll())
+        {
+            if(to.getTestPlan().equals(findOne(id))){
+                testObjectService.delete(to.getId());
+            }
+        }
+
         this.testPlanRepository.delete(id);
     }
 
     private TestPlan findOne(Long id) {
         return testPlanRepository.findOne(id);
+    }
+
+    public void createTestObject(TestPlan testplan){
+        for(User user : testplan.getUsers()){
+            testObjectRepository.save(new TestObject(testplan.getName(), user.getUserName(), testplan ));
+        }
     }
 }

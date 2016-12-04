@@ -4,6 +4,7 @@ import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class TestObject extends MyAbstractPersistable<Long>{
     private String name;
     private long templateID;
     private String user;
+    private boolean complete;
 
     @OneToOne
     private TestPlan testPlan;
@@ -37,11 +39,17 @@ public class TestObject extends MyAbstractPersistable<Long>{
 
     }
 
-    public TestObject(String name, long templateID, String user, TestPlan testPlan){
+    public TestObject(String name, String user, TestPlan testPlan){
         this.name = name;
-        this.templateID = templateID;
+        this.templateID = testPlan.getTestTemplate().getId();
         this.user = user;
         this.testPlan = testPlan;
+        complete = false;
+        List<Long> seqID = new ArrayList<>();
+        for(TestSequence seq : testPlan.getTestTemplate().getTestSequences()){
+            seqID.add(seq.getId());
+        }
+        setSequences(seqID);
     }
 
     public String getName() {
@@ -91,5 +99,13 @@ public class TestObject extends MyAbstractPersistable<Long>{
 
     public void setTemplateID(long templateID) {
         this.templateID = templateID;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 }

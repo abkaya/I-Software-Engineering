@@ -349,5 +349,27 @@ public class DatabaseLoader {
         resList5.add(r24);
         to6.setResults(resList6);
         testObjectRepository.save(to6);
+
+        Survey s1 = new Survey();
+        s1.setOpinion("Zorg dat het personaliseerbaar is");
+        s1.setPowerControl("6");
+        s1.setDevice(d1);
+        surveyRepository.save(s1);
+        Survey s2 = new Survey();
+        s2.setOpinion("Geen idee");
+        s2.setPowerControl("4");
+        s2.setDevice(d2);
+        surveyRepository.save(s2);
+        Survey s3 = new Survey();
+        s3.setOpinion("Maak de besturing mogelijk met 2 handen");
+        s3.setPowerControl("1");
+        s3.setDevice(d3);
+        surveyRepository.save(s3);
+        Survey s4 = new Survey();
+        s4.setOpinion("Maak het toestel groter");
+        s4.setPowerControl("2");
+        s4.setDevice(d4);
+        surveyRepository.save(s4);
+
     }
 }

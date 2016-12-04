@@ -91,6 +91,9 @@ public class TestPlanController {
                 model.addAttribute("allDevices", deviceRepository.findAll());
                 return "testplans-manage";
             }
+            if(testplan.isCompleted()) {
+                return "redirect:/questionssurvey";
+            }
             testPlanService.saveSomeAttributes(testplan);
             testPlanService.createTestObject(testplan);
             return "redirect:/testplans";

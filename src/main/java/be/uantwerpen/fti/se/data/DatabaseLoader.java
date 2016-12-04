@@ -49,43 +49,51 @@ public class DatabaseLoader {
     @PostConstruct
     private void initDatabase() {
         //Array of permissions, to be saved in p and later to be assigned to the administrator role.
-        String[] allPermissions = {"user-view", "user-create", "user-edit", "user-delete",
-                "role-view", "role-create", "role-edit", "role-delete", "test-view", "test-create", "test-edit", "test-delete", "device-view", "device-create", "device-edit", "device-delete",  "testplan-view", "testplan-create", "testplan-edit", "testplan-delete","survey-view"};
-        for (String p : allPermissions) {
+        String[] adminPermissions = {"logon", "user-view", "user-create", "user-edit", "user-delete", "survey-view",
+                "role-view", "role-create", "role-edit", "role-delete", "device-view", "device-create", "device-edit", "device-delete", "test-view", "test-create", "test-edit", "test-delete", "testplan-view", "testplan-create", "testplan-edit", "testplan-delete"};
+        String[] userPermissions = {"logon", "surveyQ-view", "device-view", "device-create", "device-edit", "device-delete", "mytests"};
+        for (String p : userPermissions) {
             permissionRepository.save(new Permission(p));
         }
 
-        for (String p : allPermissions) {
-            permissionRepository.save(new Permission(p));
-        }
+        //create logon permission and save it to the repository
+        //Permission p1 = new Permission("logon");
+        //permissionRepository.save(p1);
+        //Permission p2 = new Permission("device-view");
+        //permissionRepository.save(p2);
 
         //create admin and tester roles
         Role administrator = new Role("Administrator");
         Role tester = new Role("Tester");
 
-        //create logon permission and save it to the repository
-        Permission p1 = new Permission("logon");
-        permissionRepository.save(p1);
+        //add permission "logon" to the newly created list permissions.
+        List<Permission> permissionsUser = new ArrayList<Permission>();
+        for (Permission p : permissionRepository.findAll()) {
+            permissionsUser.add(p);
+        }
+        //permissions.add(p1);
+        //permissions.add(p2);
+
+        //now add all permissions in permissions to the tester role (currently just 1)
+        tester.setPermissions(permissionsUser);
+        roleRepository.save(tester);
 
         //now add all permissions from the String array above (allPermissions) to the newly created permissions.
-        List<Permission> permissions = new ArrayList<Permission>();
-        for (Permission p : permissionRepository.findAll()) {
-            permissions.add(p);
+        List<Permission> permissionsAdmin = new ArrayList<Permission>();
+        for (String p : adminPermissions) {
+            permissionRepository.save(new Permission(p));
+        }
+        //for (Permission p : permissionRepository2.findAll()) {
+        //    permissionsAdmin.add(p);
+        //}
+        for (long i=8;i<=29;i++){
+            Permission p = permissionRepository.findOne(i);
+            permissionsAdmin.add(p);
         }
 
         //add all these permissions to the administrator role
-        administrator.setPermissions(permissions);
+        administrator.setPermissions(permissionsAdmin);
         roleRepository.save(administrator);
-
-        Permission p2 = new Permission("surveyQ-view");
-        permissionRepository.save(p2);
-        //add permission "logon" to the newly created list permissions.
-        permissions = new ArrayList<Permission>();
-        permissions.add(p1);
-        permissions.add(p2);
-        //now add all permissions in permissions to the tester role (currently just 1)
-        tester.setPermissions(permissions);
-        roleRepository.save(tester);
 
         //create users and set roles
         User u1 = new User("admin", "admin");

@@ -1,6 +1,7 @@
 package be.uantwerpen.fti.se.controller;
 
 import be.uantwerpen.fti.se.model.Device;
+import be.uantwerpen.fti.se.model.TestTemplate;
 import be.uantwerpen.fti.se.model.User;
 import be.uantwerpen.fti.se.repository.DeviceRepository;
 import be.uantwerpen.fti.se.repository.TestPlanRepository;
@@ -44,4 +45,5 @@ public class HomeController {
         model.addAttribute("homeActiveSettings","active");
         return "homepage";
     }
+
 }

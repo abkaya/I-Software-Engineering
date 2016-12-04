@@ -1,6 +1,7 @@
 package be.uantwerpen.fti.se.controller;
 
 import be.uantwerpen.fti.se.model.Survey;
+import be.uantwerpen.fti.se.repository.DeviceRepository;
 import be.uantwerpen.fti.se.repository.SurveyRepository;
 import be.uantwerpen.fti.se.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,14 @@ public class SurveyController {
     SurveyRepository surveyRepository;
     @Autowired
     SurveyService surveyService;
+    @Autowired
+    private DeviceRepository deviceRepository;
 
     @RequestMapping(value="/resultssurvey", method = RequestMethod.GET)
     public String showResultSurvey(final ModelMap model) {
         model.addAttribute("survey", new Survey());
         model.addAttribute("allOpinions", surveyRepository.findAll());
+        model.addAttribute("allDevices", deviceRepository.findAll());
         model.addAttribute("SurveyActiveSettings", "active");
         return "surveys-list";
     }
@@ -34,6 +38,7 @@ public class SurveyController {
     @RequestMapping(value="/questionssurvey", method = RequestMethod.GET)
     public String showQuestionsSurvey(final ModelMap model){
         model.addAttribute("survey", new Survey());
+        model.addAttribute("allDevices", deviceRepository.findAll());
         model.addAttribute("SurveyQActiveSettings","active");
         return "survey-questions";
     }
@@ -42,8 +47,7 @@ public class SurveyController {
     public String viewEditSurvey(@PathVariable Long id, final ModelMap model){
         model.addAttribute("allOpinions", surveyRepository.findAll());
         model.addAttribute("opinion",surveyRepository.findOne(id));
-
-        //Set the navigation button Test Management to active
+        model.addAttribute("allDevices", deviceRepository.findAll());
         model.addAttribute("SurveyQActiveSettings","active");
         return "redirect:/home";
     }
@@ -52,7 +56,7 @@ public class SurveyController {
     public String addOpinion(@Valid Survey survey, BindingResult result, final ModelMap model){
         if(result.hasErrors()){
             model.addAttribute("allOpinions", surveyRepository.findAll());
-            //Set the navigation button User Management to active
+            model.addAttribute("allDevices", deviceRepository.findAll());
             model.addAttribute("SurveyQActiveSettings","active");
             return "survey-questions";
         }

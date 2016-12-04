@@ -6,10 +6,6 @@
 <body onload="initPage()">
 <script type="text/javascript">
     function initPage(){
-        $('#answers').multiSelect({
-            selectableHeader: '<div class="custom-header" th:text="#{selectable.items}">Selectable items</div>',
-            selectionHeader: '<div class="custom-header" th:text="#{selected.items}">Selected items</div>'
-        });
     }
 </script>
 <div class="container">
@@ -18,37 +14,50 @@
     <div th:replace="layout :: navbar"></div>
     <form action="#" th:action="@{/questionssurvey/{id}(id=${survey})}" th:object="${survey}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
-        <p>What's your general opinon about this test?</p>
+
+        <div class="form-group">
+            <label class="control-label" th:field="#{device.name}">Device Name</label>
+            <select class="form-control" th:field="*{device}" id="sel1">
+                <option th:value="${{device}}" th:text="${device?.deviceName}">Current Device</option>
+                <option th:each="device : ${allDevices}"
+                        th:value="${{device}}"
+                        th:text="${device.deviceName}">Wireframe</option>
+            </select>
+        </div>
+
         <div class="form-group" th:classappend="${#fields.hasErrors('opinion')}?'has-error': ''">
+            <th th:text="#{q1}">Question1</th>
             <span class="control-label" th:if="${#fields.hasErrors('opinion')}" th:errors="*{opinion}">opinion Error</span>
             <input class="form-control" type="text" th:field="*{opinion}" />
         </div>
 
-      <!--  <thead>
+       <thead>
         <tr>
             <th th:text="#{vraag1}">Vraag1</th>
             <th></th>
         </tr>
         </thead>
-        <div class="radio" id="filterDay">
-            <label><input type="radio" name="optradio" value="Perfect" id="Perfect">Perfect</input></label>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="1" id="Perfect">1</input></label>
         </div>
         <div class="radio">
-            <label><input type="radio" name="optradio" value="Acceptable" id="Acceptable">Acceptable</input></label>
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="2" id="Acceptable">2</input></label>
         </div>
         <div class="radio">
-            <label><input type="radio" name="optradio" value="Difficult" id="Difficult">Difficult</input></label>
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="3" id="Difficult">3</input></label>
         </div>
         <div class="radio">
-            <label><input type="radio" name="optradio" value="Very Difficult" id="Very Difficult">Very difficult</input></label>
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="4" id="Very Difficult">4</input></label>
         </div>
-        <script>
-           // $(".alignment .radio").click(function() {
-                // whenever a button is clicked, set the hidden helper
-           //     $("#alignment").val($(this).text());
-           // });
-        </script>
-       <input type="radio" th:field="*{evaluateDifficulty}" th:value=$('#filterDay label.active input').val() />-->
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="5" id="Acceptable1">5</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="6" id="Difficult1">6</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="7" id="Very Difficult1">7</input></label>
+        </div>
         <p>
             <a href="/home" th:text="#{close}" class="btn btn-primary">Close</a>
             <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
@@ -65,31 +74,4 @@
                     40% Complete (success)
                 </div>
             </div>
-
-  <table class="table table-hover">
-            <thead>
-            <tr>
-                <th th:text="#{questions}">Questions</th>
-                <th></th>
-            </tr>
-            </thead>
-        </table>
-
-            <thead>
-            <tr>
-                <th th:text="#{vraag2}">Vraag2</th>
-                <th></th>
-            </tr>
-            </thead>
-            <div class="radio">
-                <label><input type="radio" name="optradio1">Perfect</input></label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio1">Acceptable</input></label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio1">Could be better</input></label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio1">Bad</input></label>
-            </div>-->
+-->

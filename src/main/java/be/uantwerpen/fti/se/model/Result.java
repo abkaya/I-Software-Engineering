@@ -11,14 +11,14 @@ public class Result extends MyAbstractPersistable<Long> {
     private double difficulty;
     private double throughput;
     private double movementTime;
-    private double errorRate;
+    private Double errorRate;
 
     public Result() {
         difficulty = 0;
         throughput = 0;
         movementTime = 0;
         //errorRate in percentages
-        errorRate = 0;
+        errorRate = 0.0;
     }
 
     public Result(double difficulty, double throughput, double movementTime, double errorRate){

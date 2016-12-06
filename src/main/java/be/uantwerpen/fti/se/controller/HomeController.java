@@ -40,6 +40,7 @@ public class HomeController {
         model.addAttribute("amountTestTemplates", testTemplateRepository.count());
         model.addAttribute("allTestObjects", testObjectRepository.findAll());
         model.addAttribute("deviceNames", testObjectService.getDeviceNames());
+        model.addAttribute("allErrorRates", testObjectService.getAllErrorRates());
 
         //Set the navigation button Home Management to active
         model.addAttribute("homeActiveSettings","active");

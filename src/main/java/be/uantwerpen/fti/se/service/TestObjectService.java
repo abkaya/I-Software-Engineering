@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -46,6 +47,44 @@ public class TestObjectService {
                 deviceNames.add(to.getTestPlan().getDevice().getDeviceName());
         }
         return deviceNames;
+    }
+
+    /**
+     * Method to get all errorRates, taking the Device name duplication in consideration and making sure the values end up in
+     * the approriate index of the list.
+     * @return a list of deviceNames
+     */
+    public List<List<Double>> getAllErrorRates(){
+        List<String> deviceNames = new ArrayList<>();
+        List<List<Double>> allErrorRates = new ArrayList<List<Double>>();
+
+        for(TestObject to : this.findAll()){
+            List<Double> currentErrorRates= new ArrayList<Double>(to.getResults().size());
+            //how to get the list of errorRates
+            //add these current results in a list.
+            for(Result re : to.getResults()) {
+                currentErrorRates.add(re.getErrorRate());
+            }
+
+            //don't simply add the list at a certain index, because it will move the double list one index further.
+            //instead, go over every single Double within that list, at that index, then add each currentError Double to it.
+            /*if(deviceNames.contains(to.getTestPlan().getDevice().getDeviceName())) {
+                for(Double err : currentErrorRates){
+                    allErrorRates.get(deviceNames.indexOf(to.getTestPlan().getDevice().getDeviceName())).add(err);
+                }
+            }*/
+
+            //then iterate over these results. BUT here is the catch. You need to know where which device is and it could be in multiple places
+            //So, first you go over whether or not the device is already in the list.
+            //If it is, then deviceNames.indexOf(to.getTestPlan().getDevice().getDeviceName())
+            //If it is not, then you first add the device to the list, and then, again  deviceNames.indexOf(to.getTestPlan().getDevice().getDeviceName())
+            //That is always the index of the list in which you add your results in the list within the list.
+            if(!deviceNames.contains(to.getTestPlan().getDevice().getDeviceName()) && to.getTestPlan().getDevice().getDeviceName()!=null) {
+                deviceNames.add(to.getTestPlan().getDevice().getDeviceName());
+                allErrorRates.add(currentErrorRates);
+            }
+        }
+        return allErrorRates;
     }
 
     public Iterable<TestObject> findForUser(String name){

@@ -198,6 +198,8 @@ public class DatabaseLoader {
         resultRepository.save(r2);
         resultRepository.save(r3);
         resultRepository.save(r4);
+        Result r30 = new Result(4,6.5,890,5.3);
+        resultRepository.save(r30);
         List<Long> seqList1 = new ArrayList<>();
         seqList1.add(tp1.getTestTemplate().getTestSequences().get(0).getId());
         seqList1.add(tp1.getTestTemplate().getTestSequences().get(1).getId());
@@ -207,6 +209,7 @@ public class DatabaseLoader {
         resList1.add(r2);
         resList1.add(r3);
         resList1.add(r4);
+        resList1.add(r30);
         to1.setResults(resList1);
         testObjectRepository.save(to1);
 
@@ -221,6 +224,8 @@ public class DatabaseLoader {
         resultRepository.save(r6);
         resultRepository.save(r7);
         resultRepository.save(r8);
+        Result r29 = new Result(4,6.5,890,5.3);
+        resultRepository.save(r29);
         List<Long> seqList2 = new ArrayList<>();
         seqList2.add(tp1.getTestTemplate().getTestSequences().get(0).getId());
         seqList2.add(tp1.getTestTemplate().getTestSequences().get(1).getId());
@@ -232,6 +237,7 @@ public class DatabaseLoader {
         resList2.add(r6);
         resList2.add(r7);
         resList2.add(r8);
+        resList2.add(r29);
         to2.setResults(resList2);
         testObjectRepository.save(to2);
 
@@ -244,6 +250,8 @@ public class DatabaseLoader {
         resultRepository.save(r10);
         resultRepository.save(r11);
         resultRepository.save(r12);
+        Result r28 = new Result(4,6.5,890,5.3);
+        resultRepository.save(r28);
         List<Long> seqList3 = new ArrayList<>();
         seqList3.add(tp2.getTestTemplate().getTestSequences().get(0).getId());
         seqList3.add(tp2.getTestTemplate().getTestSequences().get(1).getId());
@@ -255,6 +263,7 @@ public class DatabaseLoader {
         resList3.add(r10);
         resList3.add(r11);
         resList3.add(r12);
+        resList3.add(r28);
         to3.setResults(resList3);
         testObjectRepository.save(to3);
 
@@ -267,6 +276,8 @@ public class DatabaseLoader {
         resultRepository.save(r14);
         resultRepository.save(r15);
         resultRepository.save(r16);
+        Result r27 = new Result(4,6.5,890,5.3);
+        resultRepository.save(r27);
         List<Long> seqList4 = new ArrayList<>();
         seqList4.add(tp2.getTestTemplate().getTestSequences().get(0).getId());
         seqList4.add(tp2.getTestTemplate().getTestSequences().get(1).getId());
@@ -278,6 +289,7 @@ public class DatabaseLoader {
         resList4.add(r14);
         resList4.add(r15);
         resList4.add(r16);
+        resList4.add(r27);
         to4.setResults(resList4);
         testObjectRepository.save(to4);
 
@@ -290,6 +302,8 @@ public class DatabaseLoader {
         resultRepository.save(r18);
         resultRepository.save(r19);
         resultRepository.save(r20);
+        Result r26 = new Result(4,6.5,890,5.3);
+        resultRepository.save(r26);
         List<Long> seqList5 = new ArrayList<>();
         seqList5.add(tp3.getTestTemplate().getTestSequences().get(0).getId());
         seqList5.add(tp3.getTestTemplate().getTestSequences().get(1).getId());
@@ -301,6 +315,7 @@ public class DatabaseLoader {
         resList5.add(r18);
         resList5.add(r19);
         resList5.add(r20);
+        resList5.add(r26);
         to5.setResults(resList5);
         testObjectRepository.save(to5);
 
@@ -309,10 +324,12 @@ public class DatabaseLoader {
         Result r22 = new Result(1.5,4.1,970,3.4);
         Result r23 = new Result(3.3,6,870,1.1);
         Result r24 = new Result(0.5,4.8,1000,6.3);
+        Result r25 = new Result(0.5,4.8,1000,6.3);
         resultRepository.save(r21);
         resultRepository.save(r22);
         resultRepository.save(r23);
         resultRepository.save(r24);
+        resultRepository.save(r25);
         List<Long> seqList6 = new ArrayList<>();
         seqList6.add(tp3.getTestTemplate().getTestSequences().get(0).getId());
         seqList6.add(tp3.getTestTemplate().getTestSequences().get(1).getId());
@@ -324,6 +341,7 @@ public class DatabaseLoader {
         resList5.add(r22);
         resList5.add(r23);
         resList5.add(r24);
+        resList5.add(r25);
         to6.setResults(resList6);
         testObjectRepository.save(to6);
     }

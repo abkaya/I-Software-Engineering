@@ -4,30 +4,8 @@
 <head th:replace="layout :: head (title='Login')"></head>
 
 <body onload="document.f.username.focus();">
-
-<!--
-<div class="container">
-    <div class="content">
-        <p th:if="${param.logout}" class="alert">You have been logged out</p>
-        <p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
-        <h2>Login with Username and Password</h2>
-        <form name="f" th:action="@{/login}" action="/login" method="POST">
-            <fieldset>
-                <input type="text" name="username" value="" placeholder="Username" />
-                <input type="password" name="password" placeholder="Password" />
-                <input type="submit" id="login" value="Login"
-                       class="btn btn-primary" />
-            </fieldset>
-
-        </form>
-    </div>
-</div>
--->
-
 <div class="container">
     <div class="row">
-        <p th:if="${param.logout}" class="alert">You have been logged out</p>
-        <p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
@@ -37,6 +15,8 @@
 
                     <form role="form" name="f" th:action="@{/login}" action="/login" method="POST">
                         <fieldset>
+
+
                             <div class="form-group col-md-4 col-md-offset-2 column">
                             <img src="images/uantwerpen.png" height="200" width="200"/>
                             </div>
@@ -48,6 +28,17 @@
                             </div>
                             <!-- Change this to a button or input when using this as a form -->
                             <input type="submit" id="login" value="Login" class="btn btn-lg btn-primary btn-block" />
+
+                            <div th:if="${param.error}" class="alert alert-danger alert-dismissable" style="margin-top: 15px">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                There was an error, please try again <a href="#" class="alert-link">Alert Link</a>.
+                            </div>
+
+                            <div th:if="${param.logout}" class="alert alert-danger alert-dismissable" style="margin-top: 15px">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                You have been logged out <a href="#" class="alert-link">Alert Link</a>.
+                            </div>
+
                         </fieldset>
                     </form>
                 </div>

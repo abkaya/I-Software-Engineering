@@ -66,7 +66,7 @@ public class TestPlan extends MyAbstractPersistable<Long>{
     @ElementCollection
     private List<String> finsihedUsers;
 
-    private void userFinished(String user){
+    public void userFinished(String user){
         finsihedUsers.add(user);
         if(finsihedUsers.size() == users.size())
             this.completed = true;

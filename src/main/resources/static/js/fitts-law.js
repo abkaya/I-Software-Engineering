@@ -24,7 +24,6 @@ function makeDimension(width, height, top, right, bottom, left) {
 }
 
 // set up dimensions for the plotting.
-//var testDimension = makeDimension(620, 400, 30, 30, 30, 30); !!!
 var testDimension = makeDimension(1140, 650, 30, 30, 30, 30);
 var plotPositionDimension = makeDimension(220, 200, 30, 30, 30, 30);
 var plotVelocitiesDimension = plotPositionDimension;

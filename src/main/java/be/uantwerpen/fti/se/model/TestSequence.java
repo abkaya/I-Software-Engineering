@@ -292,11 +292,12 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      *
      * @return the middlepoint of the screen
      */
+    /*
     public Point getMiddlePoint() {
         Point p = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
         return p;
     }
-
+*/
 
     /**
      * Delete a sequence

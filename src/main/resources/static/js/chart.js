@@ -1,14 +1,9 @@
-var allTestObjects = /*[[${allTestObjects}]]*/ 'defaultanyvalue';
-console.log(allTestObjects);
+/**
+ * Created by abdil on 27/11/2016.
+ */
 
-
-var thisData = [
-    [760, 801, 848, 895, 965],
-    [733, 853, 939, 980, 1080],
-    [714, 762, 817, 870, 918],
-    [724, 802, 806, 871, 950],
-    [834, 836, 864, 882, 910]
-];
+console.log(deviceNames);
+console.log(allErrorRates);
 
 $(function () {
     Highcharts.chart('container', {
@@ -18,7 +13,7 @@ $(function () {
         },
 
         title: {
-            text: 'This is some difficulty range : e.g. 0-2 : easy'
+            text: 'All tested devices : error rate'
         },
 
         legend: {
@@ -27,7 +22,7 @@ $(function () {
 
         xAxis: {
             //Devices with results need to be populated from a query which gets appropriate difficulty data.
-            categories: ['Device1', 'Device2', 'Device3', 'Device4', 'Device5'],
+            categories: deviceNames,
             title: {
                 text: 'Device'
             }
@@ -42,7 +37,7 @@ $(function () {
         series: [{
             name: 'Device',
             //These values will also need to be populated using test results for each device, given certain difficulties.
-            data: thisData,
+            data: allErrorRates,
             tooltip: {
                 headerFormat: '<em>{point.key}</em><br/>'
             }

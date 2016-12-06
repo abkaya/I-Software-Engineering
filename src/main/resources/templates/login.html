@@ -4,11 +4,9 @@
 <head th:replace="layout :: head (title='Login')"></head>
 
 <body onload="document.f.username.focus();">
+
+<!--
 <div class="container">
-
-    <!-- Import menu bar -->
-    <div th:replace="layout :: navbar"></div>
-
     <div class="content">
         <p th:if="${param.logout}" class="alert">You have been logged out</p>
         <p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
@@ -22,6 +20,39 @@
             </fieldset>
 
         </form>
+    </div>
+</div>
+-->
+
+<div class="container">
+    <div class="row">
+        <p th:if="${param.logout}" class="alert">You have been logged out</p>
+        <p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please Sign In</h3>
+                </div>
+                <div class="panel-body">
+
+                    <form role="form" name="f" th:action="@{/login}" action="/login" method="POST">
+                        <fieldset>
+                            <div class="form-group col-md-4 col-md-offset-2 column">
+                            <img src="images/uantwerpen.png" height="200" width="200"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="username" value="" placeholder="Username" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" name="password" placeholder="Password" />
+                            </div>
+                            <!-- Change this to a button or input when using this as a form -->
+                            <input type="submit" id="login" value="Login" class="btn btn-lg btn-primary btn-block" />
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

@@ -3,6 +3,7 @@ package be.uantwerpen.fti.se.controller;
 import be.uantwerpen.fti.se.model.Device;
 import be.uantwerpen.fti.se.model.User;
 import be.uantwerpen.fti.se.repository.*;
+import be.uantwerpen.fti.se.service.TestObjectService;
 import be.uantwerpen.fti.se.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,8 @@ public class HomeController {
     private TestTemplateRepository testTemplateRepository;
     @Autowired
     private TestObjectRepository testObjectRepository;
+    @Autowired
+    private TestObjectService testObjectService;
 
     @RequestMapping({"/","/home"})
     @PreAuthorize("hasAuthority('logon')")
@@ -36,6 +39,7 @@ public class HomeController {
         model.addAttribute("amountTestPlans", testPlanRepository.count());
         model.addAttribute("amountTestTemplates", testTemplateRepository.count());
         model.addAttribute("allTestObjects", testObjectRepository.findAll());
+        model.addAttribute("deviceNames", testObjectService.getDeviceNames());
 
         //Set the navigation button Home Management to active
         model.addAttribute("homeActiveSettings","active");

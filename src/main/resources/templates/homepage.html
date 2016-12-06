@@ -124,13 +124,20 @@
         </div>
 
         <div id="container" style="height: 400px; margin: auto; min-width: 310px; max-width: 600px"></div>
-        <script type="text/javascript" src="/js/chart.js"></script>
+
+
+        <!--This is where you get the values from the model attributes, through the testobject service.
+            Once all data is gathered, you can generate the graphs, using highcharts.
+            A selection between data to be generated can be made afterwards, but all data to be put in the
+            charts has to be ready and available.
+        -->
         <script th:inline="javascript">
         /*<![CDATA[*/
-        var allTestObjects = [[${allTestObjects}]];
-        console.log(allTestObjects);
+        var deviceNames = [[${deviceNames}]];
         /*]]>*/
         </script>
+        <script type="text/javascript" src="/js/chart.js"></script>
+        
 
     </div>
 

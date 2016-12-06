@@ -1,6 +1,9 @@
 /**
  * Created by abdil on 27/11/2016.
  */
+var allTestObjects = allTestObjects;
+var deviceNames = deviceNames;
+console.log(allTestObjects)
 
 var thisData = [
     [760, 801, 848, 895, 965],
@@ -27,7 +30,7 @@ $(function () {
 
         xAxis: {
             //Devices with results need to be populated from a query which gets appropriate difficulty data.
-            categories: ['Device1', 'Device2', 'Device3', 'Device4', 'Device5'],
+            categories: deviceNames,
             title: {
                 text: 'Device'
             }

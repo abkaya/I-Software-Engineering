@@ -33,6 +33,21 @@ public class TestObjectService {
         this.testObjectRepository.delete(id);
     }
 
+
+    /**
+     * Check for each testObject's testPlan, whether the device name is already in a list. If not, it'll be added to the list.
+     * This method is used to pass the X-axis values to the graph javascript variable.
+     * @return a list of deviceNames
+     */
+    public List<String> getDeviceNames(){
+        List<String> deviceNames = new ArrayList<String>();
+        for(TestObject to : this.findAll()){
+            if(!deviceNames.contains(to.getTestPlan().getDevice().getDeviceName()))
+                deviceNames.add(to.getTestPlan().getDevice().getDeviceName());
+        }
+        return deviceNames;
+    }
+
     public Iterable<TestObject> findForUser(String name){
         List<TestObject> myTests = new ArrayList<>();
         for(TestObject it : this.findAll())

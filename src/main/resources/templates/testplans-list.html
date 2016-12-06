@@ -34,18 +34,18 @@
                     <th th:text="#{testplan.name}">Name</th>
                     <th th:text="#{template.name}">Template</th>
                     <th th:text="#{device.name}">Device</th>
-                    <th th:text="#{testplan.amountFinishedTestplans}">#Finsihed Testplans</th>
+                    <th th:text="#{testplan.finishedUsers}">#Finsihed Users</th>
                     <th th:text="#{testplan.amountUsers}">#Users</th>
                     <th></th>
                 </tr>
                 </thead>
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
-                <tr th:each="testplan : ${allTestplans}" >
+                <tr class="" th:each="testplan : ${allTestplans}" th:classappend="${testplan.isCompleted()} ?  success : danger">
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.name}">Name</td>
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.testTemplate.name}">Test Template</td>
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.device.deviceName}">Device</td>
-                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.finsihedUsers.size()}">#Finished Testplans</td>
+                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.finsihedUsers.size()}">#Finished Users</td>
                     <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.users.size()}">#Users</td>
                     <td>
                         <a sec:authorize="hasAuthority('testplan-edit')" th:href="@{/testplans/{id}/(id=${testplan.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
@@ -78,10 +78,10 @@
 
 
 
-                                                <label class="control-label" th:text="#{testplan.users}">TestPlan Users</label>
-                                                <ul class="list-group">
-                                                    <li class="list-group-item list-group-item-action" th:each="user : ${testplan.users}" th:text="${user.userName}" th:classappend="${testplan.isFinished(user)} ?  list-group-item-success : list-group-item-danger">User Name</li>
-                                                </ul>
+                                    <label class="control-label" th:text="#{testplan.users}">TestPlan Users</label>
+                                    <ul class="list-group">
+                                        <li class="list-group-item list-group-item-action" th:each="user : ${testplan.users}" th:text="${user.userName}" th:classappend="${testplan.isFinished(user)} ?  list-group-item-success : list-group-item-danger">User Name</li>
+                                    </ul>
 
 
                                 </div>

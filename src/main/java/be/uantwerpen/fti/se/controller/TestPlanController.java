@@ -54,7 +54,7 @@ public class TestPlanController {
     }
 
     @RequestMapping(value="/testplans/put", method= RequestMethod.GET)
-    public String viewCreateUser(Principal principal, final ModelMap model){
+    public String viewCreateTestPlan(Principal principal, final ModelMap model){
         if(userRepository.findByUserName(principal.getName()).isAdmin()) {
             model.addAttribute("allTemplates", testTemplateRepository.findAll());
             model.addAttribute("allUsers", userRepository.findAll());
@@ -68,7 +68,7 @@ public class TestPlanController {
     }
 
     @RequestMapping(value="/testplans/{id}", method= RequestMethod.GET)
-    public String viewEditUser(Principal principal, @PathVariable Long id, final ModelMap model){
+    public String viewEditTestPlan(Principal principal, @PathVariable Long id, final ModelMap model){
         if(userRepository.findByUserName(principal.getName()).isAdmin()) {
             model.addAttribute("testPlan", testPlanRepository.findOne(id));
             model.addAttribute("allTemplates", testTemplateRepository.findAll());
@@ -83,7 +83,7 @@ public class TestPlanController {
     }
 
     @RequestMapping(value={"/testplans/", "/testplans/{id}"}, method= RequestMethod.POST)
-    public String addUser(Principal principal, @Valid TestPlan testplan, BindingResult result, final ModelMap model){
+    public String addTestPlan(Principal principal, @Valid TestPlan testplan, BindingResult result, final ModelMap model){
         if(userRepository.findByUserName(principal.getName()).isAdmin()) {
             if (result.hasErrors()) {
                 model.addAttribute("allTemplates", testTemplateRepository.findAll());
@@ -92,15 +92,16 @@ public class TestPlanController {
                 return "testplans-manage";
             }
             testPlanService.saveSomeAttributes(testplan);
+            testPlanService.createTestObject(testplan);
             return "redirect:/testplans";
         }
         return "redirect:/";
     }
 
     @RequestMapping(value="/testplans/{id}/delete")
-    public String deleteUser(Principal principal, @PathVariable Long id, final ModelMap model){
+    public String deleteTestPlan(Principal principal, @PathVariable Long id, final ModelMap model){
         if(userRepository.findByUserName(principal.getName()).isAdmin()) {
-            testPlanRepository.delete(id);
+            testPlanService.delete(id);
             model.clear();
             return "redirect:/testplans";
         }

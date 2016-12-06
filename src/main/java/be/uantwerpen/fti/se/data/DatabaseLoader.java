@@ -188,7 +188,7 @@ public class DatabaseLoader {
         deviceRepository.save(d3);
         testPlanRepository.save(tp3);
 
-        TestObject to1 = new TestObject("TestObject 1", tp1.getTestTemplate().getId(), u2.getUserName(), tp1);
+        TestObject to1 = new TestObject("TestObject 1", u2.getUserName(), tp1);
         List<Result> resList1 = new ArrayList<>();
         Result r1 = new Result(5,10,1000,2.53);
         Result r2 = new Result(0.5,7,1200,5.6);
@@ -199,10 +199,10 @@ public class DatabaseLoader {
         resultRepository.save(r3);
         resultRepository.save(r4);
         List<Long> seqList1 = new ArrayList<>();
-        seqList1.add(t1.getTestSequences().get(0).getId());
-        seqList1.add(t1.getTestSequences().get(1).getId());
-        seqList1.add(t1.getTestSequences().get(2).getId());
-        seqList1.add(t1.getTestSequences().get(3).getId());
+        seqList1.add(tp1.getTestTemplate().getTestSequences().get(0).getId());
+        seqList1.add(tp1.getTestTemplate().getTestSequences().get(1).getId());
+        seqList1.add(tp1.getTestTemplate().getTestSequences().get(2).getId());
+        seqList1.add(tp1.getTestTemplate().getTestSequences().get(3).getId());
         resList1.add(r1);
         resList1.add(r2);
         resList1.add(r3);
@@ -212,7 +212,7 @@ public class DatabaseLoader {
 
 
 
-        TestObject to2 = new TestObject("TestObject 2", tp1.getTestTemplate().getId(), u3.getUserName(), tp1);
+        TestObject to2 = new TestObject("TestObject 2", u3.getUserName(), tp1);
         Result r5 = new Result(6,7,970,38);
         Result r6 = new Result(3.1,6.23,1235,80.3);
         Result r7 = new Result(1.8,9.5,1300,15.2);
@@ -222,10 +222,10 @@ public class DatabaseLoader {
         resultRepository.save(r7);
         resultRepository.save(r8);
         List<Long> seqList2 = new ArrayList<>();
-        seqList2.add(t1.getTestSequences().get(0).getId());
-        seqList2.add(t1.getTestSequences().get(1).getId());
-        seqList2.add(t1.getTestSequences().get(2).getId());
-        seqList2.add(t1.getTestSequences().get(3).getId());
+        seqList2.add(tp1.getTestTemplate().getTestSequences().get(0).getId());
+        seqList2.add(tp1.getTestTemplate().getTestSequences().get(1).getId());
+        seqList2.add(tp1.getTestTemplate().getTestSequences().get(2).getId());
+        seqList2.add(tp1.getTestTemplate().getTestSequences().get(3).getId());
         to2.setSequences(seqList2);
         List<Result> resList2 = new ArrayList<>();
         resList2.add(r5);
@@ -235,7 +235,7 @@ public class DatabaseLoader {
         to2.setResults(resList2);
         testObjectRepository.save(to2);
 
-        TestObject to3 = new TestObject("TestObject 3", tp2.getTestTemplate().getId(), u2.getUserName(), tp2);
+        TestObject to3 = new TestObject("TestObject 3", u2.getUserName(), tp2);
         Result r9 = new Result(5,7,1020,16.3);
         Result r10 = new Result(2,7.23,1500,5.8);
         Result r11 = new Result(1.2,6.5,1300,12.4);
@@ -258,7 +258,7 @@ public class DatabaseLoader {
         to3.setResults(resList3);
         testObjectRepository.save(to3);
 
-        TestObject to4 = new TestObject("TestObject 4", tp2.getTestTemplate().getId(), u3.getUserName(), tp2);
+        TestObject to4 = new TestObject("TestObject 4", u3.getUserName(), tp2);
         Result r13 = new Result(2,6.6,980,1.2);
         Result r14 = new Result(1.5,4.5,1300,3.2);
         Result r15 = new Result(4.7,9,1200,2.6);
@@ -281,7 +281,7 @@ public class DatabaseLoader {
         to4.setResults(resList4);
         testObjectRepository.save(to4);
 
-        TestObject to5 = new TestObject("TestObject 5", tp3.getTestTemplate().getId(), u2.getUserName(), tp3);
+        TestObject to5 = new TestObject("TestObject 5", u2.getUserName(), tp3);
         Result r17 = new Result(1,3.8,1350,4.2);
         Result r18 = new Result(1.8,4.5,1300,9);
         Result r19 = new Result(3,8,1020,4.1);
@@ -304,7 +304,7 @@ public class DatabaseLoader {
         to5.setResults(resList5);
         testObjectRepository.save(to5);
 
-        TestObject to6 = new TestObject("TestObject 6", tp3.getTestTemplate().getId(), u3.getUserName(), tp3);
+        TestObject to6 = new TestObject("TestObject 6", u3.getUserName(), tp3);
         Result r21 = new Result(2,3.5,900,6.2);
         Result r22 = new Result(1.5,4.1,970,3.4);
         Result r23 = new Result(3.3,6,870,1.1);

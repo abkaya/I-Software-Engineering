@@ -15,6 +15,15 @@ public class TestPlan extends MyAbstractPersistable<Long>{
     private String name;
     private String description;
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    private boolean completed = false;
 
 
     @ManyToOne
@@ -40,22 +49,28 @@ public class TestPlan extends MyAbstractPersistable<Long>{
             inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")})
     private List<User> users;
 
-    public List<User> getFinsihedUsers() {
+    public List<String> getFinsihedUsers() {
         return finsihedUsers;
     }
 
-    public void setFinsihedUsers(List<User> finsihedUsers) {
+    public void setFinsihedUsers(List<String> finsihedUsers) {
         this.finsihedUsers = finsihedUsers;
     }
 
-    public void addFinsihedUsers(User finsihedUser) {
+    public void addFinsihedUsers(String finsihedUser) {
         this.finsihedUsers.add(finsihedUser);
     }
 
 
     @Column
-    @ElementCollection(targetClass=User.class)
-    private List<User> finsihedUsers;
+    @ElementCollection
+    private List<String> finsihedUsers;
+
+    private void userFinished(String user){
+        finsihedUsers.add(user);
+        if(finsihedUsers.size() == users.size())
+            this.completed = true;
+    }
 
 
     @ManyToOne
@@ -111,9 +126,9 @@ public class TestPlan extends MyAbstractPersistable<Long>{
     }
 
     public Boolean isFinished(User user){
-        for (Iterator<User> iter = finsihedUsers.iterator(); iter.hasNext(); ) {
-            User userF = iter.next();
-            if(userF.getUserName() == user.getUserName()){
+        for (Iterator<String> iter = finsihedUsers.iterator(); iter.hasNext(); ) {
+            String userF = iter.next();
+            if(userF.equals(user.getUserName())){
                 return true;
             }
         }

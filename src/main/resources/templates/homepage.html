@@ -124,7 +124,13 @@
         </div>
 
         <div id="container" style="height: 400px; margin: auto; min-width: 310px; max-width: 600px"></div>
-        <script th:inline="javascript" src="/js/chart.js"></script>
+        <script type="text/javascript" src="/js/chart.js"></script>
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+        var allTestObjects = [[${allTestObjects}]];
+        console.log(allTestObjects);
+        /*]]>*/
+        </script>
 
     </div>
 

@@ -1,6 +1,6 @@
-var allTestObjects = /*[[${allTestObjects}]]*/ 'defaultanyvalue';
-console.log(allTestObjects);
-
+/**
+ * Created by abdil on 27/11/2016.
+ */
 
 var thisData = [
     [760, 801, 848, 895, 965],

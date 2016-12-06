@@ -34,9 +34,6 @@
                     <th th:text="#{device.version}">Version</th>
                     <th th:text="#{device.manufacturer}">Manufacturer</th>
                     <th th:text="#{device.driver}">Driver</th>
-                    <th th:text="#{device.used}">Used</th>
-                    <th th:text="#{device.inUse}">In use</th>
-                    <th th:text="#{device.disabled}">Disabled</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -49,9 +46,6 @@
                     <td class="deviceClass" th:value="${device}" th:text="${device.version}">Class</td>
                     <td class="deviceManufacturer" th:value="${device}" th:text="${device.manufacturer}">Manufacturer</td>
                     <td class="deviceDriver" th:value="${device}" th:text="${device.driver}">Driver</td>
-                    <td class="deviceUsed" th:value="${device}" th:text="${device.used}">Used</td>
-                    <td class="deviceInUse" th:value="${device}" th:text="${device.inUse}">In use</td>
-                    <td class="deviceDisabled" th:value="${device}" th:text="${device.disabled}">Disabled</td>
                     <td>
                         <!-- OLD
                         <div sec:authorize="hasAuthority('device-edit')" role="presentation" th:class="${rolesActiveSettings}">
@@ -63,8 +57,8 @@
                         <a th:href="@{/devices/{id}/files(id=${device.id})}"><span class="glyphicon glyphicon-folder-open"></span></a>
                         -->
 
-                        <a sec:authorize="hasAuthority('device-edit')" role="presentation" th:class="${rolesActiveSettings}" th:href="@{/devices/{id}/(id=${device.id})}" th:remove="${!device.disabled or device.inUse or device.used}? tag"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                        <a sec:authorize="hasAuthority('device-delete')" role="presentation" th:class="${rolesActiveSettings}" th:href="@{/devices/{id}/delete(id=${device.id})}" th:remove="${!device.disabled or device.inUse or device.used}? tag"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a sec:authorize="hasAuthority('device-edit')" role="presentation" th:class="${rolesActiveSettings}" th:href="@{/devices/{id}/(id=${device.id})}" th:remove="${device.disabled or device.inUse or device.used}? tag"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                        <a sec:authorize="hasAuthority('device-delete')" role="presentation" th:class="${rolesActiveSettings}" th:href="@{/devices/{id}/delete(id=${device.id})}" th:remove="${device.disabled or device.inUse or device.used}? tag"><span class="glyphicon glyphicon-trash"></span></a>
                         <a th:href="@{/devices/{id}/files(id=${device.id})}"><span class="glyphicon glyphicon-folder-open"></span></a>
                     </td>
 

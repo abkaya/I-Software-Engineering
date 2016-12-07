@@ -1,47 +1,45 @@
 package be.uantwerpen.fti.se.model;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Created by Kevin on 22/11/2016.
  */
 @Entity
-public class Survey extends MyAbstractPersistable<Long>{
+public class Survey extends MyAbstractPersistable<Long> {
 
     private String opinion;
     private String powerControl;
-   // private Device device;
-  //  private int evaluateBER;
+    private String question;
+
+    @ManyToMany
+    @JoinTable(
+            name = "SURVEY_USER",
+            joinColumns = {@JoinColumn(name = "SURVEY_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")})
+    private List<User> users;
 
     @ManyToOne
     @JoinTable(
-            name="SURVEY_DEVICE",
-            joinColumns={@JoinColumn(name="SURVEY_ID", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="DEVICE_ID", referencedColumnName="ID")})
+            name = "SURVEY_DEVICE",
+            joinColumns = {@JoinColumn(name = "SURVEY_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "DEVICE_ID", referencedColumnName = "ID")})
     private Device device;
 
-    public Survey(){
+    public Survey() {
         opinion = "";
         powerControl = "";
-     //   device = new Device();
-    //    evaluateBER = 0;
     }
 
-    public Survey(String powerControl){
+    public Survey(String powerControl) {
         opinion = "";
         this.powerControl = powerControl;
-    //    device = new Device();
     }
 
-    public Survey(String opinion, String powerControl){//}, int evaluateBER, int evaluateDifficulty){
+    public Survey(String opinion, String powerControl) {
         this.opinion = opinion;
         this.powerControl = powerControl;
-    //    device = new Device();
-    //    this.evaluateBER = evaluateBER;
     }
 
     public Device getDevice() {
@@ -52,35 +50,35 @@ public class Survey extends MyAbstractPersistable<Long>{
         this.device = device;
     }
 
-    public String getOpinion(){
+    public String getOpinion() {
         return opinion;
     }
 
-    public void setOpinion(String opinion){
+    public void setOpinion(String opinion) {
         this.opinion = opinion;
     }
 
-    public String getPowerControl(){
+    public String getPowerControl() {
         return powerControl;
     }
 
-    public void setPowerControl(String powerControl){
+    public void setPowerControl(String powerControl) {
         this.powerControl = powerControl;
     }
 
-  /*  public void setDevice(Device device){
-        this.device = device;
+    public String getQuestion() {
+        return question;
     }
 
-    public Device getDevice(){
-        return device;
-    }*/
-
-/*    public int getEvaluateBER(){
-        return evaluateBER;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
-    public void setEvaluateBER(int evaluateBER){
-        this.evaluateBER = evaluateBER;
-    }*/
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }

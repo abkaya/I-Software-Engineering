@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#{surveys.management}')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage(){
+
+        $('#users').multiSelect({
+            selectableHeader: '<div class="custom-header" th:text="#{selectable.items}">Selectable items</div>',
+            selectionHeader: '<div class="custom-header" th:text="#{selected.items}">Selected items</div>'
+        });
+    }
+
+</script>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+    <form action="#" th:action="@{/createsurvey/{id}(id=${survey})}" th:object="${survey}" method="post">
+        <input th:type="hidden" th:field="*{id}"/>
+
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('question')}?'has-error': ''">
+            <label class="control-label" th:text="#{question}">Name</label>
+            <span class="control-label" th:if="${#fields.hasErrors('question')}" th:errors="*{question}">Testplan Name Error</span>
+            <input class="form-control" type="text" th:field="*{question}" />
+        </div>
+
+        <p> <label th:text="#{user.management}">Users</label>
+            <select th:field="*{users}" multiple="multiple">
+                <option th:each="user : ${allUsers}"
+                        th:value="${{user}}"
+                        th:text="${user.userName}">Wireframe</option>
+            </select>
+        </p>
+
+        <p>
+            <a href="/resultssurvey" th:text="#{close}" class="btn btn-primary">Close</a>
+            <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
+        </p>
+
+    </form>
+</div>
+</body>
+</html>

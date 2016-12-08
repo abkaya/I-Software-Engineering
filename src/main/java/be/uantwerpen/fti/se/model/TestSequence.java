@@ -50,6 +50,9 @@ public class TestSequence extends MyAbstractPersistable<Long>{
      */
     public TestSequence(int difficulty, int numberOfTargets) {
         this.difficulty = difficulty;
+        if((numberOfTargets % 2)==0 ){
+            numberOfTargets++;
+        }
         this.numberOfTargets = numberOfTargets;
         this.radiusSmall = 33;
         this.radiusBig = 250;

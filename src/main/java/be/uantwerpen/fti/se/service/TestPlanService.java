@@ -59,9 +59,36 @@ public class TestPlanService {
         return testTemplates;
     }
 
+    Iterable<TestPlan> findByTestTemplate(TestTemplate testTemplate){
+        List<TestPlan> testPlanList = new ArrayList<TestPlan>();
+        for (TestPlan  testPlan : testPlanRepository.findAll()) {
+            if(testPlan.getTestTemplate() == testTemplate)
+            testPlanList.add(testPlan);
+        }
+        return testPlanList;
+    }
+
+    Iterable<TestPlan> findByDevice(Device device){
+        List<TestPlan> testPlanList = new ArrayList<TestPlan>();
+        for (TestPlan  testPlan : testPlanRepository.findAll()) {
+            if(testPlan.getDevice() == device)
+                testPlanList.add(testPlan);
+        }
+        return testPlanList;
+    }
+
     public void saveSomeAttributes(TestPlan testPlan) {
         TestPlan tempTestPlan = testPlan.getId() == null ? null : findOne(testPlan.getId());
         if (tempTestPlan != null) {
+
+
+            if(((List<TestPlan>)findByTestTemplate(tempTestPlan.getTestTemplate())).size() == 1){
+                tempTestPlan.getTestTemplate().setEditable(true);
+            }
+
+            if(!(((List<TestPlan>)findByDevice(tempTestPlan.getDevice())).size() == 1 )){
+                tempTestPlan.getDevice().setIsNotInUse();
+            }
 
             tempTestPlan.setName(testPlan.getName());
             tempTestPlan.setDescription(testPlan.getDescription());

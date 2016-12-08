@@ -12,31 +12,31 @@ import java.util.List;
  */
 @Entity
 public class QuestionsSurvey extends MyAbstractPersistable<Long>{
-    private ArrayList<String> questions;
+    private String questions;
 
     @ManyToMany
     @JoinTable(
-            name = "SURVEY_USER",
-            joinColumns = {@JoinColumn(name = "SURVEY_ID", referencedColumnName = "ID")},
+            name = "QUESTIONS_USER",
+            joinColumns = {@JoinColumn(name = "QUESTIONS_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")})
     private List<User> users;
 
     public QuestionsSurvey(){
-        questions = new ArrayList<String>();
+        questions = "";
         users = new ArrayList<>();
     }
 
-    public ArrayList<String> getQuestion() {
+    public String getQuestions() {
         return questions;
     }
 
-    public void setQuestion(ArrayList<String> questions) {
+    public void setQuestions(String questions) {
         this.questions = questions;
     }
 
-    public void addOneQuestion(String question){
+    /*public void addOneQuestion(String question){
         this.questions.add(question);
-    }
+    }*/
 
     public List<User> getUsers() {
         return users;

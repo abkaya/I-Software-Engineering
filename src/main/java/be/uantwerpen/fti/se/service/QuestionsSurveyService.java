@@ -37,7 +37,7 @@ public class QuestionsSurveyService {
         QuestionsSurvey s1 = survey.getId()==null?null:findOne(survey.getId());
         if (s1 != null){
             s1.setUsers(survey.getUsers());
-            s1.setQuestion(survey.getQuestion());
+            s1.setQuestions(survey.getQuestions());
             questionsSurveyRepository.save(s1);
         }
         else{

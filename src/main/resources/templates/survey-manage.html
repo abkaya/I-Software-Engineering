@@ -22,13 +22,13 @@
         <input th:type="hidden" th:field="*{id}"/>
 
 
- <!--       <div class="form-group" th:classappend="${#fields.hasErrors('questions')}?'has-error': ''">
+        <div class="form-group" th:classappend="${#fields.hasErrors('questions')}?'has-error': ''">
             <label class="control-label" th:text="#{questions}">Name</label>
             <span class="control-label" th:if="${#fields.hasErrors('questions')}" th:errors="*{questions}">Testplan Name Error</span>
             <input class="form-control" type="text" th:field="*{questions}" />
-        </div>-->
+        </div>
 
-        <p> <label th:text="#{user.management}">Users</label>
+        <p> <label th:text="#{qsurvey.management}">Users</label>
             <select th:field="*{users}" multiple="multiple">
                 <option th:each="user : ${allUsers}"
                         th:value="${{user}}"

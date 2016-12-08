@@ -59,7 +59,7 @@ public class SurveyController {
     @RequestMapping(value={"/questionssurvey/", "/questionssurvey/{id}"}, method= RequestMethod.POST)
     public String addOpinion(@Valid Survey survey, BindingResult result, final ModelMap model){
         if(result.hasErrors()){
-            model.addAttribute("allOpinions", surveyRepository.findAll());
+            model.addAttribute("allQuestions", surveyRepository.findAll());
             model.addAttribute("allDevices", deviceRepository.findAll());
             model.addAttribute("SurveyQActiveSettings","active");
             return "survey-questions";
@@ -67,39 +67,4 @@ public class SurveyController {
         surveyService.saveSomeAttributes(survey);
         return "redirect:/home";
     }
-
-    @RequestMapping(value="/createsurvey", method = RequestMethod.GET)
-    public String showResultSurvey1(final ModelMap model) {
-        model.addAttribute("survey", new Survey());
-        model.addAttribute("allOpinions", surveyRepository.findAll());
-        model.addAttribute("allDevices", deviceRepository.findAll());
-        model.addAttribute("SurveyCreateActiveSettings", "active");
-        return "surveys-list";
-    }
-
-    @RequestMapping(value="/createsurvey/put", method= RequestMethod.GET)
-    public String viewCreateQuestion(Principal principal, final ModelMap model){
-        if(userRepository.findByUserName(principal.getName()).isAdmin()) {
-            model.addAttribute("allUsers", userRepository.findAll());
-            model.addAttribute("survey", new Survey());
-            return "survey-manage";
-        }
-        else{
-            return "redirect:/";
-        }
-    }
-
-    @RequestMapping(value={"/createsurvey/", "/createsurvey/{id}"}, method= RequestMethod.POST)
-    public String addQuestion(Principal principal, @Valid Survey survey, BindingResult result, final ModelMap model){
-        if(userRepository.findByUserName(principal.getName()).isAdmin()) {
-            if (result.hasErrors()) {
-                model.addAttribute("allUsers", userRepository.findAll());
-                return "survey-manage";
-            }
-            surveyService.saveSomeAttributes(survey);
-            return "redirect:/resultssurvey";
-        }
-        return "redirect:/";
-    }
-
 }

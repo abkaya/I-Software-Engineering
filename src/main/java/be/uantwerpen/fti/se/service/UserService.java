@@ -41,20 +41,13 @@ public class UserService {
 
     }
 
+
     public void add(final User user) {
         this.userRepository.save(user);
     }
 
     public void delete(Long id) {
-        if(findOne(id).isAdmin()) {
-            int admins = findAllAdmins().size();
-            if (((List<?>) findAllAdmins()).size() > 1) {
-                this.userRepository.delete(id);
-            }
-        }
-        else{
-            this.userRepository.delete(id);
-        }
+         this.userRepository.delete(id);
     }
 
 

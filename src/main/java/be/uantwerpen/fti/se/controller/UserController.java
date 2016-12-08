@@ -66,12 +66,25 @@ public class UserController {
 
     @RequestMapping(value="/users/{id}/delete")
     public String deleteUser(@PathVariable Long id, final ModelMap model){
-        if(! userService.isInTestplan(userRepository.findOne(id))) {
-            userService.delete(id);
-            model.clear();
-            //Set the navigation button User Management to active
-            model.addAttribute("usersActiveSettings","active");
-            return "redirect:/users";
+        User usr = userRepository.findOne(id);
+        if(!userService.isInTestplan(usr)) {
+            if(usr.isAdmin()){
+                if (userService.findAllAdmins().size() > 1){
+                    userService.delete(id);
+                    model.clear();
+                    //Set the navigation button User Management to active
+                    model.addAttribute("usersActiveSettings", "active");
+                    return "redirect:/users";
+                }
+                return "redirect:/users?lastAdmin";
+            }
+            else {
+                userService.delete(id);
+                model.clear();
+                //Set the navigation button User Management to active
+                model.addAttribute("usersActiveSettings", "active");
+                return "redirect:/users";
+            }
         }
         return "redirect:/users?inUse";
 

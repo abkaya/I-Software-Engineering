@@ -1,7 +1,9 @@
 package be.uantwerpen.fti.se.service;
 
+import be.uantwerpen.fti.se.model.TestPlan;
 import be.uantwerpen.fti.se.model.TestSequence;
 import be.uantwerpen.fti.se.model.TestTemplate;
+import be.uantwerpen.fti.se.repository.TestPlanRepository;
 import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import be.uantwerpen.fti.se.repository.TestTemplateRepository;
 import org.aspectj.weaver.ast.Test;
@@ -18,6 +20,9 @@ import java.util.List;
 public class TestTemplateService {
     @Autowired
     private TestTemplateRepository testTemplateRepository;
+
+    @Autowired
+    private TestPlanRepository testPlanRepository;
 
     @Autowired
     TestSequenceRepository testSequenceRepository;
@@ -149,8 +154,8 @@ public class TestTemplateService {
         return testTemplateRepository.findOne(id);
     }
 
-    private long size() {
-        System.out.println("testtest "+testTemplateRepository.count());
-        return testTemplateRepository.count();
+    public Boolean isInTestplan(TestTemplate testTemplate){
+        return ((List<TestPlan>) testPlanRepository.findByTestTemplate(testTemplate)).size() > 0;
+
     }
 }

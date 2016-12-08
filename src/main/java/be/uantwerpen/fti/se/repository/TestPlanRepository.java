@@ -12,5 +12,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface TestPlanRepository extends CrudRepository<TestPlan, Long> {
     Iterable<TestPlan> findByUsers(User user);
+    Iterable<TestPlan> findByTestTemplate(TestTemplate testTemplate);
     TestPlan findOne(Long id);
 }

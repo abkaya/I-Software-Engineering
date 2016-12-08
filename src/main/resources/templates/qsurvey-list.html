@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#{qsurvey.management}')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage(){
+        var options = {
+            valueNames: [ 'questions']
+        };
+
+        var qsurveyList = new List('qsurvey-list', options);
+    }
+</script>
+
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="content">
+
+        <div id="qsurvey-list">
+            <input class="search" placeholder="Search" />
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{name}">Name</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <!-- IMPORTANT, class="list" have to be at tbody -->
+                <tbody class="list">
+                <tr th:each="qsurvey : ${allQuestions}">
+                    <td class="Device" data-toggle="modal" th:attr="data-target='#Survey'+${qsurvey.id }" th:value="${qsurvey}" th:text="${qsurvey.id}">Device</td>
+                </tr>
+                </tbody>
+            </table>
+            <a href="/createsurvey/put" class="btn btn-primary" th:text="#{create.survey}">Create Survey</a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

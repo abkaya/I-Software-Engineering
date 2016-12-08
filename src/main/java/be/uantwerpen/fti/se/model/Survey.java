@@ -1,6 +1,7 @@
 package be.uantwerpen.fti.se.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,14 +12,6 @@ public class Survey extends MyAbstractPersistable<Long> {
 
     private String opinion;
     private String powerControl;
-    private String question;
-
-    @ManyToMany
-    @JoinTable(
-            name = "SURVEY_USER",
-            joinColumns = {@JoinColumn(name = "SURVEY_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")})
-    private List<User> users;
 
     @ManyToOne
     @JoinTable(
@@ -64,21 +57,5 @@ public class Survey extends MyAbstractPersistable<Long> {
 
     public void setPowerControl(String powerControl) {
         this.powerControl = powerControl;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 }

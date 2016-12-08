@@ -19,16 +19,6 @@ public class SurveyService {
         return this.surveyRepository.findAll();
     }
 
-    public Iterable<Survey> findByUserName(User user){
-        if(user.isAdmin()){
-
-            return surveyRepository.findAll();
-        }
-        else{
-            return surveyRepository.findByUsers(user);
-        }
-    }
-
     public void add(final Survey survey) {
         this.surveyRepository.save(survey);
     }
@@ -39,7 +29,6 @@ public class SurveyService {
             s1.setOpinion(survey.getOpinion());
             s1.setPowerControl(survey.getPowerControl());
             s1.setDevice(survey.getDevice());
-            s1.setUsers(survey.getUsers());
             surveyRepository.save(s1);
         }
         else{

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.nio.file.Paths;
 import java.util.Locale;
 
 @SpringBootApplication
@@ -80,6 +81,11 @@ public class IdTestManagerApplication extends WebMvcConfigurerAdapter{
         if (!registry.hasMappingForPattern("/webjars/**")) {
             registry.addResourceHandler("/webjars/**").addResourceLocations(
                     "classpath:/META-INF/resources/webjars/");
+        }
+
+        if(!registry.hasMappingForPattern("/external_data/**"))    {
+            String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+            registry.addResourceHandler("/external_data/**").addResourceLocations(parent + "\\external_data\\");
         }
     }
 

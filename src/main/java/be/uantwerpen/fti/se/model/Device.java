@@ -30,7 +30,8 @@ public class Device extends MyAbstractPersistable<Long> {
 
     public Device(){
         String parent = Paths.get(".").toAbsolutePath().normalize().toString();
-        this.imagesDefaultLocPath = parent + "\\src\\main\\resources\\static\\devices_images";
+        //this.imagesDefaultLocPath = parent + "\\src\\main\\resources\\devices_images";
+        this.imagesDefaultLocPath = "external_data/devices_images";
         this.filesDefaultLocPath = parent + "\\src\\main\\resources\\devices_files";
 
         used = false;
@@ -45,7 +46,8 @@ public class Device extends MyAbstractPersistable<Long> {
         this.manufacturer = manufacturer;
         this.driver = driver;
         String parent = Paths.get(".").toAbsolutePath().normalize().toString();
-        this.imagesDefaultLocPath = parent + "\\src\\main\\resources\\static\\devices_images";
+        //this.imagesDefaultLocPath = parent + "\\src\\main\\resources\\devices_images";
+        this.imagesDefaultLocPath = "external_data/devices_images";
         this.filesDefaultLocPath = parent + "\\src\\main\\resources\\devices_files";
 
         used = false;

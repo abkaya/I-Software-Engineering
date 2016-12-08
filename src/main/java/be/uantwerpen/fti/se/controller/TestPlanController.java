@@ -94,9 +94,13 @@ public class TestPlanController {
             if(testplan.isCompleted()) {
                 return "redirect:/questionssurvey";
             }
-            testPlanService.saveSomeAttributes(testplan);
-            testPlanService.createTestObject(testplan);
+            if(testplan.checkTestplan()) {
+                testPlanService.saveSomeAttributes(testplan);
+                testPlanService.createTestObject(testplan);
+                return "redirect:/testplans";
+            }
             return "redirect:/testplans";
+
         }
         return "redirect:/";
     }

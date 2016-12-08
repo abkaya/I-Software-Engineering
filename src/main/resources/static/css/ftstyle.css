@@ -1,0 +1,49 @@
+@import url("https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css");
+
+hr {
+	height: 1px;
+	background-color: #ccc;
+	margin: 15px;
+}
+
+div.msg {
+	width: 200px;
+	position: fixed;
+	top: 10px;
+	left:50%;
+	margin-left: -100px;
+	background-color: #FFE736;
+	border-radius: 10px;
+	padding: 10px;
+	color: #fff;
+	text-align: center;
+	vertical-align: center;
+	font-family: 'Open Sans';
+	font-weight: 700;
+}
+
+div.math {
+	padding: 20px;
+}
+
+.back {
+	fill: #fff;
+	stroke-width: 2px;
+  	shape-rendering: crispEdges;
+}
+
+#plot-scatter circle {
+	fill: red;
+	opacity: 0.5;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+
+circle.iso {
+	fill: #ddd;
+	opacity: 0.5;
+}

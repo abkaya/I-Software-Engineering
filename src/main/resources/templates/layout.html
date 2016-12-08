@@ -12,6 +12,9 @@
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
             th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
 
+
+
+
     <!--<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/css/bootstrap.min.css" />-->
     <!--<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />-->
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>-->
@@ -20,10 +23,35 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script >
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
 
+
+
+    <!-- ADDED BY JAN for image enlarge -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- *** -->
+
+    <!-- ADDED BY JAN for Fitts Test -->
+
+    <script type="text/javascript" src="/js/d3.v2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/css/ftstyle.css"/>
+
+    <!-- *** -->
+
+    <!-- Custom files -->
     <link rel="stylesheet" type="text/css" href="/css/multiselect.css" />
-    <link rel="stylesheet" type="text/css" href="/css/image_enlarge.css" />
     <script type="text/javascript" src="/js/list.min.js"></script>
     <script type="text/javascript" src="/js/jquery.multi-select.js"></script>
+
+
+
+    <!-- Bootstrap extensions -->
+    <link rel="stylesheet" type="text/css" href="/css/sb-admin-2.css" />
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.css" />
+    <script type="text/javascript" src="/js/sb-admin-2.js"></script>
+
 </head>
 
 
@@ -44,13 +72,26 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li role="presentation" th:class="${homeActiveSettings}">
+                    <li sec:authorize="hasAuthority('user-view')" role="presentation" th:class="${homeActiveSettings}">
                         <a href="/">Home <span class="sr-only">(homepage)</span></a></li>
                     <li sec:authorize="hasAuthority('user-view')" role="presentation" th:class="${usersActiveSettings}">
                         <a href="/users" th:text="#{user.management}">User management <span class="sr-only">(user management)</span></a>
                     </li>
+
+                    <li sec:authorize="hasAuthority('mytests')" role="presentation" th:class="${testObjectsActiveSettings}">
+                        <a href="/testobjects" th:text="#{testobject.title}">TestObject management <span class="sr-only">(testobject management)</span></a>
+                    </li>
+
                     <li sec:authorize="hasAuthority('role-view')" role="presentation" th:class="${rolesActiveSettings}">
                         <a href="/roles" th:text="#{role.management}">Role management <span class="sr-only">(role management)</span></a>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('survey-view')" role="presentation" th:class="${SurveyActiveSettings}">
+                        <a href="/resultssurvey" th:text="#{survey.management}">Survey Results <span class="sr-only">(survey management)</span></a>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('surveyQ-view')" role="presentation" th:class="${SurveyQActiveSettings}">
+                        <a href="/questionssurvey" th:text="#{Survey.questions}">Survey Questions <span class="sr-only">(survey questions)</span></a>
                     </li>
 
 
@@ -70,6 +111,12 @@
                             <li><a href = "/testplans">Test plan</a></li>
                         </ul>
                     </li>
+
+                    <!-- Added for Fitts Test -->
+                    <li>
+                        <a href="/fittstest">Fitts Test <span class="sr-only">(Fitts Test)</span></a>
+                    </li>
+                    <!-- *** -->
 
                     <li>
                         <a href="/logout">Logout <span class="sr-only">(logout)</span></a>

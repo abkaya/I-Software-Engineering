@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#{Survey.questions}')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage(){
+    }
+</script>
+<div class="container">
+
+    <!-- Import menu bar -->
+    <div th:replace="layout :: navbar"></div>
+    <form action="#" th:action="@{/questionssurvey/{id}(id=${survey})}" th:object="${survey}" method="post">
+        <input th:type="hidden" th:field="*{id}"/>
+
+        <div class="form-group">
+            <label class="control-label" th:field="#{device.name}">Device Name</label>
+            <select class="form-control" th:field="*{device}" id="sel1">
+                <option th:value="${{device}}" th:text="${device?.deviceName}">Current Device</option>
+                <option th:each="device : ${allDevices}"
+                        th:value="${{device}}"
+                        th:text="${device.deviceName}">Wireframe</option>
+            </select>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('opinion')}?'has-error': ''">
+            <th th:text="#{q1}">Question1</th>
+            <span class="control-label" th:if="${#fields.hasErrors('opinion')}" th:errors="*{opinion}">opinion Error</span>
+            <input class="form-control" type="text" th:field="*{opinion}" />
+        </div>
+
+       <thead>
+        <tr>
+            <th th:text="#{vraag1}">Vraag1</th>
+            <th></th>
+        </tr>
+        </thead>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="1" id="Perfect">1</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="2" id="Acceptable">2</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="3" id="Difficult">3</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="4" id="Very Difficult">4</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="5" id="Acceptable1">5</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="6" id="Difficult1">6</input></label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" th:field="*{powerControl}" value="7" id="Very Difficult1">7</input></label>
+        </div>
+        <p>
+            <a href="/home" th:text="#{close}" class="btn btn-primary">Close</a>
+            <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
+        </p>
+    </form>
+</div>
+</body>
+</html>
+
+
+<!--  <div class="progress">
+                <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                    40% Complete (success)
+                </div>
+            </div>
+-->

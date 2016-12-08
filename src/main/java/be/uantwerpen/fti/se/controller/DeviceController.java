@@ -5,20 +5,22 @@ import be.uantwerpen.fti.se.model.Device;
 import be.uantwerpen.fti.se.repository.DeviceRepository;
 import be.uantwerpen.fti.se.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
 
 /**
- * Created by Jan Huijghebaert on 20-Oct-16.
+ * Created by Jan Huijghebaert
  */
 @Controller
 public class DeviceController {
@@ -33,7 +35,6 @@ public class DeviceController {
     public DeviceController(StorageService storageService) {
         this.storageService = storageService;
     }
-
 
     @RequestMapping(value = "/devices", method = RequestMethod.GET)
     public String showDevices(final ModelMap model) {
@@ -52,46 +53,37 @@ public class DeviceController {
     @RequestMapping(value = "/devices/{id}", method = RequestMethod.GET)
     public String viewEditDevice(@PathVariable Long id, final ModelMap model)  {
         Device device = deviceRepository.findOne(id);
-        if(device.isUsed() || device.isInUse() || device.isDisabled())
-        {
+        if(device.isUsed() || device.isInUse() || device.isDisabled()) {
             return "redirect:/devices";
-        }else {
+        } else {
             model.addAttribute("device", deviceRepository.findOne(id));
             model.addAttribute("devicesActiveSettings", "active");
-
             return "devices-manage";
         }
     }
 
     @RequestMapping(value = {"/devices/", "/devices/{id}"}, method = RequestMethod.POST)
     public String addDevice(@Valid Device device, BindingResult result, final ModelMap model, @RequestParam("file") MultipartFile file)   {
-
-        if (!file.isEmpty()) {
-            File dir = new File(device.getImagePath().toString());
-            if(dir.list().length>0) {
-                storageService.deleteAll(device, file);
-            }
-            storageService.storeImage(file, device);
-        }
-
         if(result.hasErrors())  {
             return "devices-manage";
         }
-        if(!device.getDeviceName().isEmpty() && !device.getVersion().isEmpty() && !device.getType().isEmpty() && !device.getDriver().isEmpty() && !device.getManufacturer().isEmpty())
-        {
-            Boolean duplicate = false;
+        if(!device.getDeviceName().isEmpty() && !device.getVersion().isEmpty() && !device.getType().isEmpty() && !device.getDriver().isEmpty() && !device.getManufacturer().isEmpty()) {
+            boolean duplicate = false;
             for(Device devices : deviceRepository.findAll()) {
-
-                if (device.getDeviceName().equals(devices.getDeviceName()) && device.getId().equals(devices.getId())) {
+                if (device.getDeviceName().equals(devices.getDeviceName())) {
                     if (device.getVersion().equals(devices.getVersion())) {
                         duplicate = true;
                     }
                 }
             }
-
-            if(duplicate){
-
-            }else {
+            if(!duplicate){
+                device.setImageId(device.getDeviceName(), device.getVersion());
+                device.setFilesDirectoryPath(device.getImageId());
+                if (!file.isEmpty()) {
+                    storageService.storeImage(file, device);
+                } else {
+                    device.setNOImageFullPath();
+                }
                 deviceRepository.save(device);
             }
         }

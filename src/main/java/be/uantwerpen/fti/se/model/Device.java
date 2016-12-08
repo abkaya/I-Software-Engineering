@@ -10,76 +10,51 @@ import java.nio.file.Paths;
 @Entity
 public class Device extends MyAbstractPersistable<Long> {
 
-
     private String deviceName;
     private String type;
     private String version;
     private String manufacturer;
     private String driver;
+
+    private String imagesDefaultLocPath;    // Example: parent + ...\templates.devices_images
+    private String filesDefaultLocPath;     // Example: parent + ...\devices_files
+    private String imageId;                 // deviceName_deviceVersion
+    private String imageExtension;          // jpg, png, ...
+    private String imageFile;               // deviceName_deviceVersion.jpg (or png, ...)
+    private String imageFullPath;           // ...\devices_images\deviceName_deviceVersion.jpg (or png, ...)
+    private String filesDirectoryPath;      // ...\devices_files\f_deviceName_deviceVersion
+
     private boolean used;
     private boolean inUse;
     private boolean disabled;
-    private boolean imageAvailable;
-    private String imageName;
-    private String imageExtension;
-    private String imagePath;
-    private String filePath;
-
-
 
     public Device(){
+        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+        this.imagesDefaultLocPath = parent + "\\src\\main\\resources\\static\\devices_images";
+        this.filesDefaultLocPath = parent + "\\src\\main\\resources\\devices_files";
+
         used = false;
         disabled = false;
         inUse = false;
     }
 
-    public Device(String deviceName, String type, String version, String manufacturer, String driver, boolean imageAvailable){
+    public Device(String deviceName, String type, String version, String manufacturer, String driver)  {
         this.deviceName = deviceName;
         this.type = type;
         this.version = version;
         this.manufacturer = manufacturer;
         this.driver = driver;
+        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
+        this.imagesDefaultLocPath = parent + "\\src\\main\\resources\\static\\devices_images";
+        this.filesDefaultLocPath = parent + "\\src\\main\\resources\\devices_files";
+
         used = false;
         inUse = false;
         disabled = false;
-        // Added by Jan for image
-        this.imageAvailable = imageAvailable;
-        imageName = "no_image";
-        if(imageAvailable)  {
-            imageExtension = "jpg"; // Search extension!!!
-            imageName = deviceName + "_" + version + "." + imageExtension;
-            imagePath = "devices_images/" + imageName;
-        } else {
-            imagePath = "devices_images/no_image.jpg";
-        }
-        setFilePath(deviceName);
-        setImagePath(deviceName);
 
-    }
-
-    public String getFilePath() { return this.filePath; }
-
-    public void setFilePath (String dev) {
-        String foldername = "files_"+dev;
-        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
-        this.filePath = parent+"\\src\\main\\resources\\static\\devices_files\\"+foldername;
-        File destfile = new File(filePath);
-        System.out.println("do this");
-        if(!destfile.exists()) {
-            destfile.mkdir();
-            System.out.println("also do this");
-        }
-    }
-
-    public String getImagePath() { return this.imagePath; }
-
-    public void setImagePath (String dev) {
-        String parent = Paths.get(".").toAbsolutePath().normalize().toString();
-        this.imagePath = parent+"\\src\\main\\resources\\static\\devices_images";
-        File destfile = new File(imagePath);
-        if(!destfile.exists()) {
-            destfile.mkdir();
-        }
+        setImageId(deviceName, version);
+        setNOImageFullPath();
+        setFilesDirectoryPath(getImageId());
     }
 
     public String getDeviceName() {
@@ -88,8 +63,6 @@ public class Device extends MyAbstractPersistable<Long> {
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
-        setFilePath(deviceName);
-        setImagePath(deviceName);
     }
 
     public String getType() {
@@ -100,12 +73,11 @@ public class Device extends MyAbstractPersistable<Long> {
         this.type = type;
     }
 
-    public String getVersion() {
-        return version;
-    }
+    public String getVersion() {return version;}
 
     public void setVersion(String version) {
         this.version = version;
+        setImageId(this.deviceName, this.version);
     }
 
     public String getManufacturer() {
@@ -124,12 +96,61 @@ public class Device extends MyAbstractPersistable<Long> {
         this.driver = driver;
     }
 
-    public String getImageName()    {
-        return imageName;
+    public String getImagesDefaultLocPath() {
+        return imagesDefaultLocPath;
     }
 
-    public void setImageName(String imageName)  {
-        this.imageName = imageName;
+    public String getFilesDefaultLocPath()  {
+        return imagesDefaultLocPath;
+    }
+
+    public String getImageId()  {
+        return imageId;
+    }
+
+    public void setImageId(String deviceName, String deviceVersion) {
+        this.imageId = deviceName + "_" + deviceVersion;
+    }
+
+    public String getImageExtension()   {
+        return imageExtension;
+    }
+
+    public void setImageExtension(String imageExtension)    {
+        this.imageExtension = imageExtension;
+    }
+
+    public String getImageFile()    {
+        return imageFile;
+    }
+
+    public void setImageFile(String imageId, String imageExtension) {
+        this.imageFile = imageId + "." + imageExtension;
+    }
+
+    public String getImageFullPath()    {
+        return imageFullPath;
+    }
+
+    public void setImageFullPath(String imageFile)  {
+        this.imageFullPath = imagesDefaultLocPath + "\\" + imageFile;
+    }
+
+    public void setNOImageFullPath()    {
+        this.imageFullPath = "images/no_image.jpg";
+    }
+
+    public String getFilesDirectoryPath()   {
+        return filesDirectoryPath;
+    }
+
+    public void setFilesDirectoryPath(String imageId)   {
+        String folder_name = "f_" + imageId;
+        this.filesDirectoryPath = filesDefaultLocPath + "\\" + folder_name;
+        File destination_folder = new File(filesDirectoryPath);
+        if(!destination_folder.exists()) {
+            destination_folder.mkdir();
+        }
     }
 
     public boolean isUsed() {
@@ -170,11 +191,8 @@ public class Device extends MyAbstractPersistable<Long> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Device device = (Device) o;
-
         return deviceName.equals(device.deviceName);
-
     }
 
     @Override
@@ -182,7 +200,6 @@ public class Device extends MyAbstractPersistable<Long> {
         if(deviceName != null) {
             return deviceName.hashCode();
         }
-
         return 0;
     }
 }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<!-- Import header -->
+<head th:replace="layout :: head (title='#{testobject.title}')"></head>
+
+<body onload="initPage()">
+<script type="text/javascript">
+    function initPage() {
+        var options = {
+            valueNames: ['name']
+        };
+        var deviceList = new List('testobject-list', options);
+    }
+</script>
+
+<div class="container">
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="content">
+
+        <div id="testobject-list">
+
+            <input class="search" placeholder="Search" />
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{testobject.id}">TestObjectID</th>
+                    <th th:text="#{testobject.name}">Name</th>
+                    <th th:text="#{testobject.device}">Template</th>
+                    <th th:text="#{testobject.template}">Template</th>
+                    <th th:text="#{testobject.amountOfSequences}">Number of Sequences</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody class="list">
+                <tr th:each="testobject : ${myTestObjects}">
+                    <td class="ID" th:value="${testobject}" th:text="${testobject.id}">TestObjectID</td>
+                    <td class="name" th:value="${testobject}" th:text="${testobject.name}">Name</td>
+                    <td class="device" th:value="${testobject}" th:text="${testobject.testPlan.device.deviceName}">Name</td>
+                    <td class="template" th:value="${testobject}" th:text="${testobject.templateID}">Template</td>
+                    <td class="numOfSeq" th:value="${testobject}" th:text="${testobject.sequences.size()}">Number of Sequences</td>
+                    <td>
+                            <a th:href="@{/testobjects/{id}/(id=${testobject.id})}" ><span class="glyphicon glyphicon-play"></span></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

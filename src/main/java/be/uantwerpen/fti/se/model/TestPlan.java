@@ -3,6 +3,7 @@ package be.uantwerpen.fti.se.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -12,9 +13,18 @@ import java.util.List;
 @Entity
 public class TestPlan extends MyAbstractPersistable<Long>{
     private String name;
-    private String startDate;
-    private String endDate;
     private String description;
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    private boolean completed = false;
+
 
     @ManyToOne
     @JoinTable(
@@ -39,19 +49,43 @@ public class TestPlan extends MyAbstractPersistable<Long>{
             inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")})
     private List<User> users;
 
-    @OneToMany
+    public List<String> getFinsihedUsers() {
+        return finsihedUsers;
+    }
+
+    public void setFinsihedUsers(List<String> finsihedUsers) {
+        this.finsihedUsers = finsihedUsers;
+    }
+
+    public void addFinsihedUsers(String finsihedUser) {
+        this.finsihedUsers.add(finsihedUser);
+    }
+
+
+    @Column
+    @ElementCollection
+    private List<String> finsihedUsers;
+
+    public void userFinished(String user){
+        finsihedUsers.add(user);
+        if(finsihedUsers.size() == users.size())
+            this.completed = true;
+    }
+
+
+    @ManyToOne
     @JoinTable(
             name="TESTPLAN_DEVICE",
             joinColumns={@JoinColumn(name="TESTPLAN_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="DEVICE_ID", referencedColumnName="ID")})
-    private List<Device> devices;
+    private Device device;
+
+
 
     public TestPlan() {}
 
-    public TestPlan(String name, String startDate, String endDate, String description) {
+    public TestPlan(String name, String description) {
         this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.description = description;
     }
 
@@ -61,22 +95,6 @@ public class TestPlan extends MyAbstractPersistable<Long>{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
     }
 
     public String getDescription() {
@@ -99,11 +117,21 @@ public class TestPlan extends MyAbstractPersistable<Long>{
         this.users = users;
     }
 
-    public List<Device> getDevices() {
-        return devices;
+    public Device getDevice() {
+        return device;
     }
 
-    public void setDevices(List<Device> devices) {
-        this.devices = devices;
+    public void setDevice(Device device) {
+        this.device = device;
+    }
+
+    public Boolean isFinished(User user){
+        for (Iterator<String> iter = finsihedUsers.iterator(); iter.hasNext(); ) {
+            String userF = iter.next();
+            if(userF.equals(user.getUserName())){
+                return true;
+            }
+        }
+        return false;
     }
 }

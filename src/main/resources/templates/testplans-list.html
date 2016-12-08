@@ -12,7 +12,11 @@
 
         var testplansList = new List('testplans-list', options);
 
+
+
     }
+
+
 
 </script>
 <div class="container">
@@ -28,19 +32,21 @@
                 <thead>
                 <tr>
                     <th th:text="#{testplan.name}">Name</th>
-                    <th th:text="#{testplan.startDate}">Start Date</th>
-                    <th th:text="#{testplan.endDate}">End Date</th>
+                    <th th:text="#{template.name}">Template</th>
+                    <th th:text="#{device.name}">Device</th>
+                    <th th:text="#{testplan.finishedUsers}">#Finsihed Users</th>
                     <th th:text="#{testplan.amountUsers}">#Users</th>
                     <th></th>
                 </tr>
                 </thead>
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
-                <tr th:each="testplan : ${allTestplans}" >
+                <tr class="" th:each="testplan : ${allTestplans}" th:classappend="${testplan.isCompleted()} ?  success : danger">
                     <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.name}">Name</td>
-                    <td class="testplanStartDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.startDate}">Start Date</td>
-                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.endDate}">Start Date</td>
-                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.users.size()}"># Users</td>
+                    <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.testTemplate.name}">Test Template</td>
+                    <td class="testplanName" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.device.deviceName}">Device</td>
+                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.finsihedUsers.size()}">#Finished Users</td>
+                    <td class="testplanEndDate" data-toggle="modal" th:attr="data-target='#testPlanModel'+${testplan.id }" th:value="${testplan}" th:text="${testplan.users.size()}">#Users</td>
                     <td>
                         <a sec:authorize="hasAuthority('testplan-edit')" th:href="@{/testplans/{id}/(id=${testplan.id})}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                         <a sec:authorize="hasAuthority('testplan-delete')" th:href="@{/testplans/{id}/delete(id=${testplan.id})}"><span class="glyphicon glyphicon-trash"></span></a>
@@ -61,26 +67,22 @@
                                     <!-- Hier komt de body, dus de context van uw box-->
                                     <p th:text="${testplan.description}">Description</p>
 
-                                    <label class="control-label" th:text="#{testplan.startDate}">Testplan Start Date</label>
-                                    <p th:text="${testplan.startDate}">startdate</p>
-
-                                    <label class="control-label" th:text="#{testplan.endDate}">Testplan End Date</label>
-                                    <p th:text="${testplan.endDate}">enddate</p>
-
                                     <hr style="width: 100%; color: black; height: 1px; background-color:lightgray;" />
 
                                     <label class="control-label" th:text="#{template.name}">Testplan Template</label>
                                     <p th:text="${testplan.testTemplate?.name}">Some text in the modal.</p>
 
-                                    <label class="control-label" th:text="#{user.management}">TestPlan Users</label>
+                                    <label class="control-label" th:text="#{device.name}">Testplan Template</label>
+                                    <p th:text="${testplan.device?.deviceName}">Some text in the modal.</p>
+
+
+
+
+                                    <label class="control-label" th:text="#{testplan.users}">TestPlan Users</label>
                                     <ul class="list-group">
-                                        <li class="list-group-item" style="height: 30px; padding: 5px 10px;" th:each="user : ${testplan.users}" th:text="${user.userName}">User Name</li>
+                                        <li class="list-group-item list-group-item-action" th:each="user : ${testplan.users}" th:text="${user.userName}" th:classappend="${testplan.isFinished(user)} ?  list-group-item-success : list-group-item-danger">User Name</li>
                                     </ul>
 
-                                    <label class="control-label" th:text="#{testplan.devices}">TestPlan Devices</label>
-                                    <ul class="list-group">
-                                        <li class="list-group-item" style="height: 30px; padding: 5px 10px;" th:each="device : ${testplan.devices}" th:text="${device.deviceName}">User Name</li>
-                                    </ul>
 
                                 </div>
                                 <div class="modal-footer">

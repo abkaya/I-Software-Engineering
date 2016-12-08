@@ -8,11 +8,11 @@
 
 <script type="text/javascript">
     function initPage() {
-    var options = {
-    valueNames: ['name']
-    };
+        var options = {
+            valueNames: ['name']
+        };
 
-    var deviceList = new List('homepage-list', options);
+        var deviceList = new List('homepage-list', options);
     }
 </script>
 
@@ -20,32 +20,118 @@
     <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
 
-   <!-- <span th:text="#{homepage.hello}"/> <br/> -->
+    <!-- <span th:text="#{homepage.hello}"/> <br/> -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
+    <div class="content" sec:authorize="hasAuthority('survey-view')">
 
-    <div class="content">
-        <div id="homepage-list">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th th:text="#{homepage.noUsers}">noUsers</th>
-                    <th th:text="#{homepage.noDevices}">noDevices</th>
-                    <th></th>
-                </tr>
-                </thead>
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-user-circle fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div th:text="${amountUsers}" class="huge">26</div>
 
-                   <tbody class="list">
-              <!--     <td class="noUsers" th:value="${noUsers}" th:text="${homepage.noUsers}">noUsers</td> -->
-                <!--   <td class="noDevices" th:value="${noDevices}" th:text="${homepage.noDevices}">noDevices</td> -->
-                   <td class="noUsers" th:value="${noUsers}" th:text="${noUsers}">noUsers</td>
-                   <td class="noDevices" th:value="${noDevices}" th:text="${noDevices}">noDevices</td>
-                   </tbody>
-               </table>
+                                <!-- Fix Message hier -->
+                                <div>Users</div>
+                            </div>
+                        </div>
+                    </div>
 
-           </div>
-       </div>
+                    <!-- Fix link naar users page -->
+                    <a href="/users">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-microchip fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div th:text="${amountDevices}" class="huge">12</div>
+                                <div>Devices</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/devices">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-file-text fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div th:text="${amountTestTemplates}" class="huge">124</div>
+                                <div>Templates</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/tests">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-sitemap fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div th:text="${amountTestPlans}" class="huge">13</div>
+                                <div>Test Plans</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/testplans">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-   </div>
-   </body>
-   </html>
+        <div id="container" style="height: 400px; margin: auto; min-width: 310px; max-width: 600px"></div>
+        <script th:inline="javascript" src="/js/chart.js"></script>
+
+    </div>
+
+    <div sec:authorize="hasAuthority('surveyQ-view')">
+        <meta http-equiv="refresh" content="0; url=https://localhost:8443/testobjects" />
+    </div>
+
+</div>
+</body>
+</html>

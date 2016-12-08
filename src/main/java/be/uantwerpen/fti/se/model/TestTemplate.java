@@ -12,12 +12,14 @@ public class TestTemplate extends MyAbstractPersistable<Long> {
     private String name;
     private String description;
     private int seqCount = 0;
+    private int seqCountHTML = 0;
     private boolean editable = true;
     private int numberOfTargets;
     private double targetRadius1;
     private double targetRadius2;
     private double circleRadius1;
     private double circleRadius2;
+    private double x;
 
     /**
      * A single TestTemplate object can be linked to multiple TestSequence objects, whereas a single
@@ -179,9 +181,9 @@ public class TestTemplate extends MyAbstractPersistable<Long> {
      *
      * @return number of sequences bound to this template
      */
-    public int getSeqCount() {
-        return seqCount;
-    }
+    public int getSeqCount() {return seqCount;}
+
+    public int getSeqCountHTML() {return seqCount+161;}
 
     /**
      * Set the number of sequences which are bound to this template
@@ -223,6 +225,7 @@ public class TestTemplate extends MyAbstractPersistable<Long> {
      * @param name        The template's name
      * @param description Template description by admin
      */
+
     public TestTemplate(String name, String description) {
         this.name = name;
         this.description = description;

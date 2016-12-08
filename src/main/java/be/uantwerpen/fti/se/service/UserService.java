@@ -2,6 +2,7 @@ package be.uantwerpen.fti.se.service;
 
 import be.uantwerpen.fti.se.model.TestPlan;
 import be.uantwerpen.fti.se.model.User;
+import be.uantwerpen.fti.se.repository.TestPlanRepository;
 import be.uantwerpen.fti.se.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TestPlanRepository testPlanRepository;
 
     public Iterable<User> findAll() {
         return this.userRepository.findAll();
@@ -30,6 +33,12 @@ public class UserService {
                 userList.add(user);
         }
         return userList;
+    }
+
+
+    public Boolean isInTestplan(User user){
+        return ((List<TestPlan>) testPlanRepository.findByUsers(user)).size() > 0;
+
     }
 
     public void add(final User user) {

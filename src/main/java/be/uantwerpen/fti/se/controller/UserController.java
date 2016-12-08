@@ -66,10 +66,14 @@ public class UserController {
 
     @RequestMapping(value="/users/{id}/delete")
     public String deleteUser(@PathVariable Long id, final ModelMap model){
-        userService.delete(id);
-        model.clear();
-        //Set the navigation button User Management to active
-        model.addAttribute("usersActiveSettings","active");
-        return "redirect:/users";
+        if(! userService.isInTestplan(userRepository.findOne(id))) {
+            userService.delete(id);
+            model.clear();
+            //Set the navigation button User Management to active
+            model.addAttribute("usersActiveSettings","active");
+            return "redirect:/users";
+        }
+        return "redirect:/users?inUse";
+
     }
 }

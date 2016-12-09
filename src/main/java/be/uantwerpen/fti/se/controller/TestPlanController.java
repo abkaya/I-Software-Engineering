@@ -42,10 +42,10 @@ public class TestPlanController {
         System.out.printf("\n The logged user is: " + principal.getName() + "\n" );
 
         if(userRepository.findByUserName(principal.getName()).isAdmin()) {
-            model.addAttribute("allTestplans", testPlanService.findByUserName(userRepository.findByUserName(principal.getName())));
-        /*
-        model.addAttribute("allTestplans", testPlanRepository.findAll());
-        */
+            model.addAttribute("allTestplans", testPlanService.findByUsers(userRepository.findByUserName(principal.getName())));
+
+        //model.addAttribute("allTestplans", testPlanRepository.findAll());
+
             return "testplans-list";
         }
         else{

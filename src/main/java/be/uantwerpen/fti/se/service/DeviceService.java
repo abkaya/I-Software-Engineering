@@ -1,6 +1,9 @@
 package be.uantwerpen.fti.se.service;
 
 import be.uantwerpen.fti.se.model.Device;
+import be.uantwerpen.fti.se.model.TestPlan;
+import be.uantwerpen.fti.se.model.TestTemplate;
+import be.uantwerpen.fti.se.model.User;
 import be.uantwerpen.fti.se.repository.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,12 @@ public class DeviceService {
             deviceRepository.save(device);
         }
     }
+
+
+    Iterable<Device> findDevicesByUser(User user){
+        return  deviceRepository.findDevicesByUser(user);
+    }
+
 
     public Device findByDeviceName(String deviceName){return deviceRepository.findByDeviceName(deviceName);}
 }

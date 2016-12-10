@@ -40,13 +40,16 @@ public class TestObjectService {
      * This method is used to pass the X-axis values to the graph javascript variable.
      * @return a list of deviceNames
      */
-    public List<String> getDeviceNames(){
+    public Iterable<String> getDeviceNames(){
+       /*
         List<String> deviceNames = new ArrayList<String>();
         for(TestObject to : this.findAll()){
             if(!deviceNames.contains(to.getTestPlan().getDevice().getDeviceName()))
                 deviceNames.add(to.getTestPlan().getDevice().getDeviceName());
         }
         return deviceNames;
+        */
+       return testObjectRepository.getDeviceNames();
     }
 
     /**
@@ -88,6 +91,7 @@ public class TestObjectService {
     }
 
     public Iterable<TestObject> findForUser(String name){
+        /*
         List<TestObject> myTests = new ArrayList<>();
         for(TestObject it : this.findAll())
         {
@@ -98,6 +102,9 @@ public class TestObjectService {
         }
 
         return myTests;
+        */
+
+        return testObjectRepository.findForUser(name);
     }
 
     public void finishTest(TestObject to){

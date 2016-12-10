@@ -7,16 +7,13 @@
  var currentTime = new Date().getTime();
  while (currentTime + 2000 >= new Date().getTime()) {
  }
-
- d3.select('body').append('div')					// Display message
- .attr('class', 'msg')
- .text('NEW')
- .style('opacity', 1)
- .transition()
- .duration(10000)
- .style('opacity', 0)
- .remove();
  */
+
+// ---------- OUTPUT ----------
+var outputThrougput = [-1];
+var outputMeanTime = [-1];
+var outputNumOfErrors = [-1];
+// ----------------------------
 
 var testDimension = makeDimension(1140, 650, 30, 30, 30, 30);	// Dimensions of test frame
 
@@ -25,27 +22,24 @@ var fittsTest = {
 	lastMousePoint: {},				// Last mouse point (location and timestamp)
 
 	arrayTargets: [],				// Array from all the targets (one sequence)
-	currentPosition: 0,				// ...
-	currentCount: 0,				// ...
+	currentPosition: 0,				// Current position
+	currentTarget: 0,				// Current target that is visible
 
 	numOfErrors: 0,					// Number of error's in current sequence
 
 	currentSequence: 0,				// Current sequence that is running
 
 	fittsParameters: {				// Current parameters from test (start-parameters)
-		numOfTargets: importNumOfTargets[this.currentSequence],
-		sequenceRadius: importSequenceRadius[this.currentSequence],
-		targetRadius: importTargetRadius[this.currentSequence],
+		numOfTargets: importNumOfTargets[0],
+		sequenceRadius: importSequenceRadius[0],
+		targetRadius: importTargetRadius[0],
 		randomize: true},
 
-	active: false,
-
-
-	data: [],
+	active: false,					// Boolean - when tester is active testing
+	data: [],						// Data to draw
 
 	generateTarget: function() {
 		this.target = this.arrayTargets[this.currentPosition];
-		this.target.distance = this.fittsParameters.sequenceRadius;
 		this.currentPosition = (this.currentPosition + Math.ceil(this.arrayTargets.length/2)) % this.arrayTargets.length;
 		var target = testAreaSVG.selectAll('#target').data([this.target]);
 		var insert = function(d) {
@@ -58,8 +52,11 @@ var fittsTest = {
 		this.active = true;
 	},
 
+	/*
+	 * Run a new sequence
+	 */
 	runNewSequence: function() {
-		this.currentCount = 0;
+		this.currentTarget = 0;
 		this.generateArrayTargets(
 			this.fittsParameters.numOfTargets,
 			this.fittsParameters.sequenceRadius,
@@ -76,6 +73,17 @@ var fittsTest = {
 		this.currentPosition = 0;
 		this.generateTarget();
 		this.active = false;
+		// Generate and display message
+		var message = 'Sequence ' + (this.currentSequence + 1) + '/' + importNumOfSequences + ' : Press the circle to start test!'
+		d3.select('body').append('div')
+			.attr('class', 'msg')
+			.text(message)
+			.style('color', 'green')
+			.style('opacity', 1)
+			.transition()
+			.duration(15000)
+			.style('opacity', 0)
+			.remove();
 	},
 
 	/*
@@ -93,24 +101,32 @@ var fittsTest = {
 		}
 	},
 
+	/*
+	 * Remove targets
+	 */
 	removeTarget: function() {
 		testAreaSVG.selectAll('#target').data([]).exit().remove();
 		this.active = false;
 	},
 
+	/*
+	 * Action when mouse is clicked
+	 * @param x	: current mouse X position
+	 * @param y : current mouse Y position
+	 */
 	mouseClicked: function(x, y) {
 		if (distance({x: x, y: y}, this.target) < (this.target.w / 2)) {		// If click is on target
 			this.removeTarget();
-			if (this.currentCount >= this.arrayTargets.length)	{		// Start new sequence
+			if (this.currentTarget >= this.arrayTargets.length)	{				// Start new sequence
 				this.setParameters();
-				this.currentCount = 0;
+				this.currentTarget = 0;
 				this.currentPosition = 0;
 				this.numOfErrors = 0;
 				this.runNewSequence;
 				this.generateTarget();
 				this.active = false;
 			} else {
-				this.currentCount++;
+				this.currentTarget++;
 				this.generateTarget();
 			}
 			this.lastMousePoint = {x: x, y: y, t: (new Date).getTime()};
@@ -144,18 +160,13 @@ var fittsTest = {
 		}
 	},
 
+	/*
+	 * Set parameters for new sequence
+	 */
 	setParameters: function()	{
 		if(this.currentSequence >= (importNumOfSequences - 1))	{
 			this.currentSequence = 0;
 			// LOOP, At this point --> END PROGRAM
-			d3.select('body').append('div')					// Display message
-				.attr('class', 'msg')
-				.text('END PROGRAM RUN')
-				.style('opacity', 1)
-				.transition()
-				.duration(10000)
-				.style('opacity', 0)
-				.remove();
 		} else {
 			this.currentSequence = this.currentSequence + 1;
 		}
@@ -165,7 +176,6 @@ var fittsTest = {
 		this.runNewSequence();
 	}
 };
-
 
 /*
  * Set dimensions from window
@@ -216,6 +226,9 @@ function distance(a, b) {
 	return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 }
 
+/*
+ * Test frame
+ */
 function bgRect(d, dim) {
 	return d.append('rect')
 		.attr('cx', 0)

@@ -38,16 +38,6 @@ public class TestPlanService {
         return testPlanRepository.findCompletedTestPlans();
     }
 
-    /*
-    public Iterable<TestTemplate> findTestTemplateByUser(User user){
-        List<TestTemplate> testTemplates = new ArrayList<TestTemplate>();
-        for (TestPlan  testPlan : findByUserName(user)) {
-            testTemplates.add(testPlan.getTestTemplate());
-        }
-        return testTemplates;
-    }
-    */
-
     Iterable<TestPlan> findByTestTemplate(TestTemplate testTemplate){
         return testPlanRepository.findByTestTemplate(testTemplate);
     }

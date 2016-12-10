@@ -1,184 +1,181 @@
 /* AUTHOR		: Jan Huijghebaert
  * DESCRIPTION	: Fitts Test Javascript
+ * OUTPUT		: Throughput, mean time, error's
  */
 
-// "use strict";
+/*
+ var currentTime = new Date().getTime();
+ while (currentTime + 2000 >= new Date().getTime()) {
+ }
 
-/* MESSAGE WEERGEVEN
-d3.select('body').append('div')
-	.attr('class', 'msg')
-	.text('updating plots...')
-	.style('opacity', 1)
-	.transition()
-	.duration(2000)
-	.style('opacity', 0)
-	.remove();
-*/
-// ---------------------------------------------
-// INPUT
-var importNumOfTargets = 9;			// Steed oneven, grenzen nog te bepalen
-var importSequenceRadius = 350;		// Grenzen nog bepalen
-var importTargetRadius = 50;		// Grenzen nog bepalen
-// OUTPUT
+ d3.select('body').append('div')					// Display message
+ .attr('class', 'msg')
+ .text('NEW')
+ .style('opacity', 1)
+ .transition()
+ .duration(10000)
+ .style('opacity', 0)
+ .remove();
+ */
 
-// ---------------------------------------------
-
-var testDimension = makeDimension(1140, 650, 30, 30, 30, 30);				// Afmetingen canvas
+var testDimension = makeDimension(1140, 650, 30, 30, 30, 30);	// Dimensions of test frame
 
 var fittsTest = {
-	target: {x: 0, y: 0, r: 10},
-	start: {x: 0, y: 0, t: 0},
-	last: {},
+	target: {x: 0, y: 0, r: 10},	// Target circle (location and radius)
+	lastMousePoint: {},				// Last mouse point (location and timestamp)
 
-	isoPositions: [],
-	currentPosition: 0,
-	currentCount: 0,
+	arrayTargets: [],				// Array from all the targets (one sequence)
+	currentPosition: 0,				// ...
+	currentCount: 0,				// ...
 
-	miss: 0,																		// Aantal error's
-	isoLimits: {minD: 120, maxD: 560, minW:10 , maxW: 100},							// Plot limieten van test
-	isoParams: {num: importNumOfTargets, distance: importSequenceRadius, width: importTargetRadius, randomize: true},		// Actuele parameters van test (start-waarden)
+	numOfErrors: 0,					// Number of error's in current sequence
 
-	currentPath: [],
+	currentSequence: 0,				// Current sequence that is running
+
+	fittsParameters: {				// Current parameters from test (start-parameters)
+		numOfTargets: importNumOfTargets[this.currentSequence],
+		sequenceRadius: importSequenceRadius[this.currentSequence],
+		targetRadius: importTargetRadius[this.currentSequence],
+		randomize: true},
+
 	active: false,
 
+
 	data: [],
-	currentDataSet: 0,
-	dataCnt: 0,
-
-	colour: d3.scale.category10(),
-
-	sumID: 0,
-	sumTime: 0,
 
 	generateTarget: function() {
-		this.target = this.isoPositions[this.currentPosition];
-		this.target.distance = this.isoParams.distance;
-		this.currentPosition = (this.currentPosition + Math.ceil(this.isoPositions.length/2)) % this.isoPositions.length;
+		this.target = this.arrayTargets[this.currentPosition];
+		this.target.distance = this.fittsParameters.sequenceRadius;
+		this.currentPosition = (this.currentPosition + Math.ceil(this.arrayTargets.length/2)) % this.arrayTargets.length;
 		var target = testAreaSVG.selectAll('#target').data([this.target]);
 		var insert = function(d) {
-			d.attr('cx', function(d) { return d.x; })
+			   d.attr('cx', function(d) { return d.x; })
 				.attr('cy', function(d) { return d.y; })
 				.attr('r', function(d) { return d.w / 2; });
 		}
-		target.enter()
-			.append('circle')
-			.attr('id', 'target')
-			.style('fill', 'green')
-			.call(insert);
-		target.transition()
-			.call(insert);
+		target.enter().append('circle').attr('id', 'target').style('fill', 'green').call(insert);
+		target.transition().call(insert);
 		this.active = true;
 	},
 
-	updateISOCircles: function() {
+	runNewSequence: function() {
 		this.currentCount = 0;
-		this.generateISOPositions(this.isoParams.num,
-			this.isoParams.distance,
-			this.isoParams.width);
-		var circles = testAreaSVG.selectAll('circle').data(this.isoPositions);
+		this.generateArrayTargets(
+			this.fittsParameters.numOfTargets,
+			this.fittsParameters.sequenceRadius,
+			this.fittsParameters.targetRadius);
+		var circles = testAreaSVG.selectAll('circle').data(this.arrayTargets);
 		var insert = function(d) {
-			d.attr('cx', function(d) { return d.x; })
+			   d.attr('cx', function(d) { return d.x; })
 				.attr('cy', function(d) { return d.y; })
 				.attr('r', function(d) { return d.w / 2; });
 		}
-		circles.enter()
-			.append('circle')
-			.attr('class', 'iso')
-			.call(insert);
-		circles.transition()
-			.call(insert);
-		circles.exit()
-			.transition()
-			.attr('r', 0)
-			.remove();
+		circles.enter().append('circle').attr('class', 'iso').call(insert);
+		circles.transition().call(insert);
+		circles.exit().transition().attr('r', 0).remove();
 		this.currentPosition = 0;
 		this.generateTarget();
 		this.active = false;
 	},
 
-	generateISOPositions: function(num, d, w) {
-		// remove all data from live view
-		this.isoPositions = [];
-		for (var i = 0; i < num; i++) {
-			this.isoPositions[i] = {x: testDimension.cx + ((d/2) * Math.cos((2 * Math.PI * i) / num)),
-				y: testDimension.cy + ((d/2) * Math.sin((2 * Math.PI * i) / num)),
-				w: w};
+	/*
+	 * Generates an array of targets
+	 * @param numOfTargets	: number of targets
+	 * @param sequenceRadius: radius of the target-sequence
+	 * @param targetRadius	: radius of an individual target
+	 */
+	generateArrayTargets: function(numOfTargets, sequenceRadius, targetRadius) {
+		this.arrayTargets = [];							// Reset array of targets
+		for (var i = 0; i < numOfTargets; i++) {		// Generate new array of targets
+			this.arrayTargets[i] = {x: testDimension.center_x + ((sequenceRadius/2) * Math.cos((2 * Math.PI * i) / numOfTargets)),
+				y: testDimension.center_y + ((sequenceRadius/2) * Math.sin((2 * Math.PI * i) / numOfTargets)),
+				w: targetRadius};
 		}
 	},
 
 	removeTarget: function() {
-		testAreaSVG.selectAll('#target').data([])
-			.exit()
-			.remove();
+		testAreaSVG.selectAll('#target').data([]).exit().remove();
 		this.active = false;
-		this.currentPath = [];
 	},
 
 	mouseClicked: function(x, y) {
-		if (distance({x: x, y: y}, this.target) < (this.target.w / 2)) {
+		if (distance({x: x, y: y}, this.target) < (this.target.w / 2)) {		// If click is on target
 			this.removeTarget();
-			if (this.isoParams.randomize && this.currentCount >= this.isoPositions.length) {
-				this.randomizeParams();
+			if (this.currentCount >= this.arrayTargets.length)	{		// Start new sequence
+				this.setParameters();
 				this.currentCount = 0;
 				this.currentPosition = 0;
-				this.miss = 0;
-				this.updateISOCircles;
+				this.numOfErrors = 0;
+				this.runNewSequence;
 				this.generateTarget();
 				this.active = false;
 			} else {
 				this.currentCount++;
 				this.generateTarget();
 			}
-			this.last = {x: x, y: y, t: (new Date).getTime()};
-			this.start = this.last;
-			this.currentPath.push(this.last);
-		} else {
-			this.miss++;
+			this.lastMousePoint = {x: x, y: y, t: (new Date).getTime()};
+		} else {																// If click is not on target (miss)
+			this.numOfErrors++;
 		}
 	},
 
+	/*
+	 * Draws following lines on frame
+	 * @param x	: current mouse X position
+	 * @param y : current mouse Y position
+	 */
 	mouseMoved: function(x, y) {
-		if (this.active) {
-			// skip if the mouse did actually not move
-			// that should practically never happen...
-			if (x == this.last.x && y == this.last.y) {
+		if (this.active) {														// If sequence-test active
+			if (x == this.lastMousePoint.x && y == this.lastMousePoint.y) {		// If mouse not moved, should never happen...
 				return;
 			}
-			var newPoint = {x: x, y: y, t: (new Date).getTime()}
-			this.currentPath.push(newPoint)
-			var dt = newPoint.t - this.last.t;
-			var dist = distance(this.last, {x: x, y: y})
-			if (dt > 0)
-				var speed = dist / dt;
-			else
-				var speed = 0;
-			testAreaSVG.append('line')
-				.attr('x1', this.last.x)
-				.attr('x2', newPoint.x)
-				.attr('y1', this.last.y)
-				.attr('y2', newPoint.y)
+			var newMousePoint = {x: x, y: y, t: (new Date).getTime()}
+			testAreaSVG.append('line')											// Draw following-lines
+				.attr('x1', this.lastMousePoint.x)
+				.attr('x2', newMousePoint.x)
+				.attr('y1', this.lastMousePoint.y)
+				.attr('y2', newMousePoint.y)
 				.style('stroke', 'black')
 				.transition()
 				.duration(5000)
 				.style('stroke-opacity', 0)
 				.remove();
-			this.last = newPoint;
+			this.lastMousePoint = newMousePoint;
 		}
 	},
 
-	randomizeParams: function() {
-		this.isoParams.distance = Math.floor(randomAB(this.isoLimits.minD, this.isoLimits.maxD));
-		this.isoParams.width = Math.floor(randomAB(this.isoLimits.minW, this.isoLimits.maxW));
-		this.updateISOCircles();
-	},
-
 	setParameters: function()	{
-		this.isoParams.distance = importSequenceRadius;
-		this.isoParams.width = importTargetRadius;
-		this.updateISOCircles();
+		if(this.currentSequence >= (importNumOfSequences - 1))	{
+			this.currentSequence = 0;
+			// LOOP, At this point --> END PROGRAM
+			d3.select('body').append('div')					// Display message
+				.attr('class', 'msg')
+				.text('END PROGRAM RUN')
+				.style('opacity', 1)
+				.transition()
+				.duration(10000)
+				.style('opacity', 0)
+				.remove();
+		} else {
+			this.currentSequence = this.currentSequence + 1;
+		}
+		this.fittsParameters.numOfTargets = importNumOfTargets[this.currentSequence];
+		this.fittsParameters.sequenceRadius = importSequenceRadius[this.currentSequence];
+		this.fittsParameters.targetRadius = importTargetRadius[this.currentSequence];
+		this.runNewSequence();
 	}
 };
 
+
+/*
+ * Set dimensions from window
+ * @param width		: outer width of the frame (in pixels)
+ * @param height	: outer height of the frame (in pixels)
+ * @param top		: top margin from the top edge (in pixels)
+ * @param right		: right margin from the right edge (in pixels)
+ * @param bottom	: bottom margin from the bottom edge (in pixels)
+ * @param left		: left margin from the left edge (in pixels)
+ */
 function makeDimension(width, height, top, right, bottom, left) {
 	return {width: width,
 		height: height,
@@ -188,32 +185,35 @@ function makeDimension(width, height, top, right, bottom, left) {
 		right: right,
 		bottom: bottom,
 		left: left,
-		cx: (width - (left + right)) / 2 + left,
-		cy: (height - (top + bottom)) / 2 + top};
+		center_x: (width - (left + right)) / 2 + left,
+		center_y: (height - (top + bottom)) / 2 + top};
 }
 
-function randomAB(a, b) {
-	return a + Math.random() * (b - a);
-}
-
+/*
+ * If mouse is moved
+ */
 function mouseMoved()	{
-	var m = d3.svg.mouse(this);
-	fittsTest.mouseMoved(m[0], m[1])
+	var locXY = d3.svg.mouse(this);
+	fittsTest.mouseMoved(locXY[0], locXY[1])
 }
 
+/*
+ * If mouse is clicked
+ */
 function mouseClicked()	{
-	var m = d3.svg.mouse(this);
-	fittsTest.mouseClicked(m[0], m[1]);
+	var locXY = d3.svg.mouse(this);
+	fittsTest.mouseClicked(locXY[0], locXY[1]);
 }
 
+/*
+ * Distance between two points
+ * @param a	: point A (point with x and y coordinates)
+ * @param b	: point B (point with x and y coordinates)
+ */
 function distance(a, b) {
 	var dx = a.x - b.x;
 	var dy = a.y - b.y;
 	return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-}
-
-function clampInt(lower, upper, x) {
-	return Math.min(upper, Math.max(lower, Math.floor(x)));
 }
 
 function bgRect(d, dim) {
@@ -225,7 +225,9 @@ function bgRect(d, dim) {
 		.attr('class', 'back');
 }
 
-// Test AREA in HTML
+/*
+ * Describes the test-area for the HTML-page
+ */
 var testAreaSVG = d3.select('#test-area').append('svg')
 	.attr('width', testDimension.width)
 	.attr('height', testDimension.height)
@@ -234,7 +236,6 @@ var testAreaSVG = d3.select('#test-area').append('svg')
 	.on('mousedown', mouseClicked)
 	.call(bgRect, testDimension);
 
-// Init code
+// INITIALIZE CODE
 fittsTest.active = false;
-fittsTest.generateISOPositions(15, 150, 10);
-fittsTest.updateISOCircles();
+fittsTest.runNewSequence();

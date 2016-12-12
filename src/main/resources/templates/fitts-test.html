@@ -9,6 +9,18 @@
 <div class="container">
     <div th:replace="layout :: navbar"></div>
 
+    <!-- nodige data voor fitts test, deleten bj release-->
+    <tbody class="list">
+    <tr th:each="sequence : ${allSequences}">
+        <td class="ID" th:value="${sequence}" th:text="${sequence.id}">ID</td>
+        <td class="Difficulty" th:value="${sequence}" th:text="${sequence.difficulty}">Difficulty</td>
+        <td class="RadiusSmall" th:value="${sequence}" th:text="${sequence.radiusSmall}">RadiusSmall</td>
+        <td class="RadiusBig" th:value="${sequence}" th:text="${sequence.radiusBig}">RadiusBig</td>
+        <td class="NumberOfTargets" th:value="${sequence}" th:text="${sequence.numberOfTargets}">NumberOfTargets</td>
+        <td class="MaxErrrorRate" th:value="${sequence}" th:text="${sequence.getmaxErrorRate()}">MaxErrorRate</td>
+    </tr>
+    </tbody>
+
     <div class="content">
 
         <script>

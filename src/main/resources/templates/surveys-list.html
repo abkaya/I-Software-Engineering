@@ -24,6 +24,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th th:text="#{id}">Device</th>
                     <th th:text="#{device}">Device</th>
                     <th></th>
                 </tr>
@@ -32,10 +33,10 @@
                 <tbody class="list">
                 <tr th:each="survey : ${allOpinions}">
                     <td class="Device" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.id}">Device</td>
-                   <!-- <td class="opinion" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.opinion}">Opinion</td>
-                    <td class="powerControl" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.powerControl}">Control Device</td>
-                    <td class="powerControl" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.id}">Control Device1</td>
--->
+                    <td class="opinion" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.device?.deviceName}">Opinion</td>
+                    <!--  <td class="powerControl" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.powerControl}">Control Device</td>
+                      <td class="powerControl" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.id}">Control Device1</td>
+  -->
                     <div th:attr="id='Survey'+${survey.id }" class="modal fade" role="dialog">
                         <div class="modal-dialog">
 
@@ -47,11 +48,11 @@
                                     <h4 class="modal-title" th:value="${survey}" th:text="${survey.device?.deviceName}">Device Name</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <label class="control-label" th:text="#{surveyOpinion}">Opinion</label>
+                                   <label class="control-label" th:text="#{surveyOpinion}">Opinion</label>
                                     <p th:text="${survey.opinion}">Some text in the modal.</p>
 
                                     <label class="control-label" th:text="#{surveyPowerControl}">Control Device</label>
-                                    <p th:text="${survey.powerControl}">Some text in the modal.</p>
+                                    <p th:text="${survey.tester}">Some text in the modal.</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

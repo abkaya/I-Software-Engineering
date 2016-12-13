@@ -12,6 +12,7 @@ public class Survey extends MyAbstractPersistable<Long> {
 
     private String opinion;
     private String powerControl;
+    private ArrayList<String> tester;
 
     @ManyToOne
     @JoinTable(
@@ -23,16 +24,27 @@ public class Survey extends MyAbstractPersistable<Long> {
     public Survey() {
         opinion = "";
         powerControl = "";
+        tester = new ArrayList<>();
     }
 
     public Survey(String powerControl) {
         opinion = "";
         this.powerControl = powerControl;
+        tester = new ArrayList<>();
     }
 
     public Survey(String opinion, String powerControl) {
         this.opinion = opinion;
         this.powerControl = powerControl;
+        tester = new ArrayList<>();
+    }
+
+    public ArrayList<String> getTester(){
+        return tester;
+    }
+
+    public void setTester(ArrayList<String> tester){
+        this.tester = tester;
     }
 
     public Device getDevice() {

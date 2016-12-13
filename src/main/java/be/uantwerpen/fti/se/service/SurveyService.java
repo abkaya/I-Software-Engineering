@@ -29,6 +29,7 @@ public class SurveyService {
             s1.setOpinion(survey.getOpinion());
             s1.setPowerControl(survey.getPowerControl());
             s1.setDevice(survey.getDevice());
+            s1.setTester(survey.getTester());
             surveyRepository.save(s1);
         }
         else{

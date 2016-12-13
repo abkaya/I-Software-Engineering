@@ -27,7 +27,7 @@
         <div class="form-group">
         <tr th:each="qsurvey : ${allQuestions}">
             <td class="Device" data-toggle="modal" th:attr="data-target='#Survey'+${qsurvey.id }" th:value="${qsurvey}" th:text="${qsurvey.questions}">Device</td>
-            <input class="form-control" type="text" th:field="*{powerControl}" />
+            <input class="form-control" type="text" th:field="*{tester}" />
         </tr>
         </div>
 

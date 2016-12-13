@@ -52,7 +52,7 @@ public class CreateSurveyController {
                 return "survey-manage";
             }
             questionsSurveyService.saveSomeAttributes(questionsSurvey);
-            return "redirect:/resultssurvey";
+            return "redirect:/createsurvey";
         }
         return "redirect:/";
     }

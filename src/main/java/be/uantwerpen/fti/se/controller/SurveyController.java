@@ -1,7 +1,9 @@
 package be.uantwerpen.fti.se.controller;
 
+import be.uantwerpen.fti.se.model.QuestionsSurvey;
 import be.uantwerpen.fti.se.model.Survey;
 import be.uantwerpen.fti.se.repository.DeviceRepository;
+import be.uantwerpen.fti.se.repository.QuestionsSurveyRepository;
 import be.uantwerpen.fti.se.repository.SurveyRepository;
 import be.uantwerpen.fti.se.repository.UserRepository;
 import be.uantwerpen.fti.se.service.SurveyService;
@@ -29,10 +31,13 @@ public class SurveyController {
     private DeviceRepository deviceRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private QuestionsSurveyRepository questionsSurveyRepository;
 
     @RequestMapping(value="/resultssurvey", method = RequestMethod.GET)
     public String showResultSurvey(final ModelMap model) {
         model.addAttribute("survey", new Survey());
+        model.addAttribute("allQuestions", questionsSurveyRepository.findAll());
         model.addAttribute("allOpinions", surveyRepository.findAll());
         model.addAttribute("allDevices", deviceRepository.findAll());
         model.addAttribute("SurveyActiveSettings", "active");
@@ -43,6 +48,7 @@ public class SurveyController {
     public String showQuestionsSurvey(final ModelMap model){
         model.addAttribute("survey", new Survey());
         model.addAttribute("allDevices", deviceRepository.findAll());
+        model.addAttribute("allQuestions", questionsSurveyRepository.findAll());
         model.addAttribute("SurveyQActiveSettings","active");
         return "survey-questions";
     }

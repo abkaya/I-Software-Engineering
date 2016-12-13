@@ -3,14 +3,8 @@
  * OUTPUT		: Throughput, mean time, error's
  */
 
-/*
- var currentTime = new Date().getTime();
- while (currentTime + 2000 >= new Date().getTime()) {
- }
- */
-
 // ---------- OUTPUT ----------
-var outputThrougput = [-1];
+var outputThroughput = [-1];
 var outputMeanTime = [-1];
 var outputNumOfErrors = [-1];
 // ----------------------------
@@ -26,6 +20,8 @@ var fittsTest = {
 	currentTarget: 0,				// Current target that is visible
 
 	numOfErrors: 0,					// Number of error's in current sequence
+	startTime: 0,					// Timer start time
+	stopTime: 0,					// Timer stop time
 
 	currentSequence: 0,				// Current sequence that is running
 
@@ -75,6 +71,7 @@ var fittsTest = {
 		this.active = false;
 		// Generate and display message
 		var message = 'Sequence ' + (this.currentSequence + 1) + '/' + importNumOfSequences + ' : Press the circle to start test!'
+		/* Comment terug weghalen!
 		d3.select('body').append('div')
 			.attr('class', 'msg')
 			.text(message)
@@ -84,6 +81,7 @@ var fittsTest = {
 			.duration(15000)
 			.style('opacity', 0)
 			.remove();
+		*/
 	},
 
 	/*
@@ -117,16 +115,22 @@ var fittsTest = {
 	mouseClicked: function(x, y) {
 		if (distance({x: x, y: y}, this.target) < (this.target.w / 2)) {		// If click is on target
 			this.removeTarget();
-			if (this.currentTarget >= this.arrayTargets.length)	{				// Start new sequence
-				this.setParameters();
-				this.currentTarget = 0;
+			if (this.currentTarget == 0)	{									// First target clicked
+				this.startTime = new Date().getTime();
+			} else if (this.currentTarget == this.arrayTargets.length)	{		// Last target clicked
+				this.stopTime = new Date().getTime();
+			} else {															// Other target clicked
+				// Do nothing
+			}
+			if (this.currentTarget >= this.arrayTargets.length)	{				// End of previous sequence, start new sequence
+				this.saveData();												// Save data last sequence
+				this.setParameters();											// Set parameters new sequence
+				this.currentTarget = 0;											// Reset counters
 				this.currentPosition = 0;
 				this.numOfErrors = 0;
-				this.runNewSequence;
-				this.generateTarget();
-				this.active = false;
+				this.runNewSequence();											// Start new sequence
 			} else {
-				this.currentTarget++;
+				this.currentTarget++;											// Generate next target
 				this.generateTarget();
 			}
 			this.lastMousePoint = {x: x, y: y, t: (new Date).getTime()};
@@ -166,6 +170,21 @@ var fittsTest = {
 	setParameters: function()	{
 		if(this.currentSequence >= (importNumOfSequences - 1))	{
 			this.currentSequence = 0;
+			// ----- PRINT OUTPUT DATA ----- (only used in testing)
+			var message = '';
+			for (var i = 0; i < importNumOfSequences; i++)	{
+				message = message + 'T=' + outputThroughput[i] + ' M=' + outputMeanTime[i] + ' E=' + outputNumOfErrors[i] + ' ';
+			}
+			d3.select('body').append('div')
+				.attr('class', 'msg')
+				.text(message)
+				.style('color', 'red')
+				.style('opacity', 1)
+				.transition()
+				.duration(20000)
+				.style('opacity', 0)
+				.remove();
+			// -----------------------------
 			// LOOP, At this point --> END PROGRAM
 		} else {
 			this.currentSequence = this.currentSequence + 1;
@@ -174,6 +193,24 @@ var fittsTest = {
 		this.fittsParameters.sequenceRadius = importSequenceRadius[this.currentSequence];
 		this.fittsParameters.targetRadius = importTargetRadius[this.currentSequence];
 		this.runNewSequence();
+	},
+
+	/*
+	 * Save data at end of sequence
+	 */
+	saveData: function()	{
+		// Number of error's
+		outputNumOfErrors[this.currentSequence] = this.numOfErrors;
+		// Mean Movement Time [seconds]
+		var totalTime = this.stopTime - this.startTime;
+		var MT = totalTime/this.fittsParameters.numOfTargets/1000;
+		outputMeanTime[this.currentSequence] = MT;
+		// Throughput [bits/second]
+		var Ae = 2; 													// Nog aanpassen
+		var We = 2; 													// Nog aanpassen
+		var IDe = getIndexOfDifficulty(Ae, We);
+		var TP = IDe/MT;
+		outputThroughput[this.currentSequence] = TP;
 	}
 };
 
@@ -224,6 +261,13 @@ function distance(a, b) {
 	var dx = a.x - b.x;
 	var dy = a.y - b.y;
 	return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+}
+
+/*
+ * Get index of difficulty (Shannon formula)
+ */
+function getIndexOfDifficulty(Ae, We) {
+	return Math.log((Ae / We) + 1) / Math.log(2);
 }
 
 /*

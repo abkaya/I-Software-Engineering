@@ -150,7 +150,6 @@ public class TestTemplateService {
     }
 
     private long size() {
-        System.out.println("testtest "+testTemplateRepository.count());
         return testTemplateRepository.count();
     }
 }

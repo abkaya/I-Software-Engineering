@@ -1,6 +1,8 @@
 package be.uantwerpen.fti.se.repository;
 
 import be.uantwerpen.fti.se.model.TestTemplate;
+import org.hibernate.annotations.NamedNativeQuery;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**

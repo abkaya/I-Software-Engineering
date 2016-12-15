@@ -22,8 +22,6 @@ public class TestObjectService {
     @Autowired
     private TestObjectRepository testObjectRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ResultRepository resultRepository;
     @Autowired
     private TestPlanRepository testPlanRepository;
@@ -31,6 +29,9 @@ public class TestObjectService {
     public Iterable<TestObject> findAll() {return this.testObjectRepository.findAll();}
     public void add(final TestObject testObject){ this.testObjectRepository.save(testObject);}
     public void delete(Long id) {
+        for(Result result : testObjectRepository.findOne(id).getResults()){
+            resultRepository.delete(result.getId());
+        }
         this.testObjectRepository.delete(id);
     }
 
@@ -119,7 +120,7 @@ public class TestObjectService {
             resultRepository.save(tempResult);
             results.add(tempResult);
         }
-        to.getTestPlan().addFinsihedUsers(to.getUser());
+        to.getTestPlan().userFinished(to.getUser());
         testPlanRepository.save(to.getTestPlan());
         to.setResults(results);
         to.setComplete(true);

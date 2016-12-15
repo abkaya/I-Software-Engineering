@@ -20,6 +20,7 @@
     });
 
     function submitForm() {
+        document.getElementById("alertsContainer").innerHTML = "";
         if(validateForm()){
             document.forms["testplanForm"].submit();
         }

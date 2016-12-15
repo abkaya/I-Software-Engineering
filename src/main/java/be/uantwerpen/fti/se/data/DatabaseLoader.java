@@ -125,13 +125,13 @@ public class DatabaseLoader {
         testSequenceRepository.save(ts4);*/
 
         //test creating a template and adding it to the repo
-        TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", true, 5, 30, 1, 5, 30,50);
-        TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.", true, 10, 30, 1, 5, 30,50);
-        TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.", true, 20, 30, 1, 5, 30,50);
-        TestTemplate t4 = new TestTemplate("Template_0x04", "Brief description of the template.", true, 45, 30, 1, 5, 30,50);
+        TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", true, 5, 30, 10, 60, 100,500);
+        TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.", true, 10, 30, 10, 60, 100 ,500);
+        TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.", true, 20, 30, 10, 60, 100 ,500);
+        TestTemplate t4 = new TestTemplate("Template_0x04", "Brief description of the template.", true, 45, 30, 10, 60, 100 ,500);
         TestTemplate t5 = new TestTemplate("Template_0x05_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. Copying is possible.",false, 65, 30, 1, 5, 30,50);
-        TestTemplate t6 = new TestTemplate("Template_0x06", "Brief description of the template.", true, 85, 30, 1, 5, 30,50);
-        TestTemplate t7 = new TestTemplate("Template_0x07", "Brief description of the template.", true, 105 , 30, 1, 5, 30,50);
+        TestTemplate t6 = new TestTemplate("Template_0x06", "Brief description of the template.", true, 85, 30, 10, 60, 100 ,500);
+        TestTemplate t7 = new TestTemplate("Template_0x07", "Brief description of the template.", true, 105 , 30, 10, 60, 100 ,500);
         TestTemplate t8 = new TestTemplate("Template_0x08_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. Copying is possible.", false, 135, 30, 1, 5, 30,50);
 
         testTemplateService.saveSomeAttributes(t1);

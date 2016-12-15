@@ -20,7 +20,14 @@
     <div th:replace="layout :: navbar"></div>
 
     <div class="content">
-
+        <div th:if="${param.inUse}" class="alert alert-danger alert-dismissable" style="margin-top: 15px">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            This user is in use. Can't be deleted during completing a testplan.
+        </div>
+        <div th:if="${param.lastAdmin}" class="alert alert-danger alert-dismissable" style="margin-top: 15px">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            Can't delete last admin, this will break your application.
+        </div>
         <div id="user-list">
             <input class="search" placeholder="Search" />
             <table class="table table-hover">

@@ -89,6 +89,22 @@ public class TestPlan extends MyAbstractPersistable<Long>{
         this.description = description;
     }
 
+    public boolean checkTestplan(){
+        if(this.name == "" || this.name == null){
+            return false;
+        }
+        if(this.description == "" || this.description == null){
+            return false;
+        }
+        if(this.testTemplate == null){
+            return false;
+        }
+        if(this.device == null){
+            return false;
+        }
+        return true;
+    }
+
     public String getName() {
         return name;
     }

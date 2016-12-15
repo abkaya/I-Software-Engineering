@@ -9,29 +9,41 @@
 <div class="container">
     <div th:replace="layout :: navbar"></div>
 
-    <!-- nodige data voor fitts test, deleten bj release-->
-    <tbody class="list">
-    <tr th:each="sequence : ${allSequences}">
-        <td class="ID" th:value="${sequence}" th:text="${sequence.id}">ID</td>
-        <td class="Difficulty" th:value="${sequence}" th:text="${sequence.difficulty}">Difficulty</td>
-        <td class="RadiusSmall" th:value="${sequence}" th:text="${sequence.radiusSmall}">RadiusSmall</td>
-        <td class="RadiusBig" th:value="${sequence}" th:text="${sequence.radiusBig}">RadiusBig</td>
-        <td class="NumberOfTargets" th:value="${sequence}" th:text="${sequence.numberOfTargets}">NumberOfTargets</td>
-        <td class="MaxErrrorRate" th:value="${sequence}" th:text="${sequence.getmaxErrorRate()}">MaxErrorRate</td>
-    </tr>
-    </tbody>
-
     <div class="content">
+        <!--
+        <script>
+            var parameter_counter = 0;
+            var importNumOfTargets = [];
+            var importSequenceRadius = [];
+            var importTargetRadius = [];
+        </script>
+
+        <script th:inline="javascript" th:each="sequence : ${allSequences}">
+            /*<![CDATA[*/
+                importNumOfTargets[parameter_counter] = /*[[${sequence.numberOfTargets}]]*/ null;
+                importSequenceRadius[parameter_counter] = /*[[${sequence.radiusBig}]]*/ null;
+                importTargetRadius[parameter_counter] = /*[[${sequence.radiusSmall}]]*/ null;
+                parameter_counter = parameter_counter + 1;
+            /*]]>*/
+        </script>
 
         <script>
-            /* importNumOfTargets       --> Steeds oneven, grenzen nog te bepalen
+            var importNumOfSequences = parameter_counter;
+        </script>
+        -->
+
+
+        <!-- TEST -->
+
+        <script>
+            /* importNumOfTargets       --> Steeds oneven?, grenzen nog te bepalen
              * importSequenceRadius     --> Grenzen nog bepalen
              * importTargetRadius       --> Grenzen nog bepalen
              */
-            var importNumOfTargets = [9, 13];
+            var importNumOfTargets = [9, 3];
             var importSequenceRadius = [300, 380];
             var importTargetRadius = [60, 50];
-            var importNumOfSequences = 2; // Hier berekenen!
+            var importNumOfSequences = 2;
         </script>
 
         <div id="test-area" class="sans"></div>

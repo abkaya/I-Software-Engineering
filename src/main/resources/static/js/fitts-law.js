@@ -3,14 +3,8 @@
  * OUTPUT		: Throughput, mean time, error's
  */
 
-/*
- var currentTime = new Date().getTime();
- while (currentTime + 2000 >= new Date().getTime()) {
- }
- */
-
 // ---------- OUTPUT ----------
-var outputThrougput = [-1];
+var outputThroughput = [-1];
 var outputMeanTime = [-1];
 var outputNumOfErrors = [-1];
 // ----------------------------
@@ -26,8 +20,16 @@ var fittsTest = {
 	currentTarget: 0,				// Current target that is visible
 
 	numOfErrors: 0,					// Number of error's in current sequence
+	startTime: 0,					// Timer start time
+	stopTime: 0,					// Timer stop time
 
 	currentSequence: 0,				// Current sequence that is running
+	Ae: 0,							// Mean distance
+	SDx: 0,
+	WeOffSetsMean: 0,
+	WeOffSets: [],
+	previousTargetClick: {x: 0, y: 0},
+	currentTargetClick: {x: 0, y: 0},
 
 	fittsParameters: {				// Current parameters from test (start-parameters)
 		numOfTargets: importNumOfTargets[0],
@@ -75,6 +77,7 @@ var fittsTest = {
 		this.active = false;
 		// Generate and display message
 		var message = 'Sequence ' + (this.currentSequence + 1) + '/' + importNumOfSequences + ' : Press the circle to start test!'
+		/* Comment terug weghalen!
 		d3.select('body').append('div')
 			.attr('class', 'msg')
 			.text(message)
@@ -84,6 +87,7 @@ var fittsTest = {
 			.duration(15000)
 			.style('opacity', 0)
 			.remove();
+		*/
 	},
 
 	/*
@@ -117,21 +121,65 @@ var fittsTest = {
 	mouseClicked: function(x, y) {
 		if (distance({x: x, y: y}, this.target) < (this.target.w / 2)) {		// If click is on target
 			this.removeTarget();
-			if (this.currentTarget >= this.arrayTargets.length)	{				// Start new sequence
-				this.setParameters();
-				this.currentTarget = 0;
+			if (this.currentTarget == 0)	{									// First target clicked
+				// Movement time
+				this.startTime = new Date().getTime();
+				// Effective distance
+				this.previousTargetClick.x = x;
+				this.previousTargetClick.y = y;
+				this.currentTargetClick.x = x;
+				this.currentTargetClick.y = y;
+				this.Ae = 0;
+				// Effective width
+				this.SDx = 0;
+				this.WeOffSetsMean = 0;
+				this.WeOffSets[this.currentTarget] = distance(this.currentTargetClick, this.target);
+				this.WeOffSetsMean = this.WeOffSetsMean + distance(this.currentTargetClick, this.target);
+			} else if (this.currentTarget == this.arrayTargets.length)	{		// Last target clicked
+				// Movement time
+				this.stopTime = new Date().getTime();
+				// Effective distance
+				this.currentTargetClick.x = x;
+				this.currentTargetClick.y = y;
+				this.Ae = this.Ae + distance(this.currentTargetClick, this.previousTargetClick);
+				this.Ae = this.Ae/this.fittsParameters.numOfTargets;
+				// Effective width
+				this.WeOffSets[this.currentTarget] = distance(this.currentTargetClick, this.target);
+				this.WeOffSetsMean = this.WeOffSetsMean + distance(this.currentTargetClick, this.target);
+				this.WeOffSetsMean = this.WeOffSetsMean/(this.fittsParameters.numOfTargets + 1);
+				var a = 0;
+				for (a = 0; a <= this.currentTarget; a++)	{
+					this.SDx = this.SDx + Math.pow((this.WeOffSets[a] - this.WeOffSetsMean), 2);
+				}
+				this.SDx = this.SDx/this.currentTarget;
+				this.SDx = Math.sqrt(this.SDx);
+			} else {															// Other target clicked
+				// Effective distance
+				this.currentTargetClick.x = x;
+				this.currentTargetClick.y = y;
+				this.Ae = this.Ae + distance(this.currentTargetClick, this.previousTargetClick);
+				this.previousTargetClick.x = x;
+				this.previousTargetClick.y = y;
+				// Effective width
+				this.WeOffSets[this.currentTarget] = distance(this.currentTargetClick, this.target);
+				this.WeOffSetsMean = this.WeOffSetsMean + distance(this.currentTargetClick, this.target);
+			}
+			if (this.currentTarget >= this.arrayTargets.length)	{				// End of previous sequence, start new sequence
+				this.saveData();												// Save data last sequence
+				this.setParameters();											// Set parameters new sequence
+				this.currentTarget = 0;											// Reset counters
 				this.currentPosition = 0;
 				this.numOfErrors = 0;
-				this.runNewSequence;
-				this.generateTarget();
-				this.active = false;
+				this.runNewSequence();											// Start new sequence
 			} else {
-				this.currentTarget++;
+				this.currentTarget++;											// Generate next target
 				this.generateTarget();
 			}
 			this.lastMousePoint = {x: x, y: y, t: (new Date).getTime()};
-		} else {																// If click is not on target (miss)
-			this.numOfErrors++;
+		} else {
+			if (this.currentTarget > 0)	{
+				this.numOfErrors++;
+			}
 		}
 	},
 
@@ -166,7 +214,22 @@ var fittsTest = {
 	setParameters: function()	{
 		if(this.currentSequence >= (importNumOfSequences - 1))	{
 			this.currentSequence = 0;
-			// LOOP, At this point --> END PROGRAM
+			// ----- PRINT OUTPUT DATA ----- (only used in testing)
+			var message = '';
+			for (var i = 0; i < importNumOfSequences; i++)	{
+				message = message + 'T=' + outputThroughput[i] + ' M=' + outputMeanTime[i] + ' E=' + outputNumOfErrors[i] + ' ';
+			}
+			d3.select('body').append('div')
+				.attr('class', 'msg')
+				.text(message)
+				.style('color', 'red')
+				.style('opacity', 1)
+				.transition()
+				.duration(20000)
+				.style('opacity', 0)
+				.remove();
+			// -----------------------------
+			// LOOP, At this point --> END PROGRAM , EXPORT DATA
 		} else {
 			this.currentSequence = this.currentSequence + 1;
 		}
@@ -174,6 +237,24 @@ var fittsTest = {
 		this.fittsParameters.sequenceRadius = importSequenceRadius[this.currentSequence];
 		this.fittsParameters.targetRadius = importTargetRadius[this.currentSequence];
 		this.runNewSequence();
+	},
+
+	/*
+	 * Save data at end of sequence
+	 */
+	saveData: function()	{
+		// Number of error's
+		outputNumOfErrors[this.currentSequence] = this.numOfErrors;
+		// Mean Movement Time [seconds]
+		var totalTime = this.stopTime - this.startTime;
+		var MT = totalTime/this.fittsParameters.numOfTargets/1000;
+		outputMeanTime[this.currentSequence] = MT;
+		// Throughput [bits/second]
+		var Ae = this.Ae;
+		var We = 4.133 * this.SDx;
+		var IDe = getIndexOfDifficulty(Ae, We);
+		var TP = IDe/MT;
+		outputThroughput[this.currentSequence] = TP;
 	}
 };
 
@@ -224,6 +305,13 @@ function distance(a, b) {
 	var dx = a.x - b.x;
 	var dy = a.y - b.y;
 	return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+}
+
+/*
+ * Get index of difficulty (Shannon formula)
+ */
+function getIndexOfDifficulty(Ae, We) {
+	return Math.log((Ae / We) + 1) / Math.log(2);
 }
 
 /*

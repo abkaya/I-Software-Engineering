@@ -24,7 +24,7 @@ public class TestPlanService {
     @Autowired
     private TestObjectService testObjectService;
 
-    public Iterable<TestPlan> findByUserName(User user){
+    public Iterable<TestPlan> findByUsers(User user){
         if(user.isAdmin()){
 
             return testPlanRepository.findAll();
@@ -35,33 +35,29 @@ public class TestPlanService {
     }
 
     public Iterable<TestPlan> findCompletedTestPlans(){
-        List<TestPlan> testPlanList = new ArrayList<TestPlan>();
-        for (TestPlan  testPlan : testPlanRepository.findAll()) {
-            if(testPlan.isCompleted())
-                testPlanList.add(testPlan);
-        }
-        return testPlanList;
+        return testPlanRepository.findCompletedTestPlans();
     }
 
-    public Iterable<Device> findDevicesByUser(User user){
-        List<Device> devices = new ArrayList<Device>();
-        for (TestPlan  testPlan : findByUserName(user)) {
-            devices.add(testPlan.getDevice());
-        }
-        return devices;
+    Iterable<TestPlan> findByTestTemplate(TestTemplate testTemplate){
+        return testPlanRepository.findByTestTemplate(testTemplate);
     }
 
-    public Iterable<TestTemplate> findTestTemplateByUser(User user){
-        List<TestTemplate> testTemplates = new ArrayList<TestTemplate>();
-        for (TestPlan  testPlan : findByUserName(user)) {
-            testTemplates.add(testPlan.getTestTemplate());
-        }
-        return testTemplates;
+    Iterable<TestPlan> findByDevice(Device device){
+        return testPlanRepository.findByDevice(device);
     }
 
     public void saveSomeAttributes(TestPlan testPlan) {
         TestPlan tempTestPlan = testPlan.getId() == null ? null : findOne(testPlan.getId());
         if (tempTestPlan != null) {
+
+
+            if(((List<TestPlan>)findByTestTemplate(tempTestPlan.getTestTemplate())).size() == 1){
+                tempTestPlan.getTestTemplate().setEditable(true);
+            }
+
+            if(!(((List<TestPlan>)findByDevice(tempTestPlan.getDevice())).size() == 1 )){
+                tempTestPlan.getDevice().setIsNotInUse();
+            }
 
             tempTestPlan.setName(testPlan.getName());
             tempTestPlan.setDescription(testPlan.getDescription());

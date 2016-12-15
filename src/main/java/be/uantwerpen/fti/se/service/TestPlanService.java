@@ -24,7 +24,7 @@ public class TestPlanService {
     @Autowired
     private TestObjectService testObjectService;
 
-    public Iterable<TestPlan> findByUserName(User user){
+    public Iterable<TestPlan> findByUsers(User user){
         if(user.isAdmin()){
 
             return testPlanRepository.findAll();
@@ -35,46 +35,15 @@ public class TestPlanService {
     }
 
     public Iterable<TestPlan> findCompletedTestPlans(){
-        List<TestPlan> testPlanList = new ArrayList<TestPlan>();
-        for (TestPlan  testPlan : testPlanRepository.findAll()) {
-            if(testPlan.isCompleted())
-                testPlanList.add(testPlan);
-        }
-        return testPlanList;
-    }
-
-    public Iterable<Device> findDevicesByUser(User user){
-        List<Device> devices = new ArrayList<Device>();
-        for (TestPlan  testPlan : findByUserName(user)) {
-            devices.add(testPlan.getDevice());
-        }
-        return devices;
-    }
-
-    public Iterable<TestTemplate> findTestTemplateByUser(User user){
-        List<TestTemplate> testTemplates = new ArrayList<TestTemplate>();
-        for (TestPlan  testPlan : findByUserName(user)) {
-            testTemplates.add(testPlan.getTestTemplate());
-        }
-        return testTemplates;
+        return testPlanRepository.findCompletedTestPlans();
     }
 
     Iterable<TestPlan> findByTestTemplate(TestTemplate testTemplate){
-        List<TestPlan> testPlanList = new ArrayList<TestPlan>();
-        for (TestPlan  testPlan : testPlanRepository.findAll()) {
-            if(testPlan.getTestTemplate() == testTemplate)
-            testPlanList.add(testPlan);
-        }
-        return testPlanList;
+        return testPlanRepository.findByTestTemplate(testTemplate);
     }
 
     Iterable<TestPlan> findByDevice(Device device){
-        List<TestPlan> testPlanList = new ArrayList<TestPlan>();
-        for (TestPlan  testPlan : testPlanRepository.findAll()) {
-            if(testPlan.getDevice() == device)
-                testPlanList.add(testPlan);
-        }
-        return testPlanList;
+        return testPlanRepository.findByDevice(device);
     }
 
     public void saveSomeAttributes(TestPlan testPlan) {

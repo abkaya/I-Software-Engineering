@@ -391,11 +391,11 @@ public class DatabaseLoader {
         s3.setPowerControl("1");
         s3.setDevice(d3);
         surveyRepository.save(s3);
-        Survey s4 = new Survey();
-        s4.setOpinion("Maak het toestel groter");
-        s4.setPowerControl("2");
-        s4.setDevice(d4);
-        surveyRepository.save(s4);
+        //Survey s4 = new Survey();
+        //s4.setOpinion("Maak het toestel groter");
+        //s4.setPowerControl("2");
+        //s4.setDevice(d4);
+        //surveyRepository.save(s4);
 
     }
 }

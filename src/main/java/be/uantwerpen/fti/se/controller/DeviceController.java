@@ -70,7 +70,7 @@ public class DeviceController {
         if(!device.getDeviceName().isEmpty() && !device.getVersion().isEmpty() && !device.getType().isEmpty() && !device.getDriver().isEmpty() && !device.getManufacturer().isEmpty()) {
             boolean duplicate = false;
             for(Device devices : deviceRepository.findAll()) {
-                if (device.getDeviceName().equals(devices.getDeviceName())) {
+                if (device.getDeviceName().equals(devices.getDeviceName()) && !device.getId().equals(devices.getId())) {
                     if (device.getVersion().equals(devices.getVersion())) {
                         duplicate = true;
                     }
@@ -93,9 +93,6 @@ public class DeviceController {
 
     @RequestMapping(value = "/devices/{id}/delete")
     public String deleteDevice(@PathVariable Long id, final ModelMap model) {
-        if(deviceRepository.findOne(id).isUsed()==false) {
-            storageService.deleteDevice(deviceRepository.findOne(id));
-        }
         deviceService.delete(id);
         model.addAttribute("allDevices", deviceRepository.findAll());
         model.addAttribute("devicesActiveSettings","active");

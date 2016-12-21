@@ -76,7 +76,7 @@ var fittsTest = {
 		this.generateTarget();
 		this.active = false;
 		// Generate and display message
-		var message = 'Sequence ' + (this.currentSequence + 1) + '/' + importNumOfSequences + ' : Press the circle to start test!'
+		var message = 'Sequence ' + (this.currentSequence + 1) + '/' + importNumOfSequences + ' : Press circle to start test!'
 		d3.select('body').append('div')
 			.attr('class', 'msg')
 			.text(message)

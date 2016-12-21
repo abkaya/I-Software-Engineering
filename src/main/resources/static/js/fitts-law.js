@@ -76,8 +76,7 @@ var fittsTest = {
 		this.generateTarget();
 		this.active = false;
 		// Generate and display message
-		var message = 'Sequence ' + (this.currentSequence + 1) + '/' + importNumOfSequences + ' : Press the circle to start test!'
-		/* Comment terug weghalen!
+		var message = 'Sequence ' + (this.currentSequence + 1) + '/' + importNumOfSequences + ' : Press circle to start test!'
 		d3.select('body').append('div')
 			.attr('class', 'msg')
 			.text(message)
@@ -87,7 +86,6 @@ var fittsTest = {
 			.duration(15000)
 			.style('opacity', 0)
 			.remove();
-		*/
 	},
 
 	/*
@@ -214,22 +212,20 @@ var fittsTest = {
 	setParameters: function()	{
 		if(this.currentSequence >= (importNumOfSequences - 1))	{
 			this.currentSequence = 0;
-			// ----- PRINT OUTPUT DATA ----- (only used in testing)
-			var message = '';
+			// ----- PRINT OUTPUT DATA -----
+			var message = 'RESULTS:\n---------------------\n';
 			for (var i = 0; i < importNumOfSequences; i++)	{
-				message = message + 'T=' + outputThroughput[i] + ' M=' + outputMeanTime[i] + ' E=' + outputNumOfErrors[i] + ' ';
+				message = message + 'Sequence ' + (i + 1) + '/4:'
+					+ '\nT=' + outputThroughput[i]
+					+ '\nM=' + outputMeanTime[i]
+					+ '\nE=' + outputNumOfErrors[i]
+					+ '\n---------------------\n';
 			}
-			d3.select('body').append('div')
-				.attr('class', 'msg')
-				.text(message)
-				.style('color', 'red')
-				.style('opacity', 1)
-				.transition()
-				.duration(20000)
-				.style('opacity', 0)
-				.remove();
+			window.alert(message);
 			// -----------------------------
-			// LOOP, At this point --> END PROGRAM , EXPORT DATA
+			/*
+			 LOOP, At this point --> END PROGRAM , EXPORT DATA
+			 */
 		} else {
 			this.currentSequence = this.currentSequence + 1;
 		}

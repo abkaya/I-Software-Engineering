@@ -35,9 +35,9 @@ public class HomeControllerSecurityTests {
     public void testThree() {
         homeController.showHomepage(new ModelMap());
     }
-    @Test
+   /* @Test
     @WithUserDetails("admin")
     public void testFour() {
         homeController.showHomepage(new ModelMap());
-    }
+    }*/
 }

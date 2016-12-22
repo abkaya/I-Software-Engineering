@@ -3,10 +3,7 @@ package be.uantwerpen.fti.se.service;
 import be.uantwerpen.fti.se.model.Result;
 import be.uantwerpen.fti.se.model.TestObject;
 import be.uantwerpen.fti.se.model.User;
-import be.uantwerpen.fti.se.repository.ResultRepository;
-import be.uantwerpen.fti.se.repository.TestObjectRepository;
-import be.uantwerpen.fti.se.repository.TestPlanRepository;
-import be.uantwerpen.fti.se.repository.UserRepository;
+import be.uantwerpen.fti.se.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +23,8 @@ public class TestObjectService {
     private ResultRepository resultRepository;
     @Autowired
     private TestPlanRepository testPlanRepository;
+    @Autowired
+    private SurveyRepository surveyRepository;
 
     public Iterable<TestObject> findAll() {return this.testObjectRepository.findAll();}
     public void add(final TestObject testObject){ this.testObjectRepository.save(testObject);}
@@ -33,6 +32,7 @@ public class TestObjectService {
         for(Result result : testObjectRepository.findOne(id).getResults()){
             resultRepository.delete(result.getId());
         }
+        surveyRepository.delete(testObjectRepository.findOne(id).getSurvey().getId());
         this.testObjectRepository.delete(id);
     }
 

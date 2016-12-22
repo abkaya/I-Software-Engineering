@@ -14,15 +14,16 @@ public class Survey extends MyAbstractPersistable<Long>{
 
     private String opinion;
     private String powerControl;
-   // private Device device;
+    private String user;
+    private String device;
   //  private int evaluateBER;
 
-    @ManyToOne
+  /*  @ManyToOne
     @JoinTable(
             name="SURVEY_DEVICE",
             joinColumns={@JoinColumn(name="SURVEY_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="DEVICE_ID", referencedColumnName="ID")})
-    private Device device;
+    private Device device;*/
 
     public Survey(){
         opinion = "";
@@ -44,11 +45,11 @@ public class Survey extends MyAbstractPersistable<Long>{
     //    this.evaluateBER = evaluateBER;
     }
 
-    public Device getDevice() {
+    public String getDevice() {
         return device;
     }
 
-    public void setDevice(Device device) {
+    public void setDevice(String device) {
         this.device = device;
     }
 
@@ -68,7 +69,15 @@ public class Survey extends MyAbstractPersistable<Long>{
         this.powerControl = powerControl;
     }
 
-  /*  public void setDevice(Device device){
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    /*  public void setDevice(Device device){
         this.device = device;
     }
 

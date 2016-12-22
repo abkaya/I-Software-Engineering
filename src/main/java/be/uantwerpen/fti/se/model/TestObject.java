@@ -22,6 +22,9 @@ public class TestObject extends MyAbstractPersistable<Long>{
     @OneToOne
     private TestPlan testPlan;
 
+    @OneToOne
+    private Survey survey;
+
     @ElementCollection
     @CollectionTable(name="sequences", joinColumns=@JoinColumn(name="sequence_id"))
     @Column(name="sequences")
@@ -107,5 +110,13 @@ public class TestObject extends MyAbstractPersistable<Long>{
 
     public void setComplete(boolean complete) {
         this.complete = complete;
+    }
+
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
     }
 }

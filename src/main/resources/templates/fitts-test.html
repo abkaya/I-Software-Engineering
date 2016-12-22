@@ -16,7 +16,10 @@
             var importSequenceRadius = [];
             var importTargetRadius = [];
             var importNumOfSequences = 0;
+            var totalNumOfSequences = document.getElementById("numberOfSequences");
         </script>
+
+
 
         <script type="text/javascript" th:inline="javascript" th:each="sequence : ${allSequences}">
             /*<![CDATA[*/
@@ -24,8 +27,11 @@
             importSequenceRadius[importNumOfSequences] = /*[[${sequence.radiusBig}]]*/ null;
             importTargetRadius[importNumOfSequences] = /*[[${sequence.radiusSmall}]]*/ null;
             importNumOfSequences = importNumOfSequences + 1;
+
             /*]]>*/
         </script>
+
+
 
 
 

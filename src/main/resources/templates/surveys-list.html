@@ -31,11 +31,10 @@
                 <!-- IMPORTANT, class="list" have to be at tbody -->
                 <tbody class="list">
                 <tr th:each="survey : ${allOpinions}">
-                    <td class="Device" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.id}">Device</td>
-                   <!-- <td class="opinion" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.opinion}">Opinion</td>
-                    <td class="powerControl" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.powerControl}">Control Device</td>
-                    <td class="powerControl" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.id}">Control Device1</td>
--->
+                    <td class="ID" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.id}">ID</td>
+                    <td class="Device" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.device}">Device</td>
+                    <td class="User" data-toggle="modal" th:attr="data-target='#Survey'+${survey.id }" th:value="${survey}" th:text="${survey.user}">User</td>
+
                     <div th:attr="id='Survey'+${survey.id }" class="modal fade" role="dialog">
                         <div class="modal-dialog">
 
@@ -44,7 +43,7 @@
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <!-- Pas hier de titel aan-->
-                                    <h4 class="modal-title" th:value="${survey}" th:text="${survey.device?.deviceName}">Device Name</h4>
+                                    <h4 class="modal-title" th:value="${survey}" th:text="${survey.device}">Device Name</h4>
                                 </div>
                                 <div class="modal-body">
                                     <label class="control-label" th:text="#{surveyOpinion}">Opinion</label>

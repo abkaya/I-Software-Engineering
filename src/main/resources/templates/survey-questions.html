@@ -15,7 +15,7 @@
     <form action="#" th:action="@{/questionssurvey/{id}(id=${survey})}" th:object="${survey}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
 
-        <div class="form-group">
+      <!--  <div class="form-group">
             <label class="control-label" th:field="#{device.name}">Device Name</label>
             <select class="form-control" th:field="*{device}" id="sel1">
                 <option th:value="${{device}}" th:text="${device?.deviceName}">Current Device</option>
@@ -23,6 +23,18 @@
                         th:value="${{device}}"
                         th:text="${device.deviceName}">Wireframe</option>
             </select>
+        </div> -->
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('device')}?'has-error': ''">
+            <th th:text="#{survey.device}">Device</th>
+            <span class="control-label" th:if="${#fields.hasErrors('device')}" th:errors="*{device}">device</span>
+            <input class="form-control" type="text" th:field="*{device}" th:readonly="*{device}"/>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('user')}?'has-error': ''">
+            <th th:text="#{survey.user}">User</th>
+            <span class="control-label" th:if="${#fields.hasErrors('user')}" th:errors="*{user}">user</span>
+            <input class="form-control" type="text" th:field="*{user}" th:readonly="*{user}" />
         </div>
 
         <div class="form-group" th:classappend="${#fields.hasErrors('opinion')}?'has-error': ''">
@@ -30,6 +42,7 @@
             <span class="control-label" th:if="${#fields.hasErrors('opinion')}" th:errors="*{opinion}">opinion Error</span>
             <input class="form-control" type="text" th:field="*{opinion}" />
         </div>
+
 
        <thead>
         <tr>

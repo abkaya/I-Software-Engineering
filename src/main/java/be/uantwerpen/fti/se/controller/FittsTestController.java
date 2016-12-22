@@ -15,4 +15,11 @@ public class FittsTestController {
     public String showFittsTest(final ModelMap model) {
         return "fitts-test";
     }
+
+    @RequestMapping(value="/survey/{id}", method = RequestMethod.GET)
+    public String finishTest(final ModelMap model) {
+
+
+
+        return "survey-questions"; }
 }

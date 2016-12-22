@@ -68,7 +68,7 @@ public class TestTemplateController {
             return "testTemplates-manage";
         }else{
             return "redirect:/tests";
-    }}
+        }}
 
     @PreAuthorize("hasAuthority('test-create')")
     @RequestMapping(value = {"/tests/", "/tests/{id}"}, method = RequestMethod.POST)

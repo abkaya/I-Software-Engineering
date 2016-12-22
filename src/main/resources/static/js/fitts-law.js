@@ -215,7 +215,7 @@ var fittsTest = {
 			// ----- PRINT OUTPUT DATA -----
 			var message = 'RESULTS:\n---------------------\n';
 			for (var i = 0; i < importNumOfSequences; i++)	{
-				message = message + 'Sequence ' + (i + 1) + '/4:'
+				message = message + 'Sequence ' + (i + 1) + '/' + importNumOfSequences + ':'
 					+ '\nT=' + outputThroughput[i]
 					+ '\nM=' + outputMeanTime[i]
 					+ '\nE=' + outputNumOfErrors[i]

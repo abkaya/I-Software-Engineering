@@ -1,6 +1,9 @@
 package be.uantwerpen.fti.se.controller;
 
+import be.uantwerpen.fti.se.model.Survey;
+import be.uantwerpen.fti.se.model.TestObject;
 import be.uantwerpen.fti.se.model.TestSequence;
+import be.uantwerpen.fti.se.repository.SurveyRepository;
 import be.uantwerpen.fti.se.repository.TestObjectRepository;
 import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import be.uantwerpen.fti.se.service.TestObjectService;
@@ -27,6 +30,8 @@ public class TestObjectController {
     private TestObjectService testObjectService;
     @Autowired
     private TestSequenceRepository testSequenceRepository;
+    @Autowired
+    private SurveyRepository surveyRepository;
 
     @RequestMapping(value = "/testobjects", method = RequestMethod.GET)
     public String showTestObject(Principal principal, final ModelMap model){
@@ -37,6 +42,16 @@ public class TestObjectController {
 
     @RequestMapping(value = "/testobjects/{id}", method = RequestMethod.GET)
     public String takeTest(@PathVariable Long id, Principal principal, final ModelMap model){
+
+        Survey survey = new Survey();
+        TestObject testObject = testObjectRepository.findOne(id);
+        survey.setDevice(testObject.getTestPlan().getDevice().getDeviceName());
+        survey.setUser(principal.getName());
+        surveyRepository.save(survey);
+        testObject.setSurvey(survey);
+        testObjectRepository.save(testObject);
+
+
         //this function should start the test. As a placeholder dud results are created
         testObjectService.finishTest(testObjectRepository.findOne(id));
 

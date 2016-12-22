@@ -222,6 +222,10 @@ var fittsTest = {
 					+ '\n---------------------\n';
 			}
 			window.alert(message);
+			var url = window.location.href;
+			var result= url.split('/');
+			var lastSegment = result[result.length-2];
+			window.location.replace("https://localhost:8443/questionssurvey/" + lastSegment);
 			// -----------------------------
 			/*
 			 LOOP, At this point --> END PROGRAM , EXPORT DATA
@@ -232,7 +236,7 @@ var fittsTest = {
 		this.fittsParameters.numOfTargets = importNumOfTargets[this.currentSequence];
 		this.fittsParameters.sequenceRadius = importSequenceRadius[this.currentSequence];
 		this.fittsParameters.targetRadius = importTargetRadius[this.currentSequence];
-		this.runNewSequence();
+		//this.runNewSequence();
 	},
 
 	/*

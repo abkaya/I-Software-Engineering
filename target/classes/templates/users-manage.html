@@ -26,7 +26,13 @@
             <span class="control-label" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Username Error</span>
             <input class="form-control" type="text" th:field="*{userName}" />
         </div>
-
+        <p> <label th:text="#{roles}">Roles</label>
+            <select th:field="*{roles}" multiple="multiple">
+                <option th:each="role : ${allRoles}"
+                        th:value="${{role}}"
+                        th:text="${role.name}">Wireframe</option>
+            </select>
+        </p>
         <p>
             <a href="/users" th:text="#{close}" class="btn btn-primary">Close</a>
             <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>

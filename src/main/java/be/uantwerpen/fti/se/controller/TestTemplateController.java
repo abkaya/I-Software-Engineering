@@ -86,7 +86,6 @@ public class TestTemplateController {
     }
 
 
-    @RequestMapping(value = "/tests/{id}/copy")
     @PreAuthorize("hasAuthority('test-create')")
     public String copyTestTemplate(@PathVariable Long id, final ModelMap model) {
         testTemplateService.copy(id);

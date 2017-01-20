@@ -3,15 +3,13 @@ package be.uantwerpen.fti.se.service;
 import be.uantwerpen.fti.se.model.Result;
 import be.uantwerpen.fti.se.model.TestObject;
 import be.uantwerpen.fti.se.model.User;
-import be.uantwerpen.fti.se.repository.ResultRepository;
-import be.uantwerpen.fti.se.repository.TestObjectRepository;
-import be.uantwerpen.fti.se.repository.TestPlanRepository;
-import be.uantwerpen.fti.se.repository.UserRepository;
+import be.uantwerpen.fti.se.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,15 +20,19 @@ public class TestObjectService {
     @Autowired
     private TestObjectRepository testObjectRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ResultRepository resultRepository;
     @Autowired
     private TestPlanRepository testPlanRepository;
+    @Autowired
+    private SurveyRepository surveyRepository;
 
     public Iterable<TestObject> findAll() {return this.testObjectRepository.findAll();}
     public void add(final TestObject testObject){ this.testObjectRepository.save(testObject);}
     public void delete(Long id) {
+        for(Result result : testObjectRepository.findOne(id).getResults()){
+            resultRepository.delete(result.getId());
+        }
+        surveyRepository.delete(testObjectRepository.findOne(id).getSurvey().getId());
         this.testObjectRepository.delete(id);
     }
 
@@ -40,13 +42,16 @@ public class TestObjectService {
      * This method is used to pass the X-axis values to the graph javascript variable.
      * @return a list of deviceNames
      */
-    public List<String> getDeviceNames(){
+    public Iterable<String> getDeviceNames(){
+       /*
         List<String> deviceNames = new ArrayList<String>();
         for(TestObject to : this.findAll()){
             if(!deviceNames.contains(to.getTestPlan().getDevice().getDeviceName()))
                 deviceNames.add(to.getTestPlan().getDevice().getDeviceName());
         }
         return deviceNames;
+        */
+       return testObjectRepository.getDeviceNames();
     }
 
     /**
@@ -68,15 +73,15 @@ public class TestObjectService {
 
             //don't simply add the list at a certain index, because it will move the double list one index further.
             //instead, go over every single Double within that list, at that index, then add each currentError Double to it.
-            /*if(deviceNames.contains(to.getTestPlan().getDevice().getDeviceName())) {
+            if(deviceNames.contains(to.getTestPlan().getDevice().getDeviceName())) {
                 for(Double err : currentErrorRates){
                     allErrorRates.get(deviceNames.indexOf(to.getTestPlan().getDevice().getDeviceName())).add(err);
                 }
-            }*/
+            }
 
             //then iterate over these results. BUT here is the catch. You need to know where which device is and it could be in multiple places
             //So, first you go over whether or not the device is already in the list.
-            //If it is, then deviceNames.indexOf(to.getTestPlan().getDevice().getDeviceName())
+            //If it is, then deviceNames.indexOf(to.getTestPlan().getDevice().getDeviceName()), adding errorRates into the proper index.
             //If it is not, then you first add the device to the list, and then, again  deviceNames.indexOf(to.getTestPlan().getDevice().getDeviceName())
             //That is always the index of the list in which you add your results in the list within the list.
             if(!deviceNames.contains(to.getTestPlan().getDevice().getDeviceName()) && to.getTestPlan().getDevice().getDeviceName()!=null) {
@@ -84,20 +89,33 @@ public class TestObjectService {
                 allErrorRates.add(currentErrorRates);
             }
         }
-        return allErrorRates;
+        //Once all of the possible errorRates for each device is stored in the 2 dimensional list, we continue by
+        //tranforming these values to another 2D list, one where each list(device bound) within the list will continue 5 values, being the ones required to draw a boxplot.
+        return calcBoxPlotValues(allErrorRates);
+        //return allErrorRates;
     }
 
-    public Iterable<TestObject> findForUser(String name){
-        List<TestObject> myTests = new ArrayList<>();
-        for(TestObject it : this.findAll())
-        {
-            if(it.getUser().equals(name) && !it.isComplete())
-            {
-                myTests.add(it);
-            }
-        }
+    /**
+     * calculate min, Q1, median. Q2, and max of the errorRates for every device
+     * @param devicesErrorRates
+     * @return
+     */
+    private List<List<Double>> calcBoxPlotValues(List<List<Double>> devicesErrorRates){
+        List<Double> boxPlotValues= new ArrayList<Double>();
+        List<List<Double>> allErrorRates = new ArrayList<List<Double>>();
+        for(List<Double> devErr : devicesErrorRates){
+            //sort list
+            Collections.sort(devErr);
+            boxPlotValues.add(Collections.min(devErr));         // 1st value : mim
+            boxPlotValues.add(devErr.get(devErr.size()*1/4));   // 2nd value : Q1
+            boxPlotValues.add(devErr.get(devErr.size()*2/4));   // 3rd value : mean
+            boxPlotValues.add(devErr.get(devErr.size()*3/4));   // 4th value : Q3
+            boxPlotValues.add(Collections.max(devErr));         // 5th value : max
 
-        return myTests;
+            allErrorRates.add(boxPlotValues);
+            boxPlotValues= new ArrayList<Double>();
+        }
+        return allErrorRates;
     }
 
     public void finishTest(TestObject to){
@@ -112,10 +130,27 @@ public class TestObjectService {
             resultRepository.save(tempResult);
             results.add(tempResult);
         }
-        to.getTestPlan().addFinsihedUsers(to.getUser());
+        to.getTestPlan().userFinished(to.getUser());
         testPlanRepository.save(to.getTestPlan());
         to.setResults(results);
         to.setComplete(true);
         testObjectRepository.save(to);
+    }
+
+    public Iterable<TestObject> findForUser(String name){
+        /*
+        List<TestObject> myTests = new ArrayList<>();
+        for(TestObject it : this.findAll())
+        {
+            if(it.getUser().equals(name) && !it.isComplete())
+            {
+                myTests.add(it);
+            }
+        }
+
+        return myTests;
+        */
+
+        return testObjectRepository.findForUser(name);
     }
 }

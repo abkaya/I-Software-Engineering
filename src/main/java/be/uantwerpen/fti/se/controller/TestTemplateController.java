@@ -6,6 +6,7 @@ import be.uantwerpen.fti.se.repository.TestSequenceRepository;
 import be.uantwerpen.fti.se.repository.TestTemplateRepository;
 import be.uantwerpen.fti.se.service.TestTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,7 @@ public class TestTemplateController {
     @Autowired
     private TestSequenceRepository testSequenceRepository;
 
+    @PreAuthorize("hasAuthority('test-view')")
     @RequestMapping(value = "/tests", method = RequestMethod.GET)
     public String showTestTemplates(final ModelMap model) {
         //findAll is edited in the service, so it would refresh the number of tests per test template
@@ -38,6 +40,7 @@ public class TestTemplateController {
         return "testTemplates-list";
     }
 
+    @PreAuthorize("hasAuthority('test-view')")
     @RequestMapping(value = "/tests/put", method = RequestMethod.GET)
     public String viewCreateTestTemplate(final ModelMap model) {
         model.addAttribute("allTestSequences", testSequenceRepository.findAll());
@@ -47,6 +50,7 @@ public class TestTemplateController {
         return "testTemplates-manage";
     }
 
+    @PreAuthorize("hasAuthority('test-view')")
     @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET)
     public String viewEditTestTemplate(@PathVariable Long id, final ModelMap model) {
         if (testTemplateRepository.findOne(id).isEditable()) {
@@ -64,8 +68,9 @@ public class TestTemplateController {
             return "testTemplates-manage";
         }else{
             return "redirect:/tests";
-    }}
+        }}
 
+    @PreAuthorize("hasAuthority('test-create')")
     @RequestMapping(value = {"/tests/", "/tests/{id}"}, method = RequestMethod.POST)
     public String addTestTemplate(@Valid TestTemplate testTemplate, BindingResult result, final ModelMap model) {
         if (result.hasErrors()) {
@@ -80,7 +85,9 @@ public class TestTemplateController {
         return "redirect:/tests/"+testTemplate.getId();
     }
 
+
     @RequestMapping(value = "/tests/{id}/copy")
+    @PreAuthorize("hasAuthority('test-create')")
     public String copyTestTemplate(@PathVariable Long id, final ModelMap model) {
         testTemplateService.copy(id);
         //Set the navigation button Tests Management to active
@@ -89,6 +96,7 @@ public class TestTemplateController {
     }
 
     @RequestMapping(value = "/tests/{id}/delete")
+    @PreAuthorize("hasAuthority('test-delete')")
     public String deleteTestTemplate(@PathVariable Long id, final ModelMap model) {
         if (testTemplateRepository.findOne(id).isEditable()) {
             testTemplateService.deleteLinkedSequences(id);

@@ -13,12 +13,52 @@
         });
     }
 
+    $( document ).ready(function() {
+        console.log( "ready!" );
+
+
+    });
+
+    function submitForm() {
+        document.getElementById("alertsContainer").innerHTML = "";
+        if(validateForm()){
+            document.forms["testplanForm"].submit();
+        }
+        else{
+            $( "#alertsContainer" ).append('<div class="alert alert-danger alert-dismissable" style="margin-top: 15px"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Fill in all the fields.</div>')
+        }
+    }
+
+    function validateForm() {
+        var x = document.forms["testplanForm"]["name"].value;
+        if (x == "") {
+            return false;
+        }
+        x = document.forms["testplanForm"]["description"].value;
+        if (x == "") {
+            return false;
+        }
+        x = document.forms["testplanForm"]["testTemplate"].value;
+        if (x == "") {
+            return false;
+        }
+        x = document.forms["testplanForm"]["device"].value;
+        if (x == "") {
+            return false;
+        }
+        return true;
+    }
+
 </script>
+<!-- Import menu bar -->
+
 <div class="container">
 
-    <!-- Import menu bar -->
     <div th:replace="layout :: navbar"></div>
-    <form action="#" th:action="@{/testplans/{id}(id=${testPlan})}" th:object="${testPlan}" method="post">
+
+
+
+    <form name="testplanForm" action="#" th:action="@{/testplans/{id}(id=${testPlan})}" th:object="${testPlan}" method="post">
         <input th:type="hidden" th:field="*{id}"/>
 
 
@@ -61,49 +101,11 @@
             </select>
         </p>
 
-
-        <!--
-        <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error': ''">
-            <label class="control-label" th:text="#{testTemplate.name}">Name</label>
-            <span class="control-label" th:if="${#fields.hasErrors('name')}" th:errors="*{testTemplate}">Testplan Name Error</span>
-            <input class="form-control" type="text" th:field="*{testTemplate}" />
-        </div>
-        -->
-
-        <!--
-              <p>
-                  <label class="control-label" th:text="#{template}"> Template </label>
-                  <select class="form-control" th:field="*{template}" id="sel1">
-                      <option th:each="template : ${allTemplates}"
-                              th:value="${{template}}"
-                              th:text="${template.name}">Wireframe</option>
-                  </select>
-              </p>
-
-                      <p> <label th:text="#{users}">Users</label>
-                          <select th:field="*{users}" multiple="multiple">
-                              <option th:each="role : ${allUsers}"
-                                      th:value="${{user}}"
-                                      th:text="${user.userName}">Wireframe</option>
-                          </select>
-                      </p>
-
-                      <p> <label th:text="#{devices}">Devices</label>
-                          <select th:field="*{devices}" multiple="multiple">
-                              <option th:each="role : ${allDevices}"
-                                      th:value="${{device}}"
-                                      th:text="${device.name}">Wireframe</option>
-                          </select>
-                      </p>
-                      <p>
-
-
-      -->
                 <p>
                     <a href="/testplans" th:text="#{close}" class="btn btn-primary">Close</a>
-                    <button type="submit" th:text="#{save}" class="btn btn-primary">Save</button>
+                    <button type="button" onclick="submitForm()" th:text="#{save}" class="btn btn-primary">Save</button>
                 </p>
-
+        <div id="alertsContainer"></div>
             </form>
         </div>
         </body>

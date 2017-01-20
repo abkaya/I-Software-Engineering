@@ -125,14 +125,14 @@ public class DatabaseLoader {
         testSequenceRepository.save(ts4);*/
 
         //test creating a template and adding it to the repo
-        TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", true, 5, 30, 1, 5, 30,50);
-        TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.", true, 10, 30, 1, 5, 30,50);
-        TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.", true, 20, 30, 1, 5, 30,50);
-        TestTemplate t4 = new TestTemplate("Template_0x04", "Brief description of the template.", true, 45, 30, 1, 5, 30,50);
-        TestTemplate t5 = new TestTemplate("Template_0x05_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. Copying is possible.",false, 65, 30, 1, 5, 30,50);
-        TestTemplate t6 = new TestTemplate("Template_0x06", "Brief description of the template.", true, 85, 30, 1, 5, 30,50);
-        TestTemplate t7 = new TestTemplate("Template_0x07", "Brief description of the template.", true, 105 , 30, 1, 5, 30,50);
-        TestTemplate t8 = new TestTemplate("Template_0x08_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. Copying is possible.", false, 135, 30, 1, 5, 30,50);
+        TestTemplate t1 = new TestTemplate("Template_0x01", "Brief description of the template.", true, 3, 11, 10, 60, 100,500);
+        TestTemplate t2 = new TestTemplate("Template_0x02", "Brief description of the template.", true, 4, 15, 10, 60, 100 ,500);
+        TestTemplate t3 = new TestTemplate("Template_0x03", "Brief description of the template.", true, 2, 7, 10, 60, 100 ,500);
+        TestTemplate t4 = new TestTemplate("Template_0x04", "Brief description of the template.", true, 45, 5, 10, 60, 100 ,500);
+        TestTemplate t5 = new TestTemplate("Template_0x05_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. Copying is possible.",false, 65, 7, 10, 60, 100,500);
+        TestTemplate t6 = new TestTemplate("Template_0x06", "Brief description of the template.", true, 85, 5, 10, 60, 100 ,500);
+        TestTemplate t7 = new TestTemplate("Template_0x07", "Brief description of the template.", true, 105 , 5, 10, 60, 100 ,500);
+        TestTemplate t8 = new TestTemplate("Template_0x08_editable_set_FALSE", "THIS TEMPLATE IS _NOT_ EDITABLE. Copying is possible.", false, 10, 3, 10, 60, 100,500);
 
         testTemplateService.saveSomeAttributes(t1);
         testTemplateService.saveSomeAttributes(t2);
@@ -221,15 +221,15 @@ public class DatabaseLoader {
 
         TestObject to1 = new TestObject("TestObject 1", u2.getUserName(), tp1);
         List<Result> resList1 = new ArrayList<>();
-        Result r1 = new Result(5,10,1000,2.53);
-        Result r2 = new Result(0.5,7,1200,5.6);
-        Result r3 = new Result(3,6.5,980,4);
-        Result r4 = new Result(4.3,8,1100,3.6);
+        Result r1 = new Result(5,10,1000,20.53);
+        Result r2 = new Result(0.5,7,1200,50.6);
+        Result r3 = new Result(3,6.5,980,40);
+        Result r4 = new Result(4.3,8,1100,30.6);
         resultRepository.save(r1);
         resultRepository.save(r2);
         resultRepository.save(r3);
         resultRepository.save(r4);
-        Result r30 = new Result(4,6.5,890,5.3);
+        Result r30 = new Result(4,6.5,890,50.3);
         resultRepository.save(r30);
         List<Long> seqList1 = new ArrayList<>();
         seqList1.add(tp1.getTestTemplate().getTestSequences().get(0).getId());
@@ -255,7 +255,7 @@ public class DatabaseLoader {
         resultRepository.save(r6);
         resultRepository.save(r7);
         resultRepository.save(r8);
-        Result r29 = new Result(4,6.5,890,5.3);
+        Result r29 = new Result(4,6.5,890,50.3);
         resultRepository.save(r29);
         List<Long> seqList2 = new ArrayList<>();
         seqList2.add(tp1.getTestTemplate().getTestSequences().get(0).getId());
@@ -274,14 +274,14 @@ public class DatabaseLoader {
 
         TestObject to3 = new TestObject("TestObject 3", u2.getUserName(), tp2);
         Result r9 = new Result(5,7,1020,16.3);
-        Result r10 = new Result(2,7.23,1500,5.8);
+        Result r10 = new Result(2,7.23,1500,50.8);
         Result r11 = new Result(1.2,6.5,1300,12.4);
         Result r12 = new Result(4,6.5,778,10.9);
         resultRepository.save(r9);
         resultRepository.save(r10);
         resultRepository.save(r11);
         resultRepository.save(r12);
-        Result r28 = new Result(4,6.5,890,5.3);
+        Result r28 = new Result(4,6.5,890,50.3);
         resultRepository.save(r28);
         List<Long> seqList3 = new ArrayList<>();
         seqList3.add(tp2.getTestTemplate().getTestSequences().get(0).getId());
@@ -299,10 +299,10 @@ public class DatabaseLoader {
         testObjectRepository.save(to3);
 
         TestObject to4 = new TestObject("TestObject 4", u3.getUserName(), tp2);
-        Result r13 = new Result(2,6.6,980,1.2);
-        Result r14 = new Result(1.5,4.5,1300,3.2);
-        Result r15 = new Result(4.7,9,1200,2.6);
-        Result r16 = new Result(5.6,7.5,800,8.9);
+        Result r13 = new Result(2,6.6,980,10.2);
+        Result r14 = new Result(1.5,4.5,1300,30.2);
+        Result r15 = new Result(4.7,9,1200,20.6);
+        Result r16 = new Result(5.6,7.5,800,80.9);
         resultRepository.save(r13);
         resultRepository.save(r14);
         resultRepository.save(r15);
@@ -325,15 +325,15 @@ public class DatabaseLoader {
         testObjectRepository.save(to4);
 
         TestObject to5 = new TestObject("TestObject 5", u2.getUserName(), tp3);
-        Result r17 = new Result(1,3.8,1350,4.2);
+        Result r17 = new Result(1,3.8,1350,40.2);
         Result r18 = new Result(1.8,4.5,1300,9);
-        Result r19 = new Result(3,8,1020,4.1);
-        Result r20 = new Result(4,6.5,890,5.3);
+        Result r19 = new Result(3,8,1020,40.1);
+        Result r20 = new Result(4,6.5,890,50.3);
         resultRepository.save(r17);
         resultRepository.save(r18);
         resultRepository.save(r19);
         resultRepository.save(r20);
-        Result r26 = new Result(4,6.5,890,5.3);
+        Result r26 = new Result(4,6.5,890,50.3);
         resultRepository.save(r26);
         List<Long> seqList5 = new ArrayList<>();
         seqList5.add(tp3.getTestTemplate().getTestSequences().get(0).getId());
@@ -351,11 +351,11 @@ public class DatabaseLoader {
         testObjectRepository.save(to5);
 
         TestObject to6 = new TestObject("TestObject 6", u3.getUserName(), tp3);
-        Result r21 = new Result(2,3.5,900,6.2);
-        Result r22 = new Result(1.5,4.1,970,3.4);
-        Result r23 = new Result(3.3,6,870,1.1);
-        Result r24 = new Result(0.5,4.8,1000,6.3);
-        Result r25 = new Result(0.5,4.8,1000,6.3);
+        Result r21 = new Result(2,3.5,900,60.2);
+        Result r22 = new Result(1.5,4.1,970,30.4);
+        Result r23 = new Result(3.3,6,870,10.1);
+        Result r24 = new Result(0.5,4.8,1000,60.3);
+        Result r25 = new Result(0.5,4.8,1000,60.3);
         resultRepository.save(r21);
         resultRepository.save(r22);
         resultRepository.save(r23);
@@ -379,23 +379,25 @@ public class DatabaseLoader {
         Survey s1 = new Survey();
         s1.setOpinion("Zorg dat het personaliseerbaar is");
         s1.setPowerControl("6");
-        s1.setDevice(d1);
+        s1.setDevice("aDevice1");
+        s1.setUser("Rudy");
         surveyRepository.save(s1);
         Survey s2 = new Survey();
-        s2.setOpinion("Geen idee");
+        s2.setOpinion("Maak de besturing mogelijk met 2 handen");
         s2.setPowerControl("4");
-        s2.setDevice(d2);
+        s2.setDevice("aDevice2");
+        s2.setUser("Gunther");
         surveyRepository.save(s2);
-        Survey s3 = new Survey();
-        s3.setOpinion("Maak de besturing mogelijk met 2 handen");
-        s3.setPowerControl("1");
-        s3.setDevice(d3);
-        surveyRepository.save(s3);
-        Survey s4 = new Survey();
-        s4.setOpinion("Maak het toestel groter");
-        s4.setPowerControl("2");
-        s4.setDevice(d4);
-        surveyRepository.save(s4);
+        //Survey s3 = new Survey();
+        //s3.setOpinion("Geen idee");
+        //s3.setPowerControl("1");
+        //s3.setDevice("aDevice3");
+        //surveyRepository.save(s3);
+        //Survey s4 = new Survey();
+        //s4.setOpinion("Maak het toestel groter");
+        //s4.setPowerControl("2");
+        //s4.setDevice(d4);
+        //surveyRepository.save(s4);
 
     }
 }

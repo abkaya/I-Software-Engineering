@@ -10,6 +10,48 @@
     <div th:replace="layout :: navbar"></div>
 
     <div class="content">
+
+        <script>
+            var importNumOfTargets = [];
+            var importSequenceRadius = [];
+            var importTargetRadius = [];
+            var importNumOfSequences = 0;
+            var totalNumOfSequences = document.getElementById("numberOfSequences");
+        </script>
+
+
+
+        <script type="text/javascript" th:inline="javascript" th:each="sequence : ${allSequences}">
+            /*<![CDATA[*/
+            importNumOfTargets[importNumOfSequences] = /*[[${sequence.numberOfTargets}]]*/ null;
+            importSequenceRadius[importNumOfSequences] = /*[[${sequence.radiusBig}]]*/ null;
+            importTargetRadius[importNumOfSequences] = /*[[${sequence.radiusSmall}]]*/ null;
+            importNumOfSequences = importNumOfSequences + 1;
+
+            /*]]>*/
+        </script>
+
+
+
+
+
+
+
+
+        <!-- TEST -->
+        <!--
+        <script>
+            /* importNumOfTargets       - Steeds oneven?, grenzen nog te bepalen
+             * importSequenceRadius     - Grenzen nog bepalen
+             * importTargetRadius       - Grenzen nog bepalen
+             */
+            var importNumOfTargets = [9, 3];
+            var importSequenceRadius = [300, 380];
+            var importTargetRadius = [60, 50];
+            var importNumOfSequences = 2;
+        </script>
+        -->
+
         <div id="test-area" class="sans"></div>
         <script type="text/javascript" src="/js/fitts-law.js"></script>
     </div>

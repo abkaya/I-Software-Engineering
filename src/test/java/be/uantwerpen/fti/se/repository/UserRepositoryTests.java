@@ -48,7 +48,7 @@ public class UserRepositoryTests {
 
         //verify count of products in DB
         long userCount = userRepository.count();
-        assertEquals(userCount, 3);
+        assertEquals(userCount, 4);
 
         //get all products, list should only have one more then initial value
         Iterable<User> users = userRepository.findAll();
@@ -59,6 +59,6 @@ public class UserRepositoryTests {
             count++;
         }
 
-        assertEquals(count, 3);// we starten reeds met 2 gebruikers in de database
+        assertEquals(count, 4);// we starten reeds met 2 gebruikers in de database
     }
 }

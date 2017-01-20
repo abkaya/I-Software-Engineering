@@ -12,9 +12,6 @@
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
             th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
 
-
-
-
     <!--<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/css/bootstrap.min.css" />-->
     <!--<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />-->
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>-->
@@ -22,7 +19,6 @@
     <!--Bootstrap used for the dropdown menu-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script >
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
-
 
 
     <!-- ADDED BY JAN for image enlarge -->
@@ -33,19 +29,15 @@
     <!-- *** -->
 
     <!-- ADDED BY JAN for Fitts Test -->
-
     <script type="text/javascript" src="/js/d3.v2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link type="text/css" rel="stylesheet" href="/css/ftstyle.css"/>
-
     <!-- *** -->
 
     <!-- Custom files -->
     <link rel="stylesheet" type="text/css" href="/css/multiselect.css" />
     <script type="text/javascript" src="/js/list.min.js"></script>
     <script type="text/javascript" src="/js/jquery.multi-select.js"></script>
-
-
 
     <!-- Bootstrap extensions -->
     <link rel="stylesheet" type="text/css" href="/css/sb-admin-2.css" />
@@ -66,7 +58,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img alt="Brand" src="/images/logo.png" style="max-width:100%;max-height:100%;"/></a>
+                <a class="navbar-brand" href="#"><img alt="Brand" src="/images/uantwerpen.png" style="max-width:200%;max-height:200%;  margin-top: -10px;"/></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -90,9 +82,9 @@
                         <a href="/resultssurvey" th:text="#{survey.management}">Survey Results <span class="sr-only">(survey management)</span></a>
                     </li>
 
-                    <li sec:authorize="hasAuthority('surveyQ-view')" role="presentation" th:class="${SurveyQActiveSettings}">
+                 <!--   <li sec:authorize="hasAuthority('surveyQ-view')" role="presentation" th:class="${SurveyQActiveSettings}">
                         <a href="/questionssurvey" th:text="#{Survey.questions}">Survey Questions <span class="sr-only">(survey questions)</span></a>
-                    </li>
+                    </li> -->
 
 
                     <li sec:authorize="hasAuthority('device-view')" role="presentation" th:class="${devicesActiveSettings}"><a href="/devices" th:text="#{device.management}">Device management <span class="sr-only">(device management)</span> </a></li>
@@ -111,12 +103,6 @@
                             <li><a href = "/testplans">Test plan</a></li>
                         </ul>
                     </li>
-
-                    <!-- Added for Fitts Test -->
-                    <li>
-                        <a href="/fittstest">Fitts Test <span class="sr-only">(Fitts Test)</span></a>
-                    </li>
-                    <!-- *** -->
 
                     <li>
                         <a href="/logout">Logout <span class="sr-only">(logout)</span></a>
